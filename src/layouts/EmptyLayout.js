@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 const { Content,Footer } = Layout;
 
 
-class emptyLayout extends Component {
+class EmptyLayout extends Component {
   state = {
     collapsed: false,
   };
@@ -25,8 +25,8 @@ class emptyLayout extends Component {
   }
 }
 
-emptyLayout.propTypes = {
+EmptyLayout.propTypes = {
     children: PropTypes.object,
 };
 
-export default emptyLayout;
+export default EmptyLayout;

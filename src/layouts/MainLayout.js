@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 const { Header, Sider, Content } = Layout;
 
 
-class mainLayout extends Component {
+class MainLayout extends Component {
   state = {
     collapsed: false,
   };
@@ -66,7 +66,7 @@ class mainLayout extends Component {
   }
 }
 
-mainLayout.propTypes = {
+MainLayout.propTypes = {
     children: PropTypes.object,
     changeLocationTo:PropTypes.func,
 };
@@ -79,4 +79,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null,mapDispatchToProps)(mainLayout);
+export default connect(null,mapDispatchToProps)(MainLayout);
