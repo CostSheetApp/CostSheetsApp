@@ -1,7 +1,7 @@
 {
   "name": "cost_sheets",
   "version": "0.1.0",
-  "description": "This project provide an easy way to create and manage cost sheets and also shared and collaborate in projects with others",
+  "description": "This project provides an easy way to create and manage cost sheets and also share and collaborate in projects with others",
   "engines": {
     "npm": ">=3"
   },
