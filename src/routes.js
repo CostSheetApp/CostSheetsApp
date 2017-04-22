@@ -19,6 +19,7 @@ export default (
     </Route>
     <Route path="/" component={MainLayout}>
       <IndexRoute component={Dashboard}/>
+      <Route path="dashboard" component={Dashboard}/>
       <Route path="fuel-savings" component={FuelSavingsPage}/>
     </Route>
     <Route path="*" component={NotFoundPage}/>
