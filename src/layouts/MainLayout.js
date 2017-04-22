@@ -1,8 +1,9 @@
 import React,{Component,PropTypes} from 'react';
 import '../styles/main-layout.css';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Icon } from 'antd';
 import {push} from 'react-router-redux';
 import {connect} from 'react-redux';
+import MainMenu from '../components/MainMenu'
 const { Header, Sider, Content } = Layout;
 
 
@@ -25,29 +26,7 @@ class MainLayout extends Component {
           collapsed={this.state.collapsed}
         >
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['/']} onClick={({ key }) => changeLocationTo(key)}>
-            <Menu.Item key="/">
-              <Icon type="pie-chart" />
-              <span className="nav-text">dashboard</span>
-            </Menu.Item>
-            <Menu.Item key="/appoitments">
-              <Icon type="calendar" />
-              <span className="nav-text">Appoitments</span>
-            </Menu.Item>
-            <Menu.Item key="/patients" >
-              <Icon type="usergroup-add" />
-              <span className="nav-text">Patients</span>
-            </Menu.Item>
-            <Menu.Item key="/reports">
-              <Icon type="copy" />
-              <span className="nav-text">Reports</span>
-            </Menu.Item>
-            <Menu.Item key="/finances">
-              <Icon type="credit-card" />
-              <span className="nav-text">Finances</span>
-            </Menu.Item>
-            
-          </Menu>
+          <MainMenu changeLocationTo={changeLocationTo} />
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }}>
