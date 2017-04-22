@@ -7,24 +7,28 @@ class MainMenu extends Component {
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['/']} onClick={({ key }) => changeLocationTo(key)}>
             <Menu.Item key="/">
               <Icon type="pie-chart" />
-              <span className="nav-text">dashboard</span>
+              <span className="nav-text">Dashboard</span>
             </Menu.Item>
-            <Menu.Item key="/appoitments">
+            <Menu.Item key="/sheet-costs">
+              <Icon type="pie-chart" />
+              <span className="nav-text">Sheet Costs</span>
+            </Menu.Item>
+            <Menu.Item key="/projects">
               <Icon type="calendar" />
-              <span className="nav-text">Appoitments</span>
+              <span className="nav-text">Projects</span>
             </Menu.Item>
-            <Menu.Item key="/patients" >
+            <Menu.Item key="/users" >
               <Icon type="usergroup-add" />
-              <span className="nav-text">Patients</span>
+              <span className="nav-text">Users</span>
             </Menu.Item>
-            <Menu.Item key="/reports">
+            {/*<Menu.Item key="/reports">
               <Icon type="copy" />
               <span className="nav-text">Reports</span>
             </Menu.Item>
             <Menu.Item key="/finances">
               <Icon type="credit-card" />
               <span className="nav-text">Finances</span>
-            </Menu.Item>
+            </Menu.Item>*/}
             
           </Menu>
         );

@@ -26,7 +26,7 @@ class MainLayout extends Component {
           collapsed={this.state.collapsed}
         >
           <div className="logo" />
-          <MainMenu changeLocationTo={changeLocationTo} />
+          <MainMenu changeLocationTo={(key) => changeLocationTo(key)} />
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }}>
@@ -47,7 +47,7 @@ class MainLayout extends Component {
 
 MainLayout.propTypes = {
     children: PropTypes.object,
-    changeLocationTo:PropTypes.func,
+    changeLocationTo:PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
