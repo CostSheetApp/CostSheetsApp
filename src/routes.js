@@ -10,12 +10,13 @@ import HomePage from './components/HomePage';
 import FuelSavingsPage from './containers/FuelSavingsPage'; // eslint-disable-line import/no-named-as-default
 import AboutPage from './components/AboutPage';
 import NotFoundPage from './components/NotFoundPage';
+import Login from './containers/Login';
 import Dashboard from './containers/Dashboard';
 
 export default (
   <Route>
     <Route component={EmpyLayout}>
-      <Route path="about" component={AboutPage}/>
+      <Route path="login" component={Login}/>
     </Route>
     <Route path="/" component={MainLayout}>
       <IndexRoute component={Dashboard}/>
