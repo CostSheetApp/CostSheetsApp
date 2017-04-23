@@ -6,15 +6,15 @@ class MainMenu extends Component {
         return (
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['/']} onClick={({ key }) => changeLocationTo(key)}>
             <Menu.Item key="/">
-              <Icon type="pie-chart" />
+              <Icon type="appstore" />
               <span className="nav-text">Dashboard</span>
             </Menu.Item>
-            <Menu.Item key="/sheet-costs">
-              <Icon type="pie-chart" />
-              <span className="nav-text">Sheet Costs</span>
+            <Menu.Item key="/cost-sheets">
+              <Icon type="file" />
+              <span className="nav-text">Cost Sheets</span>
             </Menu.Item>
             <Menu.Item key="/projects">
-              <Icon type="calendar" />
+              <Icon type="rocket" />
               <span className="nav-text">Projects</span>
             </Menu.Item>
             <Menu.Item key="/users" >
