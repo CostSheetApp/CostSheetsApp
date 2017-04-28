@@ -1,6 +1,6 @@
 import axios from 'axios';
 import cookie from 'react-cookie';
-import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND} from '../constants/actionTypes';
+import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND,RESET_PASSWORD_ERROR} from '../constants/actionTypes';
 import {API_URL} from '../constants/global';
 
 
@@ -29,6 +29,26 @@ export const Login = ({username, password}) =>
         });
     }
 
+export const Logout = () =>
+    (dispatch, getState) => {
+        axios.post(`${API_URL}/accounts/logout`, {},{
+        headers: {'Authorization': cookie.load('token')}
+        })
+        .then(response => {
+            cookie.remove('token');
+            dispatch({
+                type: ACCOUNT_LOGOUT
+            })
+        })
+        .catch((error) => {
+            dispatch({
+                type: UNAUTHORIZED_ACCOUNT,
+                error: error.response.data.error.message
+            })
+        });
+    }
+
+
 
 export const ForgotPassword = ({email}) =>
     (dispatch, getState) => {
@@ -44,3 +64,16 @@ export const ForgotPassword = ({email}) =>
         });
     }
 
+export const ResetPassword = ({access_token,password, confirmPassword}) =>
+    (dispatch, getState) => {
+        axios.post(`${API_URL}/accounts/reset-password`, {access_token,password, confirmPassword})
+        .then(response => {
+            window.location.href =  '/login';
+        })
+        .catch((error) => {
+            dispatch({
+                type: RESET_PASSWORD_ERROR,
+                error: error.response.data.error.message
+            })
+        });
+    }
