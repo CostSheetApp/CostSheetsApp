@@ -18,6 +18,7 @@ import ForgotPassword from './components/ForgotPassword';
 import CostSheets from './containers/CostSheets';
 import Projects from './containers/Projects';
 import Users from './containers/Users';
+import ResetPassword from './components/ResetPassword';
 
 const UserIsNotAuthenticated = UserAuthWrapper({
   authSelector: state => state.account,
@@ -45,6 +46,7 @@ export default (
     <Route component={EmpyLayout}>
       <Route path="login" component={UserIsNotAuthenticated(Login)}/>
       <Route path="forgot-password" component={ForgotPassword}></Route>
+      <Route path="reset-password" component={ResetPassword}></Route>
     </Route>
     <Route path="/" component={UserIsAuthenticated(MainLayout)}>
       <IndexRoute component={Dashboard}/>
