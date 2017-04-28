@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, Icon, Input, Button, Checkbox, Row, Col } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Row, Col,Alert } from 'antd';
 import '../styles/login.css';
 const FormItem = Form.Item;
 
@@ -10,12 +10,20 @@ class LoginForm extends Component {
         if (!err) {
             console.log('Received values of form: ', values);
             let {login} = this.props;
-            login(values.username,values.password);
+            login(values);
         }
         });
     }
     render() {
-        const { getFieldDecorator } = this.props.form;
+        let { getFieldDecorator } = this.props.form;
+        let {hasError,error} = this.props;
+
+        let errorMessage = null
+
+        if(hasError){
+            errorMessage =  <Alert message={error} type="error" />
+        }
+
         return (           
             <Row type="flex" justify="space-around" align="middle">
         <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}></Col>
@@ -35,6 +43,7 @@ class LoginForm extends Component {
                 <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
             )}
             </FormItem>
+            {errorMessage}
             <FormItem>
             {getFieldDecorator('remember', {
                 valuePropName: 'checked',
@@ -42,7 +51,7 @@ class LoginForm extends Component {
             })(
                 <Checkbox>Remember me</Checkbox>
             )}
-            <a className="login-form-forgot" href="">Forgot password</a>
+            <a className="login-form-forgot" href="/forgot-password">Forgot password</a>
             <Button type="primary" htmlType="submit" className="login-form-button">
                 Log in
             </Button>
@@ -58,6 +67,8 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
     login: PropTypes.func.isRequired,
+    hasError: PropTypes.bool.isRequired,
+    error: PropTypes.string.isRequired,
 };
 
 export default Form.create()(LoginForm);
