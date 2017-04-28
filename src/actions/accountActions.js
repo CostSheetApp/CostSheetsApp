@@ -1,6 +1,6 @@
 import axios from 'axios';
 import cookie from 'react-cookie';
-import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND,RESET_PASSWORD_ERROR} from '../constants/actionTypes';
+import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND,RESET_PASSWORD_ERROR,ACCOUNT_REGISTER,ACCOUNT_REGISTER_ERROR} from '../constants/actionTypes';
 import {API_URL} from '../constants/global';
 
 
@@ -73,6 +73,20 @@ export const ResetPassword = ({access_token,password, confirmPassword}) =>
         .catch((error) => {
             dispatch({
                 type: RESET_PASSWORD_ERROR,
+                error: error.response.data.error.message
+            })
+        });
+    }
+
+  export const Register = ({name,username,email,password}) =>
+    (dispatch, getState) => {
+        axios.post(`${API_URL}/accounts`, {name,username,email,password})
+        .then(response => {
+            window.location.href =  '/login';
+        })
+        .catch((error) => {
+            dispatch({
+                type: ACCOUNT_REGISTER_ERROR,
                 error: error.response.data.error.message
             })
         });
