@@ -4,20 +4,10 @@ import { Layout, Icon, Dropdown, Menu, Row, Col } from 'antd';
 import {push} from 'react-router-redux';
 import {connect} from 'react-redux';
 import MainMenu from '../components/MainMenu';
+import {Logout} from '../actions/accountActions';
 const { Header, Sider, Content } = Layout;
 
-const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">My account</a>
-    </Menu.Item>
-    <Menu.Item key="1">
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="3"><Icon type="logout" /> Log Out</Menu.Item>
-  </Menu>
-);
+
 
 class MainLayout extends Component {
   state = {
@@ -29,7 +19,19 @@ class MainLayout extends Component {
     });
   }
   render() {
-    let {changeLocationTo}=this.props;
+    let {changeLocationTo,username,logout}=this.props;
+    const menu = (
+  <Menu onClick={()=>logout()}>
+    <Menu.Item key="0">
+      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">My account</a>
+    </Menu.Item>
+    <Menu.Item key="1">
+      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
+    </Menu.Item>
+    <Menu.Divider />
+    <Menu.Item key="3" ><Icon type="logout" /> Log Out</Menu.Item>
+  </Menu>
+);
     return (
       <Layout style={{ height: '100%'}}>
         <Sider
@@ -53,7 +55,7 @@ class MainLayout extends Component {
               <Col>
               <Dropdown overlay={menu}>
                 <a className="ant-dropdown-link user-menu" href="#" >
-                 Alex Fernandez <Icon type="user"/>
+                 {username} <Icon type="user"/>
                 </a>
              </Dropdown>
               </Col>
@@ -71,14 +73,25 @@ class MainLayout extends Component {
 MainLayout.propTypes = {
     children: PropTypes.object,
     changeLocationTo:PropTypes.func.isRequired,
+    username: PropTypes.string.isRequired,
+    logout: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    username: state.account.username
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
     changeLocationTo: (location) => {
       dispatch(push(location));
+    },
+    logout: ()=>{
+      dispatch(Logout());
     }
   };
 };
 
-export default connect(null,mapDispatchToProps)(MainLayout);
+export default connect(mapStateToProps,mapDispatchToProps)(MainLayout);
