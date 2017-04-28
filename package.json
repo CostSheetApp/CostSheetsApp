@@ -34,7 +34,7 @@
     "axios": "0.16.1",
     "object-assign": "4.1.0",
     "react": "15.4.1",
-    "react-cookie": "2.0.6",
+    "react-cookie": "1.0.4",
     "react-dom": "15.4.1",
     "react-fa": "4.1.2",
     "react-icons": "2.2.3",
@@ -122,10 +122,16 @@
           "env",
           "react-hmre"
         ],
-      "plugins": [
-        "transform-class-properties",
-        ["import", { "libraryName": "antd", "style": "css" }]
-      ]
+        "plugins": [
+          "transform-class-properties",
+          [
+            "import",
+            {
+              "libraryName": "antd",
+              "style": "css"
+            }
+          ]
+        ]
       },
       "production": {
         "presets": [
@@ -142,7 +148,13 @@
           "transform-react-constant-elements",
           "transform-react-remove-prop-types",
           "transform-class-properties",
-          ["import", { "libraryName": "antd", "style": "css" }]
+          [
+            "import",
+            {
+              "libraryName": "antd",
+              "style": "css"
+            }
+          ]
         ]
       },
       "test": {

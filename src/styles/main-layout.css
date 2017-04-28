@@ -10,6 +10,19 @@
   color: #108ee9;
 }
 
+.user-menu {
+  font-size: 15px;
+  line-height: 64px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: color .3s;
+  color: black;
+}
+
+.user-menu:hover {
+  color: #108ee9;
+}
+
 .logo {
   height: 32px;
   background: #333;
