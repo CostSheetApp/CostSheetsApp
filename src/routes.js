@@ -15,6 +15,9 @@ import NotFoundPage from './components/NotFoundPage';
 import Login from './containers/Login';
 import Dashboard from './containers/Dashboard';
 import ForgotPassword from './components/ForgotPassword';
+import CostSheets from './containers/CostSheets';
+import Projects from './containers/Projects';
+import Users from './containers/Users';
 
 const UserIsNotAuthenticated = UserAuthWrapper({
   authSelector: state => state.account,
@@ -46,6 +49,9 @@ export default (
     <Route path="/" component={UserIsAuthenticated(MainLayout)}>
       <IndexRoute component={Dashboard}/>
       <Route path="dashboard" component={Dashboard}/>
+      <Route path="cost-sheets" component={CostSheets}/>
+      <Route path="projects" component={Projects}/>
+      <Route path="users" component={Users}/>
       <Route path="fuel-savings" component={FuelSavingsPage}/>
     </Route>
     <Route path="*" component={NotFoundPage}/>
