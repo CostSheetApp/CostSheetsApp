@@ -1,4 +1,5 @@
-import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND} from '../constants/actionTypes'
+import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND,ACCOUNT_REGISTER,ACCOUNT_REGISTER_ERROR} from '../constants/actionTypes'
+
 
 const initState = {
     username: '',
@@ -37,6 +38,18 @@ const reducer = (state = initState, action) => {
             isAuthenticated: false
         }
         case EMAIL_NOT_FOUND:
+        return {
+            ...state,
+            hasError: true,
+            error: action.error
+        }
+        case ACCOUNT_REGISTER:
+        return {
+            ...state,
+            hasError: false,
+            error: ''
+        }
+        case ACCOUNT_REGISTER_ERROR:
         return {
             ...state,
             hasError: true,
