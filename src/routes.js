@@ -20,6 +20,7 @@ import Projects from './containers/Projects';
 import Users from './containers/Users';
 import ResetPassword from './components/ResetPassword';
 import RegisterForm from './components/RegisterForm';
+import Materiasl from './containers/Materials';
 
 
 const UserIsNotAuthenticated = UserAuthWrapper({
@@ -56,6 +57,7 @@ export default (
       <Route path="dashboard" component={Dashboard}/>
       <Route path="cost-sheets" component={CostSheets}/>
       <Route path="projects" component={Projects}/>
+      <Route path="materials" component={Materiasl}/>      
       <Route path="users" component={Users}/>
       <Route path="fuel-savings" component={FuelSavingsPage}/>
     </Route>
