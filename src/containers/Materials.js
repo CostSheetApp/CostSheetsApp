@@ -1,20 +1,19 @@
 import { connect } from 'react-redux';
-import Materials from '../components/Materials.js';
+import Materials from '../components/Materials';
 import {FetchMaterials,FetchMaterialCostHistory} from '../actions/materialsActions';
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         materials: state.materials.list,
-        material: state.materials.materialToEdit,
-        costHistory: state.materials.materialCostHistory,
+        costHistory: state.materials.CostHistory,
         isSaving: state.materials.isSaving
     };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         FetchMaterials: () => {
-            dispatch(FetchMaterials())
+            dispatch(FetchMaterials());
         },
         FetchMaterialCostHistory: (id) => {
             dispatch(FetchMaterialCostHistory(id));
