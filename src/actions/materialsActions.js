@@ -11,7 +11,9 @@ import {
     FETCHING_MATERIAL_UNITS_OF_MEASUREMENT_ERROR,
     MATERIAL_ADDED,
     ADDING_MATERIAL,
-    ADDING_MATERIAL_ERROR
+    ADDING_MATERIAL_ERROR,
+    MATERIAL_UPDATED,
+    UPDATING_MATERIAL_ERROR
 } from '../constants/actionTypes';
 
 export const FetchMaterials = () => (dispatch, getState) => {
@@ -82,10 +84,31 @@ export const AddMaterial = (params) =>
         })
         .then((response) => {
             dispatch({type: MATERIAL_ADDED, payload: response.data});
+            FetchMaterials();
         })
         .catch((error) => {
             console.log(error);
             dispatch({type: ADDING_MATERIAL_ERROR});
+            //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+        });
+    }
+
+export const UpdateMaterial = (id,params) =>
+    (dispatch, getState) => {
+        params.code = 'code';
+        axios
+        .patch(`${API_URL}/Materials/${id}?filter={"include":"unitsOfMeasurement"}`,params, {
+        headers: {
+            'Authorization': cookie.load('token')
+        }
+        })
+        .then((response) => {
+            dispatch({type: MATERIAL_UPDATED, payload: response.data});
+            FetchMaterials();
+        })
+        .catch((error) => {
+            console.log(error);
+            dispatch({type: UPDATING_MATERIAL_ERROR});
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
     }

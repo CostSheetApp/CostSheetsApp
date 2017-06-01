@@ -101,8 +101,8 @@ class Materials extends Component {
         if (err) {
             return;
         }
-        let { EditMaterial } = this.props;
-        EditMaterial(values);
+        let { UpdateMaterial } = this.props;
+        UpdateMaterial(values.id,values);
         form.resetFields();
         this.setState({ visible: false });
         });
@@ -144,6 +144,7 @@ Materials.propTypes = {
     UnitsOfMeasurement: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     AddMaterial: PropTypes.func.isRequired,
+    UpdateMaterial: PropTypes.func.isRequired,
 };
 
 export default Materials;

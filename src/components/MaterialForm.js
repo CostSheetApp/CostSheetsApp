@@ -96,9 +96,12 @@ class addMaterialForm extends Component {
                                 placeholder="Select a person"
                                 optionFilterProp="children"
                                 //onChange={handleChange}
-                                filterOption={(input, option) => option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                filterOption={(input, option) => {
+                                    console.log(input,option);
+                                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                }}
                             >
-                                {UnitsOfMeasurement.map(o => <Option key={o.id}>{`${o.description} (${o.abbreviation})`}</Option>)}
+                                {UnitsOfMeasurement.map(o => <Option key={o.id} >{`${o.description} (${o.abbreviation})`}</Option>)}
                             </Select>
                         )}
                          </FormItem>
