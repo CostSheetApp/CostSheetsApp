@@ -21,6 +21,7 @@ import Users from './containers/Users';
 import ResetPassword from './components/ResetPassword';
 import RegisterForm from './components/RegisterForm';
 
+import Regions from './containers/Regions';
 
 const UserIsNotAuthenticated = UserAuthWrapper({
   authSelector: state => state.account,
@@ -56,6 +57,7 @@ export default (
       <Route path="dashboard" component={Dashboard}/>
       <Route path="cost-sheets" component={CostSheets}/>
       <Route path="projects" component={Projects}/>
+      <Route path="regions" component={Regions}/> 
       <Route path="users" component={Users}/>
       <Route path="fuel-savings" component={FuelSavingsPage}/>
     </Route>

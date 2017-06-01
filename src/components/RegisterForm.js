@@ -22,7 +22,7 @@ class RegisterUserForm extends Component {
         let { getFieldDecorator } = this.props.form;
         let {hasError,error} = this.props;
 
-        let errorMessage = null
+        let errorMessage = null;
 
         if(hasError){
             errorMessage =  <Alert message={error} type="error" />
@@ -84,16 +84,16 @@ const mapStateToProps = (state, ownProps) => {
     return {
         hasError: state.account.hasError,
         error: state.account.error,
-    }
-}
+    };
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         registerUser: (name,username,email,password) => {
             dispatch(Register(name,username,email,password))
         }
-    }
-}
+    };
+};
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(RegisterUserForm))
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(RegisterUserForm));
