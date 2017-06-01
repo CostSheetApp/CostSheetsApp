@@ -3,12 +3,14 @@ import fuelSavings from './fuelSavingsReducer';
 import {routerReducer} from 'react-router-redux';
 import accountReducer from './accountReducer';
 import regionsReducer from './regionsReducer';
+import usersReducer from './regionsReducer';
 
 const rootReducer = combineReducers({
   fuelSavings,
   routing: routerReducer,
   account: accountReducer,
-  regions: regionsReducer
+  regions: regionsReducer,
+  users: usersReducer
 });
 
 export default rootReducer;

@@ -1,11 +1,29 @@
-import React from 'react'
+import { connect } from 'react-redux';
+import Users from '../components/Users';
+import {FetchUsers,AddUser,EditUser} from '../actions/usersActions';
 
-const Users = (props) => {
-    return(
-        <div>
-            Users 
-        </div>
-    )
-}
+const mapStateToProps = (state) => {
+    return {
+        regions: state.users.list,
+        isSaving: state.users.isSaving
+    };
+};
 
-export default Users;
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        FetchUsers: () => {
+            dispatch(FetchUsers());
+        },
+        AddUser: (name) => {
+            dispatch(AddUser(name));
+        },
+        EditUser: (id,name) => {
+            dispatch(EditUser(id,name));
+        }
+    };
+};
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);
