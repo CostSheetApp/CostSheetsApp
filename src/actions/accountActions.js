@@ -33,9 +33,7 @@ export const Login = ({username, password}) =>
 export const Logout = () =>
     (dispatch, getState) => {
         dispatch({ type: ACCOUNT_LOGOUT });
-        axios.post(`${API_URL}/accounts/logout`,{
-        headers: {'Authorization': cookie.load('token')}
-        })
+        axios.post(`${API_URL}/accounts/logout?access_token=${cookie.load('token')}`)
         .then(response => {
             cookie.remove('token');
         })
