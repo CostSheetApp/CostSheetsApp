@@ -25,11 +25,16 @@ class Materials extends Component {
         }, {
           title: 'Unit Of Measurement',
           key: 'unitsOfMeasurementId',
-          render: (text,material) => (
-            <Tooltip title={material.unitsOfMeasurement.description}>
-                <span>{material.unitsOfMeasurement.abbreviation}</span>
-            </Tooltip>
-          ),
+          render: (text,material) => {
+              if(!material.unitsOfMeasurement){
+                return;
+              }
+              return (
+                  <Tooltip title={material.unitsOfMeasurement.description}>
+                    <span>{material.unitsOfMeasurement.abbreviation}</span>
+                </Tooltip>
+              );
+          },
         }, {
           title: 'Action',
           key: 'action',
@@ -106,7 +111,7 @@ class Materials extends Component {
         this.form = form;
     }
     render() {
-        let {materials,loading,FetchMaterialCostHistory,costHistory,isSaving} = this.props;
+        let {materials,loading,FetchMaterialCostHistory,FetchUnitsOfMeasurement,costHistory,UnitsOfMeasurement,isSaving} = this.props;
         return (
             <Row>
                 <MaterialForm 
@@ -115,7 +120,9 @@ class Materials extends Component {
                 onCancel={this.handleCancel}
                 onCreate={this.handle}
                 FetchMaterialCostHistory={(id)=>FetchMaterialCostHistory(id)}
+                FetchUnitsOfMeasurement={FetchUnitsOfMeasurement}
                 material={this.material}
+                UnitsOfMeasurement={UnitsOfMeasurement}
                 costHistory={costHistory}
                 isSaving={isSaving}
                 title={this.title}
@@ -132,8 +139,11 @@ Materials.propTypes = {
     FetchMaterials: PropTypes.func.isRequired,
     materials: PropTypes.array.isRequired,
     FetchMaterialCostHistory: PropTypes.func.isRequired,
+    FetchUnitsOfMeasurement: PropTypes.func.isRequired,
     costHistory: PropTypes.object.isRequired,
-    isSaving: PropTypes.bool.isRequired
+    UnitsOfMeasurement: PropTypes.array.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    AddMaterial: PropTypes.func.isRequired,
 };
 
 export default Materials;

@@ -36,8 +36,12 @@ class addMaterialForm extends Component {
         }
         ];
     }  
+    componentWillMount() {
+        let {FetchUnitsOfMeasurement} = this.props;
+        FetchUnitsOfMeasurement();
+    }
     render() {
-        let {visible, onCancel, onCreate, material, costHistory,isSaving,title } = this.props;
+        let {visible, onCancel, onCreate, material, costHistory,isSaving,title,UnitsOfMeasurement } = this.props;
         let {getFieldDecorator} = this.props.form;
         
         return (
@@ -48,7 +52,7 @@ class addMaterialForm extends Component {
                 onOk={onCreate}
                 footer={[
                     <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                    <Button key="submit" type="primary" size="large" onClick={onCreate}> Submit </Button >
+                    <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Submit </Button >
                     ]}>
                 <Form>
                     {getFieldDecorator('id', {
@@ -73,7 +77,7 @@ class addMaterialForm extends Component {
                             rules: [
                                 { required: true, message: 'Please input material waste!' }, 
                                 ],
-                                initialValue: material.waste?material.waste:1
+                                initialValue: material.waste?material.waste:0
                         })(
                             <Input type="number" placeholder="Material waste" />
                         )}
@@ -94,9 +98,7 @@ class addMaterialForm extends Component {
                                 //onChange={handleChange}
                                 filterOption={(input, option) => option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
-                                <Option value="3">Jack</Option>
-                                <Option value="4">Lucy</Option>
-                                <Option value="5">Tom</Option>
+                                {UnitsOfMeasurement.map(o => <Option key={o.id}>{`${o.description} (${o.abbreviation})`}</Option>)}
                             </Select>
                         )}
                          </FormItem>
@@ -115,8 +117,10 @@ class addMaterialForm extends Component {
 
 addMaterialForm.propTypes = {
     FetchMaterialCostHistory: PropTypes.func.isRequired,
+    FetchUnitsOfMeasurement: PropTypes.func.isRequired,
     material: PropTypes.object,
     costHistory: PropTypes.object.isRequired,
+    UnitsOfMeasurement: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
 };
