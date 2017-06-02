@@ -4,6 +4,7 @@ import {routerReducer} from 'react-router-redux';
 import accountReducer from './accountReducer';
 import regionsReducer from './regionsReducer';
 import usersReducer from './usersReducer';
+import materialsReducer from './materialsReducer';
 
 const rootReducer = combineReducers({
   fuelSavings,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   account: accountReducer,
   regions: regionsReducer,
   users: usersReducer
+  materials: materialsReducer
 });
 
 export default rootReducer;

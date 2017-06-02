@@ -77,11 +77,11 @@ MainLayout.propTypes = {
     logout: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     username: state.account.username
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {

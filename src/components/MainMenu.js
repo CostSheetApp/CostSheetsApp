@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Menu, Icon } from 'antd';
+import CubesIcon from 'react-icons/lib/fa/cubes';
 class MainMenu extends Component {
     render() {
         let {changeLocationTo}=this.props;
@@ -9,13 +10,17 @@ class MainMenu extends Component {
               <Icon type="appstore" />
               <span className="nav-text">Dashboard</span>
             </Menu.Item>
+            <Menu.Item key="/projects">
+              <Icon type="rocket" />
+              <span className="nav-text">Projects</span>
+            </Menu.Item>
             <Menu.Item key="/cost-sheets">
               <Icon type="file" />
               <span className="nav-text">Cost Sheets</span>
             </Menu.Item>
-            <Menu.Item key="/projects">
-              <Icon type="rocket" />
-              <span className="nav-text">Projects</span>
+            <Menu.Item key="/materials">
+              <CubesIcon className="anticon"/>
+              <span className="nav-text">Materials</span>
             </Menu.Item>
             <Menu.Item key="/users" >
               <Icon type="usergroup-add" />
@@ -24,6 +29,10 @@ class MainMenu extends Component {
             <Menu.Item key="/regions" >
               <Icon type="folder" />
               <span className="nav-text">Regions</span>
+            </Menu.Item>
+            <Menu.Item key="/register-user" >
+              <Icon type="usergroup-add" />
+              <span className="nav-text">Register</span>
             </Menu.Item>
             {/*<Menu.Item key="/reports">
               <Icon type="copy" />
