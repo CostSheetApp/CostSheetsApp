@@ -3,7 +3,8 @@ import {
     Form,
     Button,
     Modal,
-    Input
+    Input,
+    Icon
 } from 'antd';
 const FormItem = Form.Item;
 
@@ -34,11 +35,39 @@ class addUserForm extends Component {
                     <FormItem>
                     {getFieldDecorator('name', {
                         rules: [
-                            { required: true, message: 'Please input User name!' }, 
+                            { required: true, message: 'Please input name!' }, 
                             ],
                             initialValue: user.name?user.name:""
                     })(
-                        <Input  placeholder="User name" />
+                        <Input  placeholder="name" />
+                    )}
+                    </FormItem>
+                    <FormItem>
+                    {getFieldDecorator('username', {
+                        rules: [
+                            { required: true, message: 'Please input username!' }, 
+                            ],
+                            initialValue: user.username?user.username:""
+                    })(
+                        <Input  placeholder="username" />
+                    )}
+                    </FormItem>
+                    <FormItem>
+                    {getFieldDecorator('email', {
+                        rules: [
+                            { required: true, message: 'Please input email!' }, 
+                            ],
+                            initialValue: user.email?user.email:""
+                    })(
+                        <Input  placeholder="email" />
+                    )}
+                    </FormItem>
+                    <FormItem>
+                    {getFieldDecorator('password', {
+                        rules: [{ required: true, message: 'Please input password!' }],
+                            initialValue: user.password?user.password:""
+                    })(
+                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
                     )}
                     </FormItem>
                 </Form>

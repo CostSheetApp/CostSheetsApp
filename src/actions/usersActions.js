@@ -7,16 +7,18 @@ import {USER_ADDED,ADDING_USER,ADDING_USER_ERROR,USER_EDITED,EDITING_USER,EDITIN
 export const FetchUsers = () =>
     (dispatch, getState) => {
         dispatch({type: FETCHING_USERS});
-
+        console.log("Buscando Usuarios");
+        console.log(`${API_URL}/Entities/1/accounts?${cookie.load('token')}`);
         axios
-            .get(`${API_URL}/Accounts`,{
+            .get(`${API_URL}/Entities/1/accounts`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
                 dispatch({type: USERS_FETCHED, list: response.data});
+                console.log("Devolvio Data");
             })
             .catch((error) => {
-                //console.log(error);
+                console.log(error);
                 dispatch({type: FETCHING_USERS_ERROR});
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
@@ -25,7 +27,8 @@ export const FetchUsers = () =>
 export const AddUser = (params) =>
     (dispatch, getState) => {
         dispatch({type: ADDING_USER});
-        axios.post(`${API_URL}/Accounts`, params , {
+        params.entityId = "1";
+        axios.post(`${API_URL}/accounts`, params , {
         headers: {
             'Authorization': cookie.load('token')
         }
@@ -34,7 +37,7 @@ export const AddUser = (params) =>
                 dispatch({type: USER_ADDED, payload: response.data});
             })
             .catch((error) => {
-                //console.log(error);
+                console.log(error);
                 dispatch({type: ADDING_USER_ERROR});
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
@@ -43,7 +46,8 @@ export const AddUser = (params) =>
 export const EditUser = (id,params) =>
     (dispatch, getState) => {
         dispatch({type: EDITING_USER});
-        axios.patch(`${API_URL}/Accounts/${id}`, params , {
+        params.entityId = "1";
+        axios.patch(`${API_URL}/accounts/${id}`, params , {
         headers: {
             'Authorization': cookie.load('token')
         }
@@ -52,7 +56,7 @@ export const EditUser = (id,params) =>
                 dispatch({type: USER_EDITED});
             })
             .catch((error) => {
-                //console.log(error);
+                console.log(error);
                 dispatch({type: EDITING_USER_ERROR});
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });

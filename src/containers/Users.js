@@ -4,7 +4,7 @@ import {FetchUsers,AddUser,EditUser} from '../actions/usersActions';
 
 const mapStateToProps = (state) => {
     return {
-        regions: state.users.list,
+        users: state.users.list,
         isSaving: state.users.isSaving
     };
 };
