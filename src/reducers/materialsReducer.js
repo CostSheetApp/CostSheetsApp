@@ -74,24 +74,23 @@ const reducer = (state = initState, action) => {
                 UnitsOfMeasurement: action.payload
             };
         case MATERIAL_ADDED:
-        return {
-            ...state,
-            isSaving: false,
-            list: [
-                action.payload,
-                ...state.list                
-            ]
-        };
+            return {
+                ...state,
+                isSaving: false,
+                list: [
+                    action.payload, ...state.list
+                ]
+            };
         case ADDING_MATERIAL:
-        return{
-            ...state,
-            isSaving: true
-        }
+            return {
+                ...state,
+                isSaving: true
+            }
         case ADDING_MATERIAL_ERROR:
-        return{
-            ...state,
-            isSaving: false
-        }
+            return {
+                ...state,
+                isSaving: false
+            }
         default:
             return state;
     }

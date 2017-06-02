@@ -1,14 +1,9 @@
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Materials from '../components/Materials';
-import {FetchMaterials,FetchMaterialCostHistory,FetchUnitsOfMeasurement,AddMaterial,UpdateMaterial} from '../actions/materialsActions';
+import {FetchMaterials, FetchMaterialCostHistory, FetchUnitsOfMeasurement, AddMaterial, UpdateMaterial} from '../actions/materialsActions';
 
 const mapStateToProps = (state) => {
-    return {
-        materials: state.materials.list,
-        costHistory: state.materials.CostHistory,
-        isSaving: state.materials.isSaving,
-        UnitsOfMeasurement: state.materials.UnitsOfMeasurement
-    };
+    return {materials: state.materials.list, costHistory: state.materials.CostHistory, isSaving: state.materials.isSaving, UnitsOfMeasurement: state.materials.UnitsOfMeasurement};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -25,11 +20,10 @@ const mapDispatchToProps = (dispatch) => {
         AddMaterial: (values) => {
             dispatch(AddMaterial(values));
         },
-        UpdateMaterial: (id,values) => {
-            dispatch(UpdateMaterial(id,values));
+        UpdateMaterial: (id, values) => {
+            dispatch(UpdateMaterial(id, values));
         }
     };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Materials);

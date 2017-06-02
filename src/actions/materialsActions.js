@@ -21,9 +21,7 @@ export const FetchMaterials = () => (dispatch, getState) => {
 
     axios
         .get(`${API_URL}/materials?filter={"include":"unitsOfMeasurement"}`, {
-        headers: {
-            'Authorization': cookie.load('token')
-        }
+        headers: {'Authorization': cookie.load('token')}
     })
         .then((response) => {
             dispatch({type: MATERIALS_FETCHED, list: response.data});
@@ -40,9 +38,7 @@ export const FetchMaterialCostHistory = (id) => (dispatch, getState) => {
 
     axios
         .get(`${API_URL}/Materials/${id}/materialCostHistories?filter={"include":"region"}`, {
-        headers: {
-            'Authorization': cookie.load('token')
-        }
+        headers: {'Authorization': cookie.load('token')}
     })
         .then((response) => {
             dispatch({type: MATERIAL_COST_HISTORY_FETCHED, list: response.data});
@@ -58,9 +54,7 @@ export const FetchUnitsOfMeasurement = () => (dispatch, getState) => {
 
         axios
         .get(`${API_URL}/UnitsOfMeasurements`, {
-        headers: {
-            'Authorization': cookie.load('token')
-        }
+        headers: {'Authorization': cookie.load('token')}
         })
         .then((response) => {
             dispatch({type: MATERIAL_UNITS_OF_MEASUREMENT_FETCHED, payload: response.data});
@@ -78,9 +72,7 @@ export const AddMaterial = (params) =>
         params.code = 'code';
         axios
         .post(`${API_URL}/Materials?filter={"include":"unitsOfMeasurement"}`,params, {
-        headers: {
-            'Authorization': cookie.load('token')
-        }
+        headers: {'Authorization': cookie.load('token')}
         })
         .then((response) => {
             dispatch({type: MATERIAL_ADDED, payload: response.data});
@@ -98,9 +90,7 @@ export const UpdateMaterial = (id,params) =>
         params.code = 'code';
         axios
         .patch(`${API_URL}/Materials/${id}?filter={"include":"unitsOfMeasurement"}`,params, {
-        headers: {
-            'Authorization': cookie.load('token')
-        }
+        headers: { 'Authorization': cookie.load('token') }
         })
         .then((response) => {
             dispatch({type: MATERIAL_UPDATED, payload: response.data});

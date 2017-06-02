@@ -41,7 +41,16 @@ class addMaterialForm extends Component {
         FetchUnitsOfMeasurement();
     }
     render() {
-        let {visible, onCancel, onCreate, material, costHistory,isSaving,title,UnitsOfMeasurement } = this.props;
+        let {
+            visible,
+            onCancel,
+            onCreate,
+            material,
+            costHistory,
+            isSaving,
+            title,
+            UnitsOfMeasurement
+        } = this.props;
         let {getFieldDecorator} = this.props.form;
         
         return (
@@ -119,7 +128,6 @@ class addMaterialForm extends Component {
 }
 
 addMaterialForm.propTypes = {
-    FetchMaterialCostHistory: PropTypes.func.isRequired,
     FetchUnitsOfMeasurement: PropTypes.func.isRequired,
     material: PropTypes.object,
     costHistory: PropTypes.object.isRequired,
