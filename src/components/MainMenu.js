@@ -27,7 +27,7 @@ class MainMenu extends Component {
               <span className="nav-text">Users</span>
             </Menu.Item>
             <Menu.Item key="/regions" >
-              <Icon type="usergroup-add" />
+              <Icon type="folder" />
               <span className="nav-text">Regions</span>
             </Menu.Item>
             <Menu.Item key="/register-user" >

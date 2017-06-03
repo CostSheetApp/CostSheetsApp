@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Regions from '../components/Regions';
-import {FetchRegions,AddRegion,EditRegion,} from '../actions/regionActions';
+import {FetchRegions,AddRegion,EditRegion} from '../actions/regionActions';
 //import {EditRegion} from '../actions/regionActions';
 //import * as courseActions from '../../actions/catActions';  
 
