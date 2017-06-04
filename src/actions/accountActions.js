@@ -2,7 +2,7 @@ import axios from 'axios';
 import cookie from 'react-cookie';
 import {API_URL} from '../constants/global';
 import {push} from 'react-router-redux';
-import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND,RESET_PASSWORD_ERROR,ACCOUNT_REGISTER,ACCOUNT_REGISTER_ERROR} from '../constants/actionTypes';
+import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND,RESET_PASSWORD_ERROR,ACCOUNT_REGISTER,ENTITY_REGISTER_ERROR} from '../constants/actionTypes';
 
 
 
@@ -18,7 +18,8 @@ export const Login = ({username, password}) =>
             setTimeout(() => {
             dispatch({
                 type: AUTHORIZED_ACCOUNT,
-                username: response.data.user.name
+                username: response.data.user.name,
+                entityId: response.data.user.entityId
             });
             }, 2000);
         })
@@ -75,16 +76,4 @@ export const ResetPassword = ({access_token,password, confirmPassword}) =>
         });
     }
 
-  export const Register = ({name,username,email,password}) =>
-    (dispatch, getState) => {
-        axios.post(`${API_URL}/accounts`, {name,username,email,password})
-        .then(response => {
-            dispatch(push("/login"));
-        })
-        .catch((error) => {
-            dispatch({
-                type: ACCOUNT_REGISTER_ERROR,
-                error: error.response.data.error.message
-            });
-        });
-    }
+

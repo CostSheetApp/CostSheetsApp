@@ -4,6 +4,7 @@ import {API_URL} from '../constants/global';
 import {
     MATERIALS_FETCHED,
     FETCHING_MATERIALS,
+    FETCHING_MATERIALS_ERROR,
     FETCHING_MATERIAL_COST_HISTORY,
     MATERIAL_COST_HISTORY_FETCHED,
     FETCHING_MATERIAL_COST_HISTORY_ERROR,
@@ -16,11 +17,11 @@ import {
     UPDATING_MATERIAL_ERROR
 } from '../constants/actionTypes';
 
-export const FetchMaterials = () => (dispatch, getState) => {
+export const FetchMaterials = (entityId) => (dispatch, getState) => {
     dispatch({type: FETCHING_MATERIALS});
 
     axios
-        .get(`${API_URL}/materials?filter={"include":"unitsOfMeasurement"}`, {
+        .get(`${API_URL}/Entities/${entityId}/materials?filter={"include":"unitsOfMeasurement"}`, {
         headers: {'Authorization': cookie.load('token')}
     })
         .then((response) => {
@@ -66,17 +67,28 @@ export const FetchUnitsOfMeasurement = () => (dispatch, getState) => {
         });
 }
 
-export const AddMaterial = (params) =>
+export const AddMaterial = (entityId,params) =>
     (dispatch, getState) => {
         dispatch({type: ADDING_MATERIAL});
-        params.code = 'code';
+        params.code = 1;
         axios
-        .post(`${API_URL}/Materials?filter={"include":"unitsOfMeasurement"}`,params, {
+        .post(`${API_URL}/Entities/${entityId}/materials?filter={"include":"unitsOfMeasurement"}`,params, {
         headers: {'Authorization': cookie.load('token')}
         })
         .then((response) => {
-            dispatch({type: MATERIAL_ADDED, payload: response.data});
-            FetchMaterials();
+
+            axios
+            .get(`${API_URL}/Materials/${response.data.id}?filter={"include":"unitsOfMeasurement"}`, {
+            headers: {'Authorization': cookie.load('token')}
+            })
+            .then((response) => {
+                dispatch({type: MATERIAL_ADDED, payload: response.data});
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch({type: ADDING_MATERIAL_ERROR});
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
         })
         .catch((error) => {
             console.log(error);
@@ -87,7 +99,6 @@ export const AddMaterial = (params) =>
 
 export const UpdateMaterial = (id,params) =>
     (dispatch, getState) => {
-        params.code = 'code';
         axios
         .patch(`${API_URL}/Materials/${id}?filter={"include":"unitsOfMeasurement"}`,params, {
         headers: { 'Authorization': cookie.load('token') }

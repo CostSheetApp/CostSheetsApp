@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Form, Icon, Input, Button, Checkbox, Row, Col,Alert } from 'antd';
-import {Register} from '../actions/accountActions';
+import {Register} from '../actions/entityActions';
 import { connect } from 'react-redux';
 import '../styles/register-form.css';
 const FormItem = Form.Item;

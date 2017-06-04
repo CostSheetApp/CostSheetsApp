@@ -5,14 +5,16 @@ import accountReducer from './accountReducer';
 import regionsReducer from './regionsReducer';
 import usersReducer from './usersReducer';
 import materialsReducer from './materialsReducer';
+import entityReducer from './entityReducer';
 
 const rootReducer = combineReducers({
   fuelSavings,
   routing: routerReducer,
   account: accountReducer,
   regions: regionsReducer,
+  materials: materialsReducer,
+  entity: entityReducer,
   users: usersReducer
-  materials: materialsReducer
 });
 
 export default rootReducer;

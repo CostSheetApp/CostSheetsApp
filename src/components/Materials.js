@@ -11,6 +11,12 @@ import {
 import '../styles/materials.css';
 import MaterialForm from './MaterialForm';
 
+Number.prototype.padZero= function(len, c){
+    var s= this.toString(), c= c || '0';
+    while(s.length< len) s= c+ s;
+    return s;
+}
+
 class Materials extends Component {
     state = {
         isCreateFormVisible: false,
@@ -21,8 +27,10 @@ class Materials extends Component {
         this.columns = [
             {
                 title: 'Code',
-                dataIndex: 'code',
-                key: 'code'
+                key: 'code',
+                render: (text, material) => {
+                    return (<span>{material.code.padZero(10)}</span>);
+                }
             }, {
                 title: 'Description',
                 dataIndex: 'description',
@@ -72,9 +80,9 @@ class Materials extends Component {
         this.material = {};
     }
     componentWillMount() {
-        let {FetchMaterials} = this.props;
+        let {FetchMaterials,entityId} = this.props;
 
-        FetchMaterials();
+        FetchMaterials(entityId);
     }
     onDelete(index, material) {
         console.log(material);
@@ -105,9 +113,9 @@ class Materials extends Component {
             if (err) {
                 return;
             }
-            let {AddMaterial} = this.props;
+            let {AddMaterial,entityId} = this.props;
             delete values.id;
-            AddMaterial(values);
+            AddMaterial(entityId,values);
             form.resetFields();
             this.setState({visible: false});
         });
@@ -182,7 +190,8 @@ Materials.propTypes = {
     UnitsOfMeasurement: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     AddMaterial: PropTypes.func.isRequired,
-    UpdateMaterial: PropTypes.func.isRequired
+    UpdateMaterial: PropTypes.func.isRequired,
+    entityId: PropTypes.number.isRequired
 };
 
 export default Materials;

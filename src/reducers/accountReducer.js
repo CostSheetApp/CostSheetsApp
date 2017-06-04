@@ -1,8 +1,9 @@
-import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND,ACCOUNT_REGISTER,ACCOUNT_REGISTER_ERROR} from '../constants/actionTypes';
+import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND,ACCOUNT_REGISTER} from '../constants/actionTypes';
 
 
 const initState = {
     username: '',
+    entityId: 0,
     isLoading: false, 
     isAuthenticated: false,
     hasError: false,
@@ -22,6 +23,7 @@ const reducer = (state = initState, action) => {
             isLoading: false,
             isAuthenticated: true,
             username: action.username,
+            entityId: action.entityId,
             hasError:false,
             error:''
         };
@@ -48,12 +50,6 @@ const reducer = (state = initState, action) => {
             ...state,
             hasError: false,
             error: ''
-        };
-        case ACCOUNT_REGISTER_ERROR:
-        return {
-            ...state,
-            hasError: true,
-            error: action.error
         };
         default:
             return state
