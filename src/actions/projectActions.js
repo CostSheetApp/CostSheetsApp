@@ -1,60 +1,60 @@
 import axios from 'axios';
 import cookie from 'react-cookie';
 import {API_URL} from '../constants/global';
-import {REGIONS_FETCHED,FETCHING_REGIONS,FETCHING_REGIONS_ERROR,REGION_ADDED,ADDING_REGION,ADDING_REGION_ERROR,REGION_EDITED,EDITING_REGION,EDITING_REGION_ERROR} from '../constants/actionTypes';
+import {PROJECTS_FETCHED,FETCHING_PROJECTS,FETCHING_PROJECTS_ERROR,PROJECT_ADDED,ADDING_PROJECT,ADDING_PROJECT_ERROR,PROJECT_EDITED,EDITING_PROJECT,EDITING_PROJECT_ERROR} from '../constants/actionTypes';
 
-export const FetchRegions = (entityId) =>
+export const FetchProjects = (entityId) =>
     (dispatch, getState) => {
-        dispatch({type: FETCHING_REGIONS});
+        dispatch({type: FETCHING_PROJECTS});
 
         axios
-            .get(`${API_URL}/Entities/${entityId}/regions`,{
+            .get(`${API_URL}/Entities/${entityId}/Projects`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
-                dispatch({type: REGIONS_FETCHED, list: response.data});
+                dispatch({type: PROJECTS_FETCHED, list: response.data});
             })
             .catch((error) => {
                 //console.log(error);
-                dispatch({type: FETCHING_REGIONS_ERROR});
+                dispatch({type: FETCHING_PROJECTS_ERROR});
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
     };
 
 
 
-export const AddRegion = (entityId,params) =>
+export const AddProject = (entityId,params) =>
     (dispatch, getState) => {
-        dispatch({type: ADDING_REGION});
-        axios.post(`${API_URL}/Entities/${entityId}/Regions`, params , {
+        dispatch({type: ADDING_PROJECT});
+        axios.post(`${API_URL}/Entities/${entityId}/Projects`, params , {
         headers: {
             'Authorization': cookie.load('token')
         }
         })
             .then((response) => {
-                dispatch({type: REGION_ADDED, payload: response.data});
+                dispatch({type: PROJECT_ADDED, payload: response.data});
             })
             .catch((error) => {
                 //console.log(error);
-                dispatch({type: ADDING_REGION_ERROR});
+                dispatch({type: ADDING_PROJECT_ERROR});
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
     };
 
-export const EditRegion = (id,params) =>
+export const EditProject = (id,params) =>
     (dispatch, getState) => {
-        dispatch({type: EDITING_REGION});
-        axios.patch(`${API_URL}/Regions/${id}`, params , {
+        dispatch({type: EDITING_PROJECT});
+        axios.patch(`${API_URL}/Projects/${id}`, params , {
         headers: {
             'Authorization': cookie.load('token')
         }
         })
             .then((response) => {
-                dispatch({type: REGION_EDITED});
+                dispatch({type: PROJECT_EDITED});
             })
             .catch((error) => {
                 //console.log(error);
-                dispatch({type: EDITING_REGION_ERROR});
+                dispatch({type: EDITING_PROJECT_ERROR});
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
     };
