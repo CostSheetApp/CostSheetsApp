@@ -7,6 +7,7 @@ import usersReducer from './usersReducer';
 import materialsReducer from './materialsReducer';
 import entityReducer from './entityReducer';
 import projectReducer from './projectsReducer';
+import toolReducer from './toolsReducer';
 
 const rootReducer = combineReducers({
   fuelSavings,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   materials: materialsReducer,
   entity: entityReducer,
   users: usersReducer,
-  projects: projectReducer
+  projects: projectReducer,
+  tools: toolReducer
 });
 
 export default rootReducer;

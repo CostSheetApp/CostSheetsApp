@@ -30,6 +30,10 @@ class MainMenu extends Component {
               <Icon type="folder" />
               <span className="nav-text">Regions</span>
             </Menu.Item>
+            <Menu.Item key="/tools-equipments" >
+              <Icon type="tool" />
+              <span className="nav-text">Tools and Equipments</span>
+            </Menu.Item>
             {/*<Menu.Item key="/reports">
               <Icon type="copy" />
               <span className="nav-text">Reports</span>
