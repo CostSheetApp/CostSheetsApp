@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import {Table,Row,Button, Icon,Popconfirm} from 'antd';
-import '../styles/regions.css';
-import RegionForm from './RegionForm';
+import Moment from 'react-moment'
+import '../styles/projects.css';
+import ProjectForm from './ProjectForm';
 
-class Regions extends Component {
+class Projects extends Component {
     state = { 
       isCreateFormVisible: false,
       isEditFormVisible: false 
@@ -15,43 +16,59 @@ class Regions extends Component {
           dataIndex: 'name',
           key: 'name'
         }, {
+          title: 'Budget',
+          dataIndex: 'budget',
+          key: 'budget'
+        }, {
+          title: 'Profit Percentage',
+          dataIndex: 'profitPercentage',
+          key: 'profitPercentage'
+        }, {
+          title: 'Start Date',
+          render: (text, record, index) => (
+            <span>
+                <Moment fromNow>{record.startDate}</Moment>
+            </span>
+          ),
+          key: 'startDate'
+        }, {
           title: 'Action',
           key: 'action',
           width: 120,
-          render: (text, region, index) => (
+          render: (text, project, index) => (
             <span>
-              <a href="#" onClick={() => this.onEdit(index,region) } > <Icon type="edit" /> Edit</a>
+              <a href="#" onClick={() => this.onEdit(index,project) } > <Icon type="edit" /> Edit</a>
               <span className="ant-divider" />
-              <Popconfirm title="Are you sure delete this region?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,region)}>
+              <Popconfirm title="Are you sure delete this project?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,region)}>
                   <a href="#"> <Icon type="delete" /> Delete</a>
               </Popconfirm>
             </span>
           ),
         }];
         this.handle = this.handleCreate;
-        this.title = "Add Region";
-        this.region={};
+        this.title = "Add Project";
+        this.project={};
     }  
     componentWillMount() {
-        let { FetchRegions,entityId } = this.props
-        FetchRegions(entityId);
+        let { FetchProjects,entityId } = this.props
+        FetchProjects(entityId);
     }
-    onDelete(index,region){
-      console.log(region);
+    onDelete(index,project){
+      console.log(project);
       alert(index);
 
     }
-    onEdit(index,region){
+    onEdit(index,project){
         this.handle = this.handleEdit;
-        this.title = "Edit Region";
-        this.region = region;
+        this.title = "Edit Project";
+        this.project = project;
         this.setState({ visible: true });
-        console.log(region);      
+        console.log(project);      
     }
     onCreate(){
         this.handle = this.handleCreate;
-        this.title = "Add Region";
-        this.region = {};
+        this.title = "Add Project";
+        this.project = {};
         this.setState({ visible: true });
     }
     handleCancel = () => {
@@ -63,9 +80,9 @@ class Regions extends Component {
         if (err) {
             return;
         }
-        let { AddRegion,entityId } = this.props;
+        let { AddProject,entityId } = this.props;
         delete values.id;
-        AddRegion(entityId,values);
+        AddProject(entityId,values);
         form.resetFields();
         this.setState({ visible: false });
         });
@@ -77,10 +94,10 @@ class Regions extends Component {
         if (err) {
             return;
         }
-        let { EditRegion } = this.props;
+        let { EditProject } = this.props;
         var id = values.id;
         delete values.id;
-        EditRegion(id, values);
+        EditProject(id, values);
         form.resetFields();
         this.setState({ visible: false });
         });
@@ -89,32 +106,32 @@ class Regions extends Component {
         this.form = form;
     }
     render() {
-        let {regions,loading,isSaving} = this.props;
+        let {projects,loading,isSaving} = this.props;
         return (
             <Row>
-                <RegionForm 
+                <ProjectForm 
                 ref={this.saveFormRef}
                 visible={this.state.visible}
                 onCancel={this.handleCancel}
                 onCreate={this.handle}
-                region={this.region}
+                project={this.project}
                 isSaving={isSaving}
                 title={this.title}
                 />
 
-                <Row><Button type="primary" icon="plus" className="add-region-button" onClick={()=>this.onCreate()}>Add</Button></Row>
-                <Table rowKey={item => item.id} size="middle" bordered={true} loading={loading} dataSource={regions} columns={this.columns} pagination={{pageSize:20}} />
+                <Row><Button type="primary" icon="plus" className="add-project-button" onClick={()=>this.onCreate()}>Add</Button></Row>
+                <Table rowKey={item => item.id} size="middle" bordered={true} loading={loading} dataSource={projects} columns={this.columns} pagination={{pageSize:20}} />
             </Row>
         );
     }
 }
 
-Regions.propTypes = {
-    FetchRegions: PropTypes.func.isRequired,
-    regions: PropTypes.array.isRequired,
+Projects.propTypes = {
+    FetchProjects: PropTypes.func.isRequired,
+    projects: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     entityId: PropTypes.number.isRequired
 };
 
 
-export default Regions;
+export default Projects;

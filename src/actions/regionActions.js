@@ -3,12 +3,12 @@ import cookie from 'react-cookie';
 import {API_URL} from '../constants/global';
 import {REGIONS_FETCHED,FETCHING_REGIONS,FETCHING_REGIONS_ERROR,REGION_ADDED,ADDING_REGION,ADDING_REGION_ERROR,REGION_EDITED,EDITING_REGION,EDITING_REGION_ERROR} from '../constants/actionTypes';
 
-export const FetchRegions = () =>
+export const FetchRegions = (entityId) =>
     (dispatch, getState) => {
         dispatch({type: FETCHING_REGIONS});
 
         axios
-            .get(`${API_URL}/Regions`,{
+            .get(`${API_URL}/Entities/${entityId}/regions`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
@@ -23,10 +23,10 @@ export const FetchRegions = () =>
 
 
 
-export const AddRegion = (params) =>
+export const AddRegion = (entityId,params) =>
     (dispatch, getState) => {
         dispatch({type: ADDING_REGION});
-        axios.post(`${API_URL}/Regions`, params , {
+        axios.post(`${API_URL}/Entities/${entityId}/Regions`, params , {
         headers: {
             'Authorization': cookie.load('token')
         }

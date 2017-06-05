@@ -6,6 +6,7 @@ import regionsReducer from './regionsReducer';
 import usersReducer from './usersReducer';
 import materialsReducer from './materialsReducer';
 import entityReducer from './entityReducer';
+import projectReducer from './projectsReducer';
 
 const rootReducer = combineReducers({
   fuelSavings,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   regions: regionsReducer,
   materials: materialsReducer,
   entity: entityReducer,
-  users: usersReducer
+  users: usersReducer,
+  projects: projectReducer
 });
 
 export default rootReducer;

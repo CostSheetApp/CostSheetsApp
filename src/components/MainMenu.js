@@ -30,10 +30,6 @@ class MainMenu extends Component {
               <Icon type="folder" />
               <span className="nav-text">Regions</span>
             </Menu.Item>
-            <Menu.Item key="/register-user" >
-              <Icon type="usergroup-add" />
-              <span className="nav-text">Register</span>
-            </Menu.Item>
             {/*<Menu.Item key="/reports">
               <Icon type="copy" />
               <span className="nav-text">Reports</span>
