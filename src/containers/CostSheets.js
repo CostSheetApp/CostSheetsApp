@@ -1,11 +1,20 @@
-import React from 'react'
+import { connect } from 'react-redux';
+import CostSheets from '../components/CostSheets';
+import {AddCostSheet} from '../actions/costSheetActions';
 
-const CostSheets = (props) => {
-    return(
-        <div>
-            Cost Sheets 
-        </div>
-    )
-}
+const mapStateToProps = (state, ownProps) => {
+    return {
+        entityId: state.account.entityId,
+        costSheets: state.costSheets.list
+    };
+};
 
-export default CostSheets;
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        AddCostSheet: (entityId) => {
+            dispatch(AddCostSheet(entityId));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CostSheets);
