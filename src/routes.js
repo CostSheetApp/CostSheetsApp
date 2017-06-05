@@ -24,6 +24,8 @@ import Materiasl from './containers/Materials';
 
 import Regions from './containers/Regions';
 import DashboardProject from './containers/DashboardProject';
+import ToolsEquipments from './containers/ToolsEquipments';
+
 
 const UserIsNotAuthenticated = UserAuthWrapper({
   authSelector: state => state.account,
@@ -63,6 +65,7 @@ export default (
       <Route path="materials" component={Materiasl}/>      
       <Route path="users" component={Users}/>
       <Route path="dashboard-project" component={DashboardProject}/>
+      <Route path="tools-equipments" component={ToolsEquipments}/>
       <Route path="fuel-savings" component={FuelSavingsPage}/>
     </Route>
     <Route path="*" component={NotFoundPage}/>
