@@ -19,8 +19,7 @@ Number.prototype.padZero= function(len, c){
 
 class Materials extends Component {
     state = {
-        isCreateFormVisible: false,
-        isEditFormVisible: false
+        visible:false
     };
     constructor(props) {
         super(props);
@@ -36,7 +35,7 @@ class Materials extends Component {
                 dataIndex: 'description',
                 key: 'description'
             }, {
-                title: 'Waste',
+                title: 'Waste %',
                 dataIndex: 'waste',
                 key: 'waste'
             }, {
@@ -81,13 +80,10 @@ class Materials extends Component {
     }
     componentWillMount() {
         let {FetchMaterials,entityId} = this.props;
-
         FetchMaterials(entityId);
     }
     onDelete(index, material) {
-        console.log(material);
         alert(index);
-
     }
     onEdit(index, material) {
         this.handle = this.handleEdit;
@@ -96,7 +92,6 @@ class Materials extends Component {
         this.setState({visible: true});
         let {FetchMaterialCostHistory} = this.props;
         FetchMaterialCostHistory(material.id);
-        console.log(material);
     }
     onCreate() {
         this.handle = this.handleCreate;
@@ -121,7 +116,6 @@ class Materials extends Component {
         });
     }
     handleEdit = () => {
-
         const form = this.form;
         form.validateFields((err, values) => {
             if (err) {
