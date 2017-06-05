@@ -72,7 +72,7 @@ export const AddMaterial = (entityId,params) =>
         dispatch({type: ADDING_MATERIAL});
         params.code = 1;
         axios
-        .post(`${API_URL}/Entities/${entityId}/materials?filter={"include":"unitsOfMeasurement"}`,params, {
+        .post(`${API_URL}/Entities/${entityId}/materials`,params, {
         headers: {'Authorization': cookie.load('token')}
         })
         .then((response) => {
