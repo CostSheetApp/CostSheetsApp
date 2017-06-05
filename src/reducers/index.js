@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   materials: materialsReducer,
   entity: entityReducer,
   users: usersReducer,
-  project: projectReducer
+  projects: projectReducer
 });
 
 export default rootReducer;

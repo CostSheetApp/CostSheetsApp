@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {Table,Row,Button, Icon,Popconfirm} from 'antd';
+import Moment from 'react-moment'
 import '../styles/projects.css';
 import ProjectForm from './ProjectForm';
 
@@ -24,7 +25,11 @@ class Projects extends Component {
           key: 'profitPercentage'
         }, {
           title: 'Start Date',
-          dataIndex: 'startDate',
+          render: (text, record, index) => (
+            <span>
+                <Moment fromNow>{record.startDate}</Moment>
+            </span>
+          ),
           key: 'startDate'
         }, {
           title: 'Action',
@@ -42,28 +47,28 @@ class Projects extends Component {
         }];
         this.handle = this.handleCreate;
         this.title = "Add Project";
-        this.region={};
+        this.project={};
     }  
     componentWillMount() {
         let { FetchProjects,entityId } = this.props
         FetchProjects(entityId);
     }
-    onDelete(index,region){
-      console.log(region);
+    onDelete(index,project){
+      console.log(project);
       alert(index);
 
     }
-    onEdit(index,region){
+    onEdit(index,project){
         this.handle = this.handleEdit;
         this.title = "Edit Project";
-        this.region = region;
+        this.project = project;
         this.setState({ visible: true });
-        console.log(region);      
+        console.log(project);      
     }
     onCreate(){
         this.handle = this.handleCreate;
         this.title = "Add Project";
-        this.region = {};
+        this.project = {};
         this.setState({ visible: true });
     }
     handleCancel = () => {
@@ -122,7 +127,7 @@ class Projects extends Component {
 }
 
 Projects.propTypes = {
-    FetchRegions: PropTypes.func.isRequired,
+    FetchProjects: PropTypes.func.isRequired,
     projects: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     entityId: PropTypes.number.isRequired

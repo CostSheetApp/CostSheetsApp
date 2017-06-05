@@ -1,10 +1,13 @@
 import React, {Component, PropTypes } from 'react';
+import moment from 'moment';
+
 import {
     Form,
     Button,
     Modal,
     Input,
     InputNumber,
+    DatePicker,
     Icon
 } from 'antd';
 const FormItem = Form.Item;
@@ -44,33 +47,41 @@ class addProjectForm extends Component {
                     )}
                     </FormItem>
                     <FormItem>
+                    {getFieldDecorator('budget', {
+                        rules: [
+                            { required: true, message: 'Please input Budget!' }, 
+                            ],
+                            initialValue: project.budget?project.budget:0
+                    })(
+                        <InputNumber 
+                            min={0}
+                            placeholder="Budget"
+                        />
+                    )}
+                    </FormItem>
+                    <FormItem>
                     {getFieldDecorator('profitPercentage', {
                         rules: [
                             { required: true, message: 'Please input Profit Percentage!' }, 
                             ],
-                            initialValue: project.profitPercentage?project.profitPercentage:""
+                            initialValue: project.profitPercentage?project.profitPercentage:0
                     })(
-                        <InputNumber placeholder="Profit Percentage" />
+                        <InputNumber 
+                            min={0}
+                            max={100}
+                            placeholder="Profit Percentage"
+                        />
                     )}
                     </FormItem>
                     <FormItem>
-                    {getFieldDecorator('email', {
+                    {getFieldDecorator('startDate', {
                         rules: [
-                            { required: true, message: 'Please input email!' }, 
-                            ],
-                            initialValue: user.email?user.email:""
+                            { required: true, message: 'Please input Start Date!' },  ],
+                            initialValue: project.startDate?moment(project.startDate): moment()
                     })(
-                        <Input type="number" placeholder="email" />
+                        <DatePicker placeholder="Start Date" />
                     )}
-                    </FormItem>
-                    <FormItem>
-                    {getFieldDecorator('password', {
-                        rules: [{ required: true, message: 'Please input password!' }],
-                            initialValue: user.password?user.password:""
-                    })(
-                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
-                    )}
-                    </FormItem>
+                    </FormItem>
                 </Form>
             </Modal>
         );
