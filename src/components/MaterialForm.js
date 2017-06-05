@@ -134,6 +134,7 @@ addMaterialForm.propTypes = {
     UnitsOfMeasurement: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
+    visible: PropTypes.bool.isRequired,
 };
 
 const addMaterial = Form.create()(addMaterialForm);
