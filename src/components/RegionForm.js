@@ -31,7 +31,7 @@ class addRegionForm extends Component {
                     })(
                         <Input type="hidden" />
                     )}
-                    <FormItem>
+                    <FormItem label="Name">
                     {getFieldDecorator('name', {
                         rules: [
                             { required: true, message: 'Please input Region description!' }, 

@@ -6,6 +6,7 @@ import {FetchRegions,AddRegion,EditRegion} from '../actions/regionActions';
 
 const mapStateToProps = (state) => {
     return {
+        entityId: state.account.entityId,
         regions: state.regions.list,
         isSaving: state.regions.isSaving
     };
@@ -14,14 +15,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        FetchRegions: () => {
-            dispatch(FetchRegions());
+        FetchRegions: (entityId) => {
+            dispatch(FetchRegions(entityId));
         },
-        AddRegion: (name) => {
-            dispatch(AddRegion(name));
+        AddRegion: (entityId,params) => {
+            dispatch(AddRegion(entityId,params));
         },
-        EditRegion: (id,name) => {
-            dispatch(EditRegion(id,name));
+        EditRegion: (id,params) => {
+            dispatch(EditRegion(id,params));
         }
     };
 };

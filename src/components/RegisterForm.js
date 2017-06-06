@@ -33,28 +33,28 @@ class RegisterUserForm extends Component {
             <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}></Col>
             <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
             <Form onSubmit={this.handleSubmit} className="register-form">
-                <FormItem>
+                <FormItem label="Name">
                     {getFieldDecorator('name', {
                         rules: [{ required: true, message: 'Please input your name!' }],
                     })(
                         <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Name" />
                     )}
                 </FormItem>
-                <FormItem>
+                <FormItem label ="Username">
                     {getFieldDecorator('username', {
                         rules: [{ required: true, message: 'Please input your username!' }],
                     })(
                         <Input prefix={<Icon type="email" style={{ fontSize: 13 }} />} placeholder="username" />
                     )}
                 </FormItem>
-                <FormItem>
+                <FormItem label="Email">
                     {getFieldDecorator('email', {
                         rules: [{ required: true, message: 'Please input your email!' }],
                     })(
                         <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="email" />
                     )}
                 </FormItem>
-                <FormItem>
+                <FormItem label="Password">
                     {getFieldDecorator('password', {
                         rules: [{ required: true, message: 'Please input your Password!' }],
                     })(
