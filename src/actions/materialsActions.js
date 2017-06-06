@@ -70,7 +70,7 @@ export const FetchUnitsOfMeasurement = () => (dispatch, getState) => {
 export const AddMaterial = (entityId,params) =>
     (dispatch, getState) => {
         dispatch({type: ADDING_MATERIAL});
-        params.code = 1;
+        //params.code = 1;
         axios
         .post(`${API_URL}/Entities/${entityId}/materials?filter={"include":"unitsOfMeasurement"}`,params, {
         headers: {'Authorization': cookie.load('token')}

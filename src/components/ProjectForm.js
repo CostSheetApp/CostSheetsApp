@@ -36,7 +36,7 @@ class addProjectForm extends Component {
                     })(
                         <Input type="hidden" />
                     )}
-                    <FormItem>
+                    <FormItem label = "Name">
                     {getFieldDecorator('name', {
                         rules: [
                             { required: true, message: 'Please input name!' }, 
@@ -46,7 +46,7 @@ class addProjectForm extends Component {
                         <Input  placeholder="name" />
                     )}
                     </FormItem>
-                    <FormItem>
+                    <FormItem label="Budget">
                     {getFieldDecorator('budget', {
                         rules: [
                             { required: true, message: 'Please input Budget!' }, 
@@ -59,7 +59,7 @@ class addProjectForm extends Component {
                         />
                     )}
                     </FormItem>
-                    <FormItem>
+                    <FormItem label="Profit Percentage">
                     {getFieldDecorator('profitPercentage', {
                         rules: [
                             { required: true, message: 'Please input Profit Percentage!' }, 
@@ -73,7 +73,7 @@ class addProjectForm extends Component {
                         />
                     )}
                     </FormItem>
-                    <FormItem>
+                    <FormItem label="Start Date">
                     {getFieldDecorator('startDate', {
                         rules: [
                             { required: true, message: 'Please input Start Date!' },  ],

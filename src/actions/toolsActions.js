@@ -50,7 +50,7 @@ export const FetchToolCostHistory = (id) => (dispatch, getState) => {
 export const AddTool = (entityId,params) =>
     (dispatch, getState) => {
         dispatch({type: ADDING_TOOL});
-        params.code = 1;
+        //params.code = 1;
         console.log(params);
         axios
         .post(`${API_URL}/Entities/${entityId}/toolsAndEquipments/`,params, {
