@@ -1,0 +1,19 @@
+.ant-row > div {
+  padding: 0 5px;
+}
+
+.add-cost-sheet-button {
+    margin: 10px 5px;
+}
+
+.separate {
+    margin-bottom: 8px;
+}
+
+.action-panel {
+    float: right;
+}
+
+.actions {
+    margin: 10px 5px;
+}

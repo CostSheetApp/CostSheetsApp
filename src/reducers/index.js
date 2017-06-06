@@ -6,6 +6,7 @@ import regionsReducer from './regionsReducer';
 import usersReducer from './usersReducer';
 import materialsReducer from './materialsReducer';
 import entityReducer from './entityReducer';
+import costSheetsReducer from './costSheetsReducer';
 import projectReducer from './projectsReducer';
 import toolReducer from './toolsReducer';
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   materials: materialsReducer,
   entity: entityReducer,
   users: usersReducer,
+  costSheets: costSheetsReducer,
   projects: projectReducer,
   tools: toolReducer
 });

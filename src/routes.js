@@ -16,6 +16,7 @@ import Login from './containers/Login';
 import Dashboard from './containers/Dashboard';
 import ForgotPassword from './components/ForgotPassword';
 import CostSheets from './containers/CostSheets';
+import EditCostSheet from './containers/EditCostSheet';
 import Projects from './containers/Projects';
 import Users from './containers/Users';
 import ResetPassword from './components/ResetPassword';
@@ -60,6 +61,7 @@ export default (
       <IndexRoute component={Dashboard}/>
       <Route path="dashboard" component={Dashboard}/>
       <Route path="cost-sheets" component={CostSheets}/>
+      <Route path="cost-sheets/:id" component={EditCostSheet}/>
       <Route path="projects" component={Projects}/>
       <Route path="regions" component={Regions}/> 
       <Route path="materials" component={Materiasl}/>      
