@@ -32,7 +32,7 @@ class addUserForm extends Component {
                     })(
                         <Input type="hidden" />
                     )}
-                    <FormItem>
+                    <FormItem label="Name">
                     {getFieldDecorator('name', {
                         rules: [
                             { required: true, message: 'Please input name!' }, 
@@ -42,7 +42,7 @@ class addUserForm extends Component {
                         <Input  placeholder="name" />
                     )}
                     </FormItem>
-                    <FormItem>
+                    <FormItem label="Username">
                     {getFieldDecorator('username', {
                         rules: [
                             { required: true, message: 'Please input username!' }, 
@@ -52,7 +52,7 @@ class addUserForm extends Component {
                         <Input  placeholder="username" />
                     )}
                     </FormItem>
-                    <FormItem>
+                    <FormItem label ="Email">
                     {getFieldDecorator('email', {
                         rules: [
                             { required: true, message: 'Please input email!' }, 
@@ -62,7 +62,7 @@ class addUserForm extends Component {
                         <Input  placeholder="email" />
                     )}
                     </FormItem>
-                    <FormItem>
+                    <FormItem label="Password">
                     {getFieldDecorator('password', {
                         rules: [{ required: true, message: 'Please input password!' }],
                             initialValue: user.password?user.password:""

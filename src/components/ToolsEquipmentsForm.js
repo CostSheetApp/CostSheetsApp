@@ -64,7 +64,7 @@ class addToolsEquipmentForm extends Component {
                     })(
                         <Input type="hidden" />
                     )}
-                    <FormItem>
+                    <FormItem label="Description">
                     {getFieldDecorator('description', {
                         rules: [
                             { required: true, message: 'Please input tool and equipment description!' }, 

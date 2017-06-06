@@ -69,7 +69,7 @@ class addMaterialForm extends Component {
                     })(
                         <Input type="hidden" />
                     )}
-                    <FormItem>
+                    <FormItem label="Description">
                     {getFieldDecorator('description', {
                         rules: [
                             { required: true, message: 'Please input material description!' }, 
@@ -81,7 +81,7 @@ class addMaterialForm extends Component {
                     </FormItem>
                     <FormItem>
                     <Col span="12">
-                    <FormItem>
+                    <FormItem label="Waste">
                         {getFieldDecorator('waste', {
                             rules: [
                                 { required: true, message: 'Please input material waste!' }, 
@@ -93,10 +93,10 @@ class addMaterialForm extends Component {
                          </FormItem>
                     </Col>
                     <Col span="12">
-                    <FormItem>
+                    <FormItem label="Unit of Measurement">
                         {getFieldDecorator('unitsOfMeasurementId', {
                             rules: [
-                                { required: true, message: 'Please input material description!' }, 
+                                { required: true, message: 'Please input Unit of Measurement!' }, 
                                 ],
                                 initialValue: material.unitsOfMeasurementId?material.unitsOfMeasurementId.toString():null
                         })(
