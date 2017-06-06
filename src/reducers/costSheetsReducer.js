@@ -1,4 +1,4 @@
-import {COST_SHEET_ADDED} from '../constants/actionTypes';
+import {COST_SHEET_ADDED,COST_SHEETS_FETCHED} from '../constants/actionTypes';
 
 const initState = {
     list: [],
@@ -21,6 +21,11 @@ const initState = {
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
+        case COST_SHEETS_FETCHED:
+        return {
+            ...state,
+            list: action.payload
+        };
         case COST_SHEET_ADDED:
         return {
             ...state,

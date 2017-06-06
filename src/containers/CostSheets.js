@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import CostSheets from '../components/CostSheets';
-import {AddCostSheet} from '../actions/costSheetActions';
+import {AddCostSheet,FetchCostSheets} from '../actions/costSheetActions';
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -11,6 +11,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
+        FetchCostSheets: (entityId) => {
+            dispatch(FetchCostSheets(entityId));
+        },
         AddCostSheet: (entityId) => {
             dispatch(AddCostSheet(entityId));
         },
