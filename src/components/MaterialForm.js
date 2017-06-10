@@ -1,5 +1,6 @@
 import React, {Component, PropTypes } from 'react';
 import Moment from 'react-moment';
+import Mayre from 'mayre';
 import {
     Form,
     Button,
@@ -49,7 +50,8 @@ class addMaterialForm extends Component {
             costHistory,
             isSaving,
             title,
-            UnitsOfMeasurement
+            UnitsOfMeasurement,
+            isEditing
         } = this.props;
         let {getFieldDecorator} = this.props.form;
         
@@ -69,7 +71,7 @@ class addMaterialForm extends Component {
                     })(
                         <Input type="hidden" />
                     )}
-                    <FormItem>
+                    <FormItem style={{marginBottom:"10px"}}>
                     {getFieldDecorator('description', {
                         rules: [
                             { required: true, message: 'Please input material description!' }, 
@@ -79,7 +81,7 @@ class addMaterialForm extends Component {
                         <Input  placeholder="Material description" />
                     )}
                     </FormItem>
-                    <FormItem>
+                    <FormItem >
                     <Col span="12">
                     <FormItem>
                         {getFieldDecorator('waste', {
@@ -116,10 +118,48 @@ class addMaterialForm extends Component {
                          </FormItem>
                     </Col>
                     </FormItem>
-                    <Row><Button type="primary" icon="plus" className="add-material-button">Add New Price</Button></Row>
-                    <FormItem>
-                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}} ></Table>
-                    </FormItem>
+                    <Mayre
+                        of={<Row><Button type="primary" icon="plus" className="add-material-button">Add New Price</Button></Row>}
+                        or={
+                            <FormItem style={{paddingTop:"10px"}}>
+                                <Col span="12">
+                                    <FormItem>
+                                        {getFieldDecorator('cost', {
+                                rules: [
+                                    { required: true, message: 'Please input initial price!' }, 
+                                    ],
+                                    initialValue: 0
+                            })(
+                                <Input type="number" placeholder="Initial price" />
+                            )}
+                                </FormItem>
+                            </Col>
+                            <Col span="12">
+                                    <FormItem>
+                                        {getFieldDecorator('regionId', {
+                                rules: [
+                                    { required: true, message: 'Please select a region' }, 
+                                    ],
+                                    initialValue: 0
+                            })(
+                                <Select />
+                            )}
+                                </FormItem>
+                            </Col>
+                        </FormItem>
+                        }
+                        when={isEditing}
+                    />
+                    
+                    <Mayre
+                        of={
+                            <FormItem>
+                                <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}} ></Table>
+                            </FormItem>
+                        }
+                        when={isEditing}
+                    />
+                    
                     
                 </Form>
             </Modal>
@@ -135,6 +175,7 @@ addMaterialForm.propTypes = {
     isSaving: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
     visible: PropTypes.bool.isRequired,
+    isEditing: PropTypes.bool.isRequired,
 };
 
 const addMaterial = Form.create()(addMaterialForm);

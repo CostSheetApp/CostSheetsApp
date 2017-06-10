@@ -32,6 +32,7 @@
   "dependencies": {
     "antd": "2.9.2",
     "axios": "0.16.1",
+    "mayre": "2.2.0",
     "moment": "2.18.1",
     "moment-timezone": "0.5.13",
     "object-assign": "4.1.0",
