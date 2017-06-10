@@ -75,6 +75,7 @@ class Materials extends Component {
             }
         ];
         this.handle = this.handleCreate;
+        this.isEditing = false;
         this.title = "Add Material";
         this.material = {};
     }
@@ -87,6 +88,7 @@ class Materials extends Component {
     }
     onEdit(index, material) {
         this.handle = this.handleEdit;
+        this.isEditing = true;
         this.title = "Edit Material";
         this.material = material;
         this.setState({visible: true});
@@ -95,6 +97,7 @@ class Materials extends Component {
     }
     onCreate() {
         this.handle = this.handleCreate;
+        this.isEditing = false;
         this.title = "Add Material";
         this.material = {};
         this.setState({visible: true});
@@ -151,7 +154,9 @@ class Materials extends Component {
                     UnitsOfMeasurement={UnitsOfMeasurement}
                     costHistory={costHistory}
                     isSaving={isSaving}
-                    title={this.title}/>
+                    title={this.title}
+                    isEditing={this.isEditing}
+                    />
 
                 <Row>
                     <Button
