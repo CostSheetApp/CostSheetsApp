@@ -4,13 +4,13 @@ import {API_URL} from '../constants/global';
 import {USER_ADDED,ADDING_USER,ADDING_USER_ERROR,USER_EDITED,EDITING_USER,EDITING_USER_ERROR,USERS_FETCHED,FETCHING_USERS,FETCHING_USERS_ERROR} from '../constants/actionTypes';
 
 
-export const FetchUsers = () =>
+export const FetchUsers = (entityId) =>
     (dispatch, getState) => {
         dispatch({type: FETCHING_USERS});
         console.log("Buscando Usuarios");
-        console.log(`${API_URL}/Entities/1/accounts?${cookie.load('token')}`);
+        console.log(`${API_URL}/Entities/${entityId}/accounts?${cookie.load('token')}`);
         axios
-            .get(`${API_URL}/Entities/1/accounts`,{
+            .get(`${API_URL}/Entities/${entityId}/accounts`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
@@ -24,11 +24,11 @@ export const FetchUsers = () =>
             });
     };
 
-export const AddUser = (params) =>
+export const AddUser = (entityId,params) =>
     (dispatch, getState) => {
         dispatch({type: ADDING_USER});
         params.entityId = "1";
-        axios.post(`${API_URL}/accounts`, params , {
+        axios.post(`${API_URL}/Entities/${entityId}/accounts`, params , {
         headers: {
             'Authorization': cookie.load('token')
         }

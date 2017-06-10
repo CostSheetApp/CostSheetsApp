@@ -41,8 +41,8 @@ class Users extends Component {
         this.user={};
     }  
     componentWillMount() {
-        let { FetchUsers } = this.props
-        FetchUsers();
+        let { FetchUsers,entityId } = this.props
+        FetchUsers(entityId);
     }
     onDelete(index,user){
       console.log(user);
@@ -71,9 +71,9 @@ class Users extends Component {
         if (err) {
             return;
         }
-        let { AddUser } = this.props;
+        let { AddUser,entityId } = this.props;
         delete values.id;
-        AddUser(values);
+        AddUser(entityId,values);
         form.resetFields();
         this.setState({ visible: false });
         });
@@ -120,7 +120,8 @@ class Users extends Component {
 Users.propTypes = {
     FetchUsers: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
-    isSaving: PropTypes.bool.isRequired
+    isSaving: PropTypes.bool.isRequired,
+    entityId: PropTypes.number.isRequired
 };
 
 
