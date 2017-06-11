@@ -9,7 +9,8 @@ import {
     Popconfirm
 } from 'antd';
 import '../styles/materials.css';
-import MaterialForm from './MaterialForm';
+import AddMaterialForm from './AddMaterialForm';
+import EditMaterialForm from './EditMaterialForm';
 
 Number.prototype.padZero= function(len, c){
     var s= this.toString(), c= c || '0';
@@ -19,7 +20,8 @@ Number.prototype.padZero= function(len, c){
 
 class Materials extends Component {
     state = {
-        visible:false
+        AddMaterialFormIsVisible:false,
+        EditMaterialFormIsVisible:false
     };
     constructor(props) {
         super(props);
@@ -74,39 +76,35 @@ class Materials extends Component {
                 )
             }
         ];
-        this.handle = this.handleCreate;
-        this.isEditing = false;
-        this.title = "Add Material";
         this.material = {};
     }
     componentWillMount() {
-        let {FetchMaterials,entityId} = this.props;
+        let {FetchMaterials,FetchRegions,entityId} = this.props;
         FetchMaterials(entityId);
+        FetchRegions(entityId);
     }
     onDelete(index, material) {
-        alert(index);
+        let {DeleteMaterial} = this.props;
+        DeleteMaterial(material.id);
     }
     onEdit(index, material) {
-        this.handle = this.handleEdit;
-        this.isEditing = true;
-        this.title = "Edit Material";
         this.material = material;
-        this.setState({visible: true});
+        this.setState({EditMaterialFormIsVisible: true});
         let {FetchMaterialCostHistory} = this.props;
         FetchMaterialCostHistory(material.id);
     }
-    onCreate() {
-        this.handle = this.handleCreate;
-        this.isEditing = false;
-        this.title = "Add Material";
+    onCreateMaterial() {
         this.material = {};
-        this.setState({visible: true});
+        this.setState({AddMaterialFormIsVisible: true});
     }
-    handleCancel = () => {
-        this.setState({visible: false});
+    CancelAdd = () => {
+        this.setState({AddMaterialFormIsVisible: false});
     }
-    handleCreate = () => {
-        const form = this.form;
+    CancelEdit = () => {
+        this.setState({EditMaterialFormIsVisible: false});
+    }
+    Create = () => {
+        const form = this.addForm;
         form.validateFields((err, values) => {
             if (err) {
                 return;
@@ -115,11 +113,11 @@ class Materials extends Component {
             delete values.id;
             AddMaterial(entityId,values);
             form.resetFields();
-            this.setState({visible: false});
+            this.setState({AddMaterialFormIsVisible: false});
         });
     }
-    handleEdit = () => {
-        const form = this.form;
+    Edit = () => {
+        const form = this.editForm;
         form.validateFields((err, values) => {
             if (err) {
                 return;
@@ -127,11 +125,14 @@ class Materials extends Component {
             let {UpdateMaterial} = this.props;
             UpdateMaterial(values.id, values);
             form.resetFields();
-            this.setState({visible: false});
+            this.setState({EditMaterialFormIsVisible: false});
         });
     }
-    saveFormRef = (form) => {
-        this.form = form;
+    saveEditFormRef = (form) => {
+        this.editForm = form;
+    }
+    saveAddFormRef = (form) => {
+        this.addForm = form;
     }
     render() {
         let {
@@ -140,30 +141,40 @@ class Materials extends Component {
             FetchUnitsOfMeasurement,
             costHistory,
             UnitsOfMeasurement,
-            isSaving
+            isSaving,
+            regions
         } = this.props;
         return (
             <Row>
-                <MaterialForm
-                    ref={this.saveFormRef}
-                    visible={this.state.visible}
-                    onCancel={this.handleCancel}
-                    onCreate={this.handle}
+                    <EditMaterialForm
+                    ref={this.saveEditFormRef}
+                    visible={this.state.EditMaterialFormIsVisible}
+                    onCancel={this.CancelEdit}
+                    onCreate={this.Edit}
                     FetchUnitsOfMeasurement={FetchUnitsOfMeasurement}
                     material={this.material}
                     UnitsOfMeasurement={UnitsOfMeasurement}
                     costHistory={costHistory}
                     isSaving={isSaving}
-                    title={this.title}
-                    isEditing={this.isEditing}
+                    Regions={regions}
                     />
 
+                    <AddMaterialForm
+                    ref={this.saveAddFormRef}
+                    visible={this.state.AddMaterialFormIsVisible}
+                    onCancel={this.CancelAdd}
+                    onCreate={this.Create}
+                    FetchUnitsOfMeasurement={FetchUnitsOfMeasurement}
+                    UnitsOfMeasurement={UnitsOfMeasurement}
+                    isSaving={isSaving}
+                    Regions={regions}
+                    />
                 <Row>
                     <Button
                         type="primary"
                         icon="plus"
                         className="add-material-button"
-                        onClick={() => this.onCreate()}>Add</Button>
+                        onClick={() => this.onCreateMaterial()}>Add</Button>
                 </Row>
                 <Table
                     rowKey={item => item.id}
@@ -190,7 +201,9 @@ Materials.propTypes = {
     isSaving: PropTypes.bool.isRequired,
     AddMaterial: PropTypes.func.isRequired,
     UpdateMaterial: PropTypes.func.isRequired,
-    entityId: PropTypes.number.isRequired
+    entityId: PropTypes.number.isRequired,
+    FetchRegions: PropTypes.func.isRequired,
+    regions: PropTypes.array.isRequired,
 };
 
 export default Materials;

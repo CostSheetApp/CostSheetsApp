@@ -14,21 +14,23 @@ import {
     ADDING_MATERIAL,
     ADDING_MATERIAL_ERROR,
     MATERIAL_UPDATED,
-    UPDATING_MATERIAL_ERROR
+    UPDATING_MATERIAL_ERROR,
+    MATERIAL_DELETED,
+    DELETING_MATERIAL_ERROR
 } from '../constants/actionTypes';
 
 export const FetchMaterials = (entityId) => (dispatch, getState) => {
     dispatch({type: FETCHING_MATERIALS});
 
     axios
-        .get(`${API_URL}/Entities/${entityId}/materials?filter={"include":"unitsOfMeasurement"}`, {
+        .get(`${API_URL}/Entities/${entityId}/materials?filter={"where": {"isDeleted": false },"include":"unitsOfMeasurement"}`, {
         headers: {'Authorization': cookie.load('token')}
     })
         .then((response) => {
             dispatch({type: MATERIALS_FETCHED, list: response.data});
         })
         .catch((error) => {
-            console.log(error);
+            
             dispatch({type: FETCHING_MATERIALS_ERROR});
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
@@ -45,7 +47,7 @@ export const FetchMaterialCostHistory = (id) => (dispatch, getState) => {
             dispatch({type: MATERIAL_COST_HISTORY_FETCHED, list: response.data});
         })
         .catch((error) => {
-            console.log(error);
+            
             dispatch({type: FETCHING_MATERIAL_COST_HISTORY_ERROR});
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
@@ -61,7 +63,7 @@ export const FetchUnitsOfMeasurement = () => (dispatch, getState) => {
             dispatch({type: MATERIAL_UNITS_OF_MEASUREMENT_FETCHED, payload: response.data});
         })
         .catch((error) => {
-            console.log(error);
+            
             dispatch({type: FETCHING_MATERIAL_UNITS_OF_MEASUREMENT_ERROR});
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
@@ -85,13 +87,13 @@ export const AddMaterial = (entityId,params) =>
                 dispatch({type: MATERIAL_ADDED, payload: response.data});
             })
             .catch((error) => {
-                console.log(error);
+                
                 dispatch({type: ADDING_MATERIAL_ERROR});
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
         })
         .catch((error) => {
-            console.log(error);
+            
             dispatch({type: ADDING_MATERIAL_ERROR});
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
@@ -104,12 +106,33 @@ export const UpdateMaterial = (id,params) =>
         headers: { 'Authorization': cookie.load('token') }
         })
         .then((response) => {
-            dispatch({type: MATERIAL_UPDATED, payload: response.data});
-            FetchMaterials();
+            axios
+            .get(`${API_URL}/Materials/${response.data.id}?filter={"include":"unitsOfMeasurement"}`, {
+            headers: {'Authorization': cookie.load('token')}
+            })
+            .then((response) => {
+                dispatch({type: MATERIAL_UPDATED, payload: response.data});
+            })
+            .catch((error) => {
+                dispatch({type: UPDATING_MATERIAL_ERROR});
+            });
         })
         .catch((error) => {
-            console.log(error);
             dispatch({type: UPDATING_MATERIAL_ERROR});
-            //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+        });
+    }
+
+
+export const DeleteMaterial = (id,index) =>
+    (dispatch, getState) => {
+        axios
+        .patch(`${API_URL}/Materials/${id}?filter={"include":"unitsOfMeasurement"}`,{isDeleted:true}, {
+        headers: { 'Authorization': cookie.load('token') }
+        })
+        .then((response) => {
+            dispatch({type: MATERIAL_DELETED, id: response.data.id});            
+        })
+        .catch((error) => {
+            dispatch({type: DELETING_MATERIAL_ERROR});
         });
     }
