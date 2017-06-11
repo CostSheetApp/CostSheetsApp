@@ -7,7 +7,8 @@ import {
     FETCHING_MANPOWER_COST_HISTORY_ERROR,
     MANPOWER_ADDED,
     ADDING_MANPOWER,
-    ADDING_MANPOWER_ERROR
+    ADDING_MANPOWER_ERROR,
+    MANPOWERS_JOBS_FETCHED
 } from '../constants/actionTypes';
 
 const initState = {
@@ -17,6 +18,7 @@ const initState = {
         list: [],
         loading: false
     },
+    Jobs: [],
     isSaving: false
 };
 
@@ -64,6 +66,11 @@ const reducer = (state = initState, action) => {
                     list: [],
                     loading: false
                 }
+            };
+        case MANPOWERS_JOBS_FETCHED:
+            return {
+                ...state,
+                Jobs: action.payload
             };
         case MANPOWER_ADDED:
             return {

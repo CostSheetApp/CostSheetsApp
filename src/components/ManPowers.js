@@ -36,6 +36,19 @@ class ManPowers extends Component {
                 dataIndex: 'description',
                 key: 'description'
             }, {
+                title: 'Job',
+                key: 'jobId',
+                render: (text, manPower) => {
+                    if (!manPower.job) {
+                        return;
+                    }
+                    return (
+                        <Tooltip title={manPower.job.description}>
+                            <span>{manPower.job.description}</span>
+                        </Tooltip>
+                    );
+                }
+            }, {
                 title: 'Action',
                 key: 'action',
                 width: 120,
@@ -123,7 +136,9 @@ class ManPowers extends Component {
         let {
             manPowers,
             loading,
+            FetchJobs,
             costHistory,
+            Jobs,
             isSaving
         } = this.props;
         return (
@@ -133,7 +148,9 @@ class ManPowers extends Component {
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
                     onCreate={this.handle}
+                    FetchJobs={FetchJobs}
                     manPower={this.manPower}
+                    Jobs={Jobs}
                     costHistory={costHistory}
                     isSaving={isSaving}
                     title={this.title}
@@ -166,7 +183,9 @@ ManPowers.propTypes = {
     FetchManPowers: PropTypes.func.isRequired,
     manPowers: PropTypes.array,
     FetchManPowerCostHistory: PropTypes.func.isRequired,
+    FetchJobs: PropTypes.func.isRequired,
     costHistory: PropTypes.object.isRequired,
+    Jobs: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     AddManPower: PropTypes.func.isRequired,
     UpdateManPower: PropTypes.func.isRequired,

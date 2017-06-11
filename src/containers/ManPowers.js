@@ -1,13 +1,14 @@
 import {connect} from 'react-redux';
 import ManPowers from '../components/ManPowers';
-import {FetchManPowers, FetchManPowerCostHistory, AddManPower, UpdateManPower} from '../actions/manPowersActions';
+import {FetchManPowers, FetchManPowerCostHistory, FetchJobs, AddManPower, UpdateManPower} from '../actions/manPowersActions';
 
 const mapStateToProps = (state) => {
 return {
     entityId: state.account.entityId,
     manPowers: state.manPowers.list, 
     costHistory: state.manPowers.CostHistory, 
-    isSaving: state.manPowers.isSaving
+    isSaving: state.manPowers.isSaving,
+    Jobs: state.manPowers.Jobs
   };
 };
 
@@ -18,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         FetchManPowerCostHistory: (id) => {
             dispatch(FetchManPowerCostHistory(id));
+        },
+        FetchJobs: () => {
+            dispatch(FetchJobs());
         },
         AddManPower: (entityId, values) => {
             dispatch(AddManPower(entityId, values));

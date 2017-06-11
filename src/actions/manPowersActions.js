@@ -12,14 +12,16 @@ import {
     ADDING_MANPOWER,
     ADDING_MANPOWER_ERROR,
     MANPOWER_UPDATED,
-    UPDATING_MANPOWER_ERROR
+    UPDATING_MANPOWER_ERROR,
+    MANPOWERS_JOBS_FETCHED,
+    FETCHING_MANPOWERS_JOBS_ERROR
 } from '../constants/actionTypes';
 
 export const FetchManPowers = (entityId) => (dispatch, getState) => {
     dispatch({type: FETCHING_MANPOWERS});
 
     axios
-        .get(`${API_URL}/Entities/${entityId}/manpowers`, {
+        .get(`${API_URL}/Entities/${entityId}/manpowers?filter={"include":"job"}`, {
         headers: {'Authorization': cookie.load('token')}
     })
         .then((response) => {
@@ -48,6 +50,21 @@ export const FetchManPowerCostHistory = (id) => (dispatch, getState) => {
         });
 };
 
+export const FetchJobs = () => (dispatch, getState) => {
+
+        axios
+        .get(`${API_URL}/Jobs`, {
+        headers: {'Authorization': cookie.load('token')}
+        })
+        .then((response) => {
+            dispatch({type: MANPOWERS_JOBS_FETCHED, payload: response.data});
+        })
+        .catch((error) => {
+            console.log(error);
+            dispatch({type: FETCHING_MANPOWERS_JOBS_ERROR});
+            //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+        });
+};
 
 export const AddManPower = (entityId,params) =>
     (dispatch, getState) => {
@@ -61,7 +78,7 @@ export const AddManPower = (entityId,params) =>
         .then((response) => {
 
             axios
-            .get(`${API_URL}/manpowers/${response.data.id}`, {
+            .get(`${API_URL}/manpowers/${response.data.id}?filter={"include":"job"}`, {
             headers: {'Authorization': cookie.load('token')}
             })
             .then((response) => {
@@ -83,7 +100,7 @@ export const AddManPower = (entityId,params) =>
 export const UpdateManPower = (id,params) =>
     (dispatch, getState) => {
         axios
-        .patch(`${API_URL}/Manpowers/${id}`,params, {
+        .patch(`${API_URL}/Manpowers/${id}?filter={"include":"job"}`,params, {
         headers: { 'Authorization': cookie.load('token') }
         })
         .then((response) => {
