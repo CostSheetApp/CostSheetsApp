@@ -29,8 +29,8 @@ const reducer = (state = initState, action) => {
             ...state,
             isSaving: false,
             list: [
-                action.payload,
-                ...state.list                
+                ...state.list,
+                action.payload                
             ]
         };
         case ADDING_REGION:

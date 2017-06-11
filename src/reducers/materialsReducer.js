@@ -9,7 +9,9 @@ import {
     FETCHING_MATERIAL_UNITS_OF_MEASUREMENT_ERROR,
     MATERIAL_ADDED,
     ADDING_MATERIAL,
-    ADDING_MATERIAL_ERROR
+    ADDING_MATERIAL_ERROR,
+    MATERIAL_UPDATED,
+    MATERIAL_DELETED
 } from '../constants/actionTypes';
 
 const initState = {
@@ -78,7 +80,7 @@ const reducer = (state = initState, action) => {
                 ...state,
                 isSaving: false,
                 list: [
-                    action.payload, ...state.list
+                     ...state.list,action.payload
                 ]
             };
         case ADDING_MATERIAL:
@@ -91,6 +93,27 @@ const reducer = (state = initState, action) => {
                 ...state,
                 isSaving: false
             }
+        case MATERIAL_UPDATED:
+        return {
+            ...state,
+            list: state.list.map( (item) => {
+                if(item.id !== action.payload.id) {
+                    // This isn't the item we care about - keep it as-is
+                    return item;
+                }
+
+                // Otherwise, this is the one we want - return an updated value
+                return {
+                    ...item,
+                    ...action.payload
+                };    
+            })
+        }
+        case MATERIAL_DELETED:
+        return {
+            ...state,
+            list: state.list.filter((item) => item.id !== action.id)
+        }
         default:
             return state;
     }
