@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, Icon, Input, Button, Checkbox, Row, Col,Alert } from 'antd';
+import { Form, Icon, Input, Button, Row, Col,Alert } from 'antd';
 import {Register} from '../actions/entityActions';
 import { connect } from 'react-redux';
 import '../styles/register-form.css';
@@ -11,7 +11,7 @@ class RegisterUserForm extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
         if (!err) {
-            console.log('Received values of form: ', values);
+            //console.log('Received values of form: ', values);
             let {registerUser} = this.props;
             registerUser(values);
         }
@@ -25,12 +25,12 @@ class RegisterUserForm extends Component {
         let errorMessage = null;
 
         if(hasError){
-            errorMessage =  <Alert message={error} type="error" />
+            errorMessage =  <Alert message={error} type="error" />;
         }
 
         return (
             <Row type="flex" justify="space-around" align="middle">
-            <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}></Col>
+            <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}/>
             <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
             <Form onSubmit={this.handleSubmit} className="register-form">
                 <FormItem label="Name">
@@ -61,14 +61,13 @@ class RegisterUserForm extends Component {
                         <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
                     )}
                 </FormItem>
+                {errorMessage}
                 <Button type="primary" htmlType="submit" className="register-form-button">
                     Register
                 </Button>
-                <FormItem>
-                </FormItem>
             </Form>
             </Col>
-            <Col xs={{ span: 5, offset: 1 }} lg={{ pan: 6, offset: 2 }}></Col>
+            <Col xs={{ span: 5, offset: 1 }} lg={{ pan: 6, offset: 2 }}/>
             </Row>
         );
     }
@@ -80,17 +79,17 @@ RegisterUserForm.propTypes = {
     registerUser: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         hasError: state.account.hasError,
         error: state.account.error,
     };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         registerUser: (name,username,email,password) => {
-            dispatch(Register(name,username,email,password))
+            dispatch(Register(name,username,email,password));
         }
     };
 };

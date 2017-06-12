@@ -23,12 +23,12 @@ class ForgotPasswordForm extends Component {
         let errorMessage = null;
 
         if(hasError){
-            errorMessage =  <Alert message={error} type="error" />
+            errorMessage =  <Alert message={error} type="error" />;
         }
 
         return (
              <Row type="flex" justify="space-around" align="middle">
-        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}></Col>
+        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}/>
         <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
         <Form onSubmit={this.handleSubmit} className="forgot-password-form">
             <FormItem>
@@ -50,7 +50,7 @@ class ForgotPasswordForm extends Component {
             </FormItem>
         </Form>
         </Col>
-        <Col xs={{ span: 5, offset: 1 }} lg={{ pan: 6, offset: 2 }}></Col>
+        <Col xs={{ span: 5, offset: 1 }} lg={{ pan: 6, offset: 2 }}/>
         </Row>
         );
     }
@@ -67,15 +67,15 @@ const mapStateToProps = (state) => {
     return {
         hasError: state.account.hasError,
         error: state.account.error,
-    }
-}
+    };
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
         forgotPassword: (email) => {
-            dispatch(ForgotPassword(email))
+            dispatch(ForgotPassword(email));
         }
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(ForgotPasswordForm))
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(ForgotPasswordForm));

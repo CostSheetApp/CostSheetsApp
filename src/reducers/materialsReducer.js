@@ -6,7 +6,7 @@ import {
     MATERIAL_COST_HISTORY_FETCHED,
     FETCHING_MATERIAL_COST_HISTORY_ERROR,
     MATERIAL_UNITS_OF_MEASUREMENT_FETCHED,
-    FETCHING_MATERIAL_UNITS_OF_MEASUREMENT_ERROR,
+    //FETCHING_MATERIAL_UNITS_OF_MEASUREMENT_ERROR,
     MATERIAL_ADDED,
     ADDING_MATERIAL,
     ADDING_MATERIAL_ERROR,
@@ -87,12 +87,12 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 isSaving: true
-            }
+            };
         case ADDING_MATERIAL_ERROR:
             return {
                 ...state,
                 isSaving: false
-            }
+            };
         case MATERIAL_UPDATED:
         return {
             ...state,
@@ -108,12 +108,12 @@ const reducer = (state = initState, action) => {
                     ...action.payload
                 };    
             })
-        }
+        };
         case MATERIAL_DELETED:
         return {
             ...state,
             list: state.list.filter((item) => item.id !== action.id)
-        }
+        };
         default:
             return state;
     }

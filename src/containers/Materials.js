@@ -9,6 +9,7 @@ return {
     materials: state.materials.list, 
     costHistory: state.materials.CostHistory, 
     isSaving: state.materials.isSaving, 
+    loading: state.materials.loading, 
     UnitsOfMeasurement: state.materials.UnitsOfMeasurement,
     regions: state.regions.list,
 

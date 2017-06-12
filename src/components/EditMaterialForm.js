@@ -1,12 +1,12 @@
 import React, {Component, PropTypes } from 'react';
 import Moment from 'react-moment';
-import Mayre from 'mayre';
+//import Mayre from 'mayre';
 import {
     Form,
     Button,
     Modal,
     Input,
-    Icon,
+    //Icon,
     Table,
     Col,
     Select,
@@ -25,7 +25,7 @@ class editMaterialForm extends Component {
         }, {
           title: 'Created At',
           key: 'createdAt',
-           render: (text, record, index) => (
+           render: (text, record) => (
             <span>
                 <Moment fromNow>{record.createdAt}</Moment>
             </span>
@@ -49,8 +49,8 @@ class editMaterialForm extends Component {
             material,
             costHistory,
             isSaving,
-            UnitsOfMeasurement,
-            Regions
+            UnitsOfMeasurement
+            //Regions
         } = this.props;
         let {getFieldDecorator} = this.props.form;
         
@@ -108,7 +108,7 @@ class editMaterialForm extends Component {
                                 optionFilterProp="children"
                                 //onChange={handleChange}
                                 filterOption={(input, option) => {
-                                    console.log(input,option);
+                                    //console.log(input,option);
                                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                 }}
                             >
@@ -122,7 +122,7 @@ class editMaterialForm extends Component {
                     <Row><Button type="primary" icon="plus" className="add-material-button">Add New Price</Button></Row>
                     
                     <FormItem>
-                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}} ></Table>
+                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}}/>
                     </FormItem>
                     
                     

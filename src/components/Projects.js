@@ -1,14 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import {Table,Row,Button, Icon,Popconfirm} from 'antd';
-import Moment from 'react-moment'
+import Moment from 'react-moment';
 import '../styles/projects.css';
 import ProjectForm from './ProjectForm';
 
 class Projects extends Component {
-    state = { 
-      isCreateFormVisible: false,
-      isEditFormVisible: false 
-    };
     constructor(props){
       super(props);
       this.columns = [{
@@ -25,7 +21,7 @@ class Projects extends Component {
           key: 'profitPercentage'
         }, {
           title: 'Start Date',
-          render: (text, record, index) => (
+          render: (text, record) => (
             <span>
                 <Moment fromNow>{record.startDate}</Moment>
             </span>
@@ -37,9 +33,9 @@ class Projects extends Component {
           width: 120,
           render: (text, project, index) => (
             <span>
-              <a href="#" onClick={() => this.onEdit(index,project) } > <Icon type="edit" /> Edit</a>
+              <a href="#" onClick={() => this.onEdit(index,project)} > <Icon type="edit" /> Edit</a>
               <span className="ant-divider" />
-              <Popconfirm title="Are you sure delete this project?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,region)}>
+              <Popconfirm title="Are you sure delete this project?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,project)}>
                   <a href="#"> <Icon type="delete" /> Delete</a>
               </Popconfirm>
             </span>
@@ -49,12 +45,17 @@ class Projects extends Component {
         this.title = "Add Project";
         this.project={};
     }  
+    state = { 
+      isCreateFormVisible: false,
+      isEditFormVisible: false 
+    };
     componentWillMount() {
-        let { FetchProjects,entityId } = this.props
+        let { FetchProjects,entityId } = this.props;
         FetchProjects(entityId);
     }
     onDelete(index,project){
-      console.log(project);
+      //console.log(project);
+      alert(project.id);
       alert(index);
 
     }
@@ -63,7 +64,7 @@ class Projects extends Component {
         this.title = "Edit Project";
         this.project = project;
         this.setState({ visible: true });
-        console.log(project);      
+        //console.log(project);      
     }
     onCreate(){
         this.handle = this.handleCreate;
@@ -95,9 +96,7 @@ class Projects extends Component {
             return;
         }
         let { EditProject } = this.props;
-        var id = values.id;
-        delete values.id;
-        EditProject(id, values);
+        EditProject(values.id, values);
         form.resetFields();
         this.setState({ visible: false });
         });
@@ -128,8 +127,11 @@ class Projects extends Component {
 
 Projects.propTypes = {
     FetchProjects: PropTypes.func.isRequired,
+    AddProject: PropTypes.func.isRequired,
+    EditProject: PropTypes.func.isRequired,
     projects: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
     entityId: PropTypes.number.isRequired
 };
 

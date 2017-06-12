@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {
     Table,
     Row,
-    Col,
+    //Col,
     Button,
     Icon,
     Tooltip,
@@ -16,13 +16,9 @@ Number.prototype.padZero= function(len, c){
     var s= this.toString(), c= c || '0';
     while(s.length< len) s= c+ s;
     return s;
-}
+};
 
 class Materials extends Component {
-    state = {
-        AddMaterialFormIsVisible:false,
-        EditMaterialFormIsVisible:false
-    };
     constructor(props) {
         super(props);
         this.columns = [
@@ -78,6 +74,10 @@ class Materials extends Component {
         ];
         this.material = {};
     }
+    state = {
+        AddMaterialFormIsVisible:false,
+        EditMaterialFormIsVisible:false
+    };
     componentWillMount() {
         let {FetchMaterials,FetchRegions,entityId} = this.props;
         FetchMaterials(entityId);
@@ -199,8 +199,10 @@ Materials.propTypes = {
     costHistory: PropTypes.object.isRequired,
     UnitsOfMeasurement: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
     AddMaterial: PropTypes.func.isRequired,
     UpdateMaterial: PropTypes.func.isRequired,
+    DeleteMaterial: PropTypes.func.isRequired,
     entityId: PropTypes.number.isRequired,
     FetchRegions: PropTypes.func.isRequired,
     regions: PropTypes.array.isRequired,

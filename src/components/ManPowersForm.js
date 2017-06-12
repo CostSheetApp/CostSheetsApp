@@ -5,9 +5,9 @@ import {
     Button,
     Modal,
     Input,
-    Icon,
+    //Icon,
     Table,
-    Col,
+    //Col,
     Select,
     Row
 } from 'antd';
@@ -24,7 +24,7 @@ class addManPowerForm extends Component {
         }, {
           title: 'Created At',
           key: 'createdAt',
-           render: (text, record, index) => (
+           render: (text, record) => (
             <span>
                 <Moment fromNow>{record.createdAt}</Moment>
             </span>
@@ -48,7 +48,7 @@ class addManPowerForm extends Component {
             manPower,
             costHistory,
             Jobs,
-            isSaving,
+            //isSaving,
             title
         } = this.props;
         let {getFieldDecorator} = this.props.form;
@@ -92,7 +92,7 @@ class addManPowerForm extends Component {
                                 optionFilterProp="children"
                                 //onChange={handleChange}
                                 filterOption={(input, option) => {
-                                    console.log(input,option);
+                                    //console.log(input,option);
                                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                 }}
                             >
@@ -102,7 +102,7 @@ class addManPowerForm extends Component {
                          </FormItem>
                     <Row><Button type="primary" icon="plus" className="add-manPowers-button">Add New Price</Button></Row>
                     <FormItem>
-                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}} ></Table>
+                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}}/>
                     </FormItem>
                 </Form>
             </Modal>

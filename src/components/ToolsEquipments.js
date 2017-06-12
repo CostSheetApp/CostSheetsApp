@@ -68,7 +68,8 @@ class ToolsEquipments extends Component {
         FetchTools(entityId);
     }
     onDelete(index, toolsEquipment) {
-        console.log(toolsEquipment);
+        //console.log(toolsEquipment);
+        alert(toolsEquipment.id);
         alert(index);
 
     }
@@ -79,7 +80,7 @@ class ToolsEquipments extends Component {
         this.setState({visible: true});
         let {FetchToolCostHistory} = this.props;
         FetchToolCostHistory(toolsEquipment.id);
-        console.log(toolsEquipment);
+        //console.log(toolsEquipment);
     }
     onCreate() {
         this.handle = this.handleCreate;
