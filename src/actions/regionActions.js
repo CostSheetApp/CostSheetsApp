@@ -4,7 +4,7 @@ import {API_URL} from '../constants/global';
 import {REGIONS_FETCHED,FETCHING_REGIONS,FETCHING_REGIONS_ERROR,REGION_ADDED,ADDING_REGION,ADDING_REGION_ERROR,REGION_EDITED,EDITING_REGION,EDITING_REGION_ERROR} from '../constants/actionTypes';
 
 export const FetchRegions = (entityId) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         dispatch({type: FETCHING_REGIONS});
 
         axios
@@ -16,7 +16,10 @@ export const FetchRegions = (entityId) =>
             })
             .catch((error) => {
                 //console.log(error);
-                dispatch({type: FETCHING_REGIONS_ERROR});
+                dispatch({
+                    type: FETCHING_REGIONS_ERROR,
+                    error: error.response.data.error.message
+                });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
     };
@@ -24,7 +27,7 @@ export const FetchRegions = (entityId) =>
 
 
 export const AddRegion = (entityId,params) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         dispatch({type: ADDING_REGION});
         axios.post(`${API_URL}/Entities/${entityId}/Regions`, params , {
         headers: {
@@ -36,25 +39,31 @@ export const AddRegion = (entityId,params) =>
             })
             .catch((error) => {
                 //console.log(error);
-                dispatch({type: ADDING_REGION_ERROR});
+                dispatch({
+                    type: ADDING_REGION_ERROR,
+                    error: error.response.data.error.message
+                });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
     };
 
 export const EditRegion = (id,params) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         dispatch({type: EDITING_REGION});
         axios.patch(`${API_URL}/Regions/${id}`, params , {
         headers: {
             'Authorization': cookie.load('token')
         }
         })
-            .then((response) => {
+            .then(() => {
                 dispatch({type: REGION_EDITED});
             })
             .catch((error) => {
                 //console.log(error);
-                dispatch({type: EDITING_REGION_ERROR});
+                dispatch({
+                    type: EDITING_REGION_ERROR,
+                    error: error.response.data.error.message
+                });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
     };

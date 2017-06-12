@@ -7,10 +7,10 @@ import {UserAuthWrapper} from 'redux-auth-wrapper';
 import MainLayout from './layouts/MainLayout';
 import EmpyLayout from './layouts/EmptyLayout';
 
-import App from './components/App';
-import HomePage from './components/HomePage';
+//import App from './components/App';
+//import HomePage from './components/HomePage';
 import FuelSavingsPage from './containers/FuelSavingsPage'; // eslint-disable-line import/no-named-as-default
-import AboutPage from './components/AboutPage';
+//import AboutPage from './components/AboutPage';
 import NotFoundPage from './components/NotFoundPage';
 import Login from './containers/Login';
 import Dashboard from './containers/Dashboard';
@@ -54,9 +54,9 @@ export default (
   <Route>
     <Route component={EmpyLayout}>
       <Route path="login" component={UserIsNotAuthenticated(Login)}/>
-      <Route path="forgot-password" component={ForgotPassword}></Route>
-      <Route path="reset-password" component={ResetPassword}></Route>
-      <Route path="register-user" component={UserIsNotAuthenticated(RegisterForm)}></Route>
+      <Route path="forgot-password" component={ForgotPassword}/>
+      <Route path="reset-password" component={ResetPassword}/>
+      <Route path="register-user" component={UserIsNotAuthenticated(RegisterForm)}/>
     </Route>
     <Route path="/" component={UserIsAuthenticated(MainLayout)}>
       <IndexRoute component={Dashboard}/>

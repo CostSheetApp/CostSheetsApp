@@ -2,10 +2,10 @@ import React, {Component, PropTypes} from 'react';
 import {
     Table,
     Row,
-    Col,
+    //Col,
     Button,
     Icon,
-    Tooltip,
+    //Tooltip,
     Popconfirm
 } from 'antd';
 import '../styles/toolsEquipments.css';
@@ -18,10 +18,6 @@ Number.prototype.padZero= function(len, c){
 };
 
 class ToolsEquipments extends Component {
-    state = {
-        isCreateFormVisible: false,
-        isEditFormVisible: false
-    };
     constructor(props) {
         super(props);
         this.columns = [
@@ -62,6 +58,10 @@ class ToolsEquipments extends Component {
         this.title = "Add Tool and Equipment";
         this.toolsEquipment = {};
     }
+    state = {
+        isCreateFormVisible: false,
+        isEditFormVisible: false
+    };
     componentWillMount() {
         let {FetchTools, entityId} = this.props;
 
@@ -167,6 +167,7 @@ ToolsEquipments.propTypes = {
     toolsEquipments: PropTypes.array,
     FetchToolCostHistory: PropTypes.func.isRequired,
     costHistory: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     AddTool: PropTypes.func.isRequired,
     UpdateTool: PropTypes.func.isRequired,

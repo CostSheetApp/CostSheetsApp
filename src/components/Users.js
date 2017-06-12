@@ -4,10 +4,6 @@ import '../styles/users.css';
 import UserForm from './UserForm';
 
 class Users extends Component {
-    state = { 
-      isCreateFormVisible: false,
-      isEditFormVisible: false 
-    };
     constructor(props){
       super(props);
       this.columns = [{
@@ -28,7 +24,7 @@ class Users extends Component {
           width: 120,
           render: (text, user, index) => (
             <span>
-              <a href="#" onClick={() => this.onEdit(index,user) } > <Icon type="edit" /> Edit</a>
+              <a href="#" onClick={() => this.onEdit(index,user)} > <Icon type="edit" /> Edit</a>
               <span className="ant-divider" />
               <Popconfirm title="Are you sure delete this user?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,user)}>
                   <a href="#"> <Icon type="delete" /> Delete</a>
@@ -39,13 +35,18 @@ class Users extends Component {
         this.handle = this.handleCreate;
         this.title = "Add Usuario";
         this.user={};
-    }  
+    }
+    state = { 
+      isCreateFormVisible: false,
+      isEditFormVisible: false 
+    };
     componentWillMount() {
-        let { FetchUsers,entityId } = this.props
+        let { FetchUsers,entityId } = this.props;
         FetchUsers(entityId);
     }
     onDelete(index,user){
-      console.log(user);
+      //console.log(user);
+      alert(user.id);
       alert(index);
 
     }
@@ -54,7 +55,7 @@ class Users extends Component {
         this.title = "Edit User";
         this.user = user;
         this.setState({ visible: true });
-        console.log(user);      
+        //console.log(user);      
     }
     onCreate(){
         this.handle = this.handleCreate;
@@ -71,7 +72,7 @@ class Users extends Component {
         if (err) {
             return;
         }
-        let { AddUser,entityId } = this.props;
+        let {AddUser,entityId } = this.props;
         delete values.id;
         AddUser(entityId,values);
         form.resetFields();
@@ -86,9 +87,7 @@ class Users extends Component {
             return;
         }
         let { EditUser } = this.props;
-        var id = values.id;
-        delete values.id;
-        EditUser(id, values);
+        EditUser(values.id, values);
         form.resetFields();
         this.setState({ visible: false });
         });
@@ -119,8 +118,11 @@ class Users extends Component {
 
 Users.propTypes = {
     FetchUsers: PropTypes.func.isRequired,
+    AddUser: PropTypes.func.isRequired,
+    EditUser: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
     entityId: PropTypes.number.isRequired
 };
 

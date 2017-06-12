@@ -84,12 +84,12 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 isSaving: true
-            }
+            };
         case ADDING_MANPOWER_ERROR:
             return {
                 ...state,
                 isSaving: false
-            }
+            };
         default:
             return state;
     }

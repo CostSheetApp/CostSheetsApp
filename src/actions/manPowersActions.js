@@ -17,7 +17,7 @@ import {
     FETCHING_MANPOWERS_JOBS_ERROR
 } from '../constants/actionTypes';
 
-export const FetchManPowers = (entityId) => (dispatch, getState) => {
+export const FetchManPowers = (entityId) => (dispatch) => {
     dispatch({type: FETCHING_MANPOWERS});
 
     axios
@@ -28,13 +28,15 @@ export const FetchManPowers = (entityId) => (dispatch, getState) => {
             dispatch({type: MANPOWERS_FETCHED, list: response.data});
         })
         .catch((error) => {
-            console.log(error);
-            dispatch({type: FETCHING_MANPOWERS_ERROR});
+            dispatch({
+                type: FETCHING_MANPOWERS_ERROR,
+                error: error.response.data.error.message
+            });
         });
 };
 
 
-export const FetchManPowerCostHistory = (id) => (dispatch, getState) => {
+export const FetchManPowerCostHistory = (id) => (dispatch) => {
     dispatch({type: FETCHING_MANPOWER_COST_HISTORY});
 
     axios
@@ -45,12 +47,14 @@ export const FetchManPowerCostHistory = (id) => (dispatch, getState) => {
             dispatch({type: MANPOWER_COST_HISTORY_FETCHED, list: response.data});
         })
         .catch((error) => {
-            console.log(error);
-            dispatch({type: FETCHING_MANPOWER_COST_HISTORY_ERROR});
+            dispatch({
+                type: FETCHING_MANPOWER_COST_HISTORY_ERROR,
+                error: error.response.data.error.message
+            });
         });
 };
 
-export const FetchJobs = () => (dispatch, getState) => {
+export const FetchJobs = () => (dispatch) => {
 
         axios
         .get(`${API_URL}/Jobs`, {
@@ -60,17 +64,20 @@ export const FetchJobs = () => (dispatch, getState) => {
             dispatch({type: MANPOWERS_JOBS_FETCHED, payload: response.data});
         })
         .catch((error) => {
-            console.log(error);
-            dispatch({type: FETCHING_MANPOWERS_JOBS_ERROR});
+            //console.log(error);
+            dispatch({
+                type: FETCHING_MANPOWERS_JOBS_ERROR,
+                error: error.response.data.error.message
+            });
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
 };
 
 export const AddManPower = (entityId,params) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         dispatch({type: ADDING_MANPOWER});
         //params.code = 1;
-        console.log(params);
+        //console.log(params);
         axios
         .post(`${API_URL}/Entities/${entityId}/manpowers/`,params, {
         headers: {'Authorization': cookie.load('token')}
@@ -85,20 +92,24 @@ export const AddManPower = (entityId,params) =>
                 dispatch({type: MANPOWER_ADDED, payload: response.data});
             })
             .catch((error) => {
-                console.log(error);
-                dispatch({type: ADDING_MANPOWER_ERROR});
+                dispatch({
+                    type: ADDING_MANPOWER_ERROR,
+                    error: error.response.data.error.message
+                });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
         })
         .catch((error) => {
-            console.log(error);
-            dispatch({type: ADDING_MANPOWER_ERROR});
+            dispatch({
+                type: ADDING_MANPOWER_ERROR,
+                error: error.response.data.error.message
+            });
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
     };
 
 export const UpdateManPower = (id,params) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         axios
         .patch(`${API_URL}/Manpowers/${id}?filter={"include":"job"}`,params, {
         headers: { 'Authorization': cookie.load('token') }
@@ -108,8 +119,10 @@ export const UpdateManPower = (id,params) =>
             FetchManPowers();
         })
         .catch((error) => {
-            console.log(error);
-            dispatch({type: UPDATING_MANPOWER_ERROR});
+            dispatch({
+                type: UPDATING_MANPOWER_ERROR,
+                error: error.response.data.error.message
+            });
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
     };

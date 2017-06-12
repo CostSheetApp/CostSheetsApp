@@ -2,10 +2,10 @@ import axios from 'axios';
 import cookie from 'react-cookie';
 import {API_URL} from '../constants/global';
 import {push} from 'react-router-redux';
-import {PROJECTS_FETCHED,FETCHING_PROJECTS,FETCHING_PROJECTS_ERROR,PROJECT_ADDED,ADDING_PROJECT,ADDING_PROJECT_ERROR,PROJECT_EDITED,EDITING_PROJECT,EDITING_PROJECT_ERROR} from '../constants/actionTypes';
+import {PROJECTS_FETCHED,FETCHING_PROJECTS,FETCHING_PROJECTS_ERROR,ADDING_PROJECT,ADDING_PROJECT_ERROR,PROJECT_EDITED,EDITING_PROJECT,EDITING_PROJECT_ERROR} from '../constants/actionTypes';
 
 export const FetchProjects = (entityId) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         dispatch({type: FETCHING_PROJECTS});
 
         axios
@@ -17,7 +17,10 @@ export const FetchProjects = (entityId) =>
             })
             .catch((error) => {
                 //console.log(error);
-                dispatch({type: FETCHING_PROJECTS_ERROR});
+                dispatch({
+                    type: FETCHING_PROJECTS_ERROR,
+                    error: error.response.data.error.message
+                });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
     };
@@ -25,7 +28,7 @@ export const FetchProjects = (entityId) =>
 
 
 export const AddProject = (entityId,params) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         dispatch({type: ADDING_PROJECT});
         params.cost = 0;
         axios.post(`${API_URL}/Entities/${entityId}/Projects`, params , {
@@ -33,31 +36,37 @@ export const AddProject = (entityId,params) =>
             'Authorization': cookie.load('token')
         }
         })
-            .then((response) => {
+            .then(() => {
                 //dispatch({type: PROJECT_ADDED, payload: response.data});
                 dispatch(push("/dashboard-project"));
             })
             .catch((error) => {
                 //console.log(error);
-                dispatch({type: ADDING_PROJECT_ERROR});
+                dispatch({
+                    type: ADDING_PROJECT_ERROR,
+                    error: error.response.data.error.message
+                });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
     };
 
 export const EditProject = (id,params) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         dispatch({type: EDITING_PROJECT});
         axios.patch(`${API_URL}/Projects/${id}`, params , {
         headers: {
             'Authorization': cookie.load('token')
         }
         })
-            .then((response) => {
+            .then(() => {
                 dispatch({type: PROJECT_EDITED});
             })
             .catch((error) => {
                 //console.log(error);
-                dispatch({type: EDITING_PROJECT_ERROR});
+                dispatch({
+                    type: EDITING_PROJECT_ERROR,
+                    error: error.response.data.error.message
+                });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
     };
