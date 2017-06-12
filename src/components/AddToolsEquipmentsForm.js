@@ -42,16 +42,15 @@ class addToolsEquipmentForm extends Component {
             onCancel,
             onCreate,
             toolsEquipment,
-            costHistory,
+            costHistory
             //isSaving,
-            title
         } = this.props;
         let {getFieldDecorator} = this.props.form;
 
         return (
             <Modal
                 visible={visible}
-                title={title}
+                title={"Add Tools"}
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
@@ -88,8 +87,7 @@ class addToolsEquipmentForm extends Component {
 addToolsEquipmentForm.propTypes = {
     toolsEquipment: PropTypes.object,
     costHistory: PropTypes.object.isRequired,
-    isSaving: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired,
+    isSaving: PropTypes.bool.isRequired
 };
 
 const addToolsEquipment = Form.create()(addToolsEquipmentForm);
