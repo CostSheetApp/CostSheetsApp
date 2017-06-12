@@ -15,28 +15,12 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 
+Array.prototype.first = function () {
+    if(this.length<=0) return;
+    return this[0];
+};
+
 class addMaterialForm extends Component {
-    constructor(props){
-      super(props);
-      this.columns = [{
-          title: 'Region',
-          dataIndex: 'region.name',
-          key: 'region.name'
-        }, {
-          title: 'Created At',
-          key: 'createdAt',
-           render: (text, record, index) => (
-            <span>
-                <Moment fromNow>{record.createdAt}</Moment>
-            </span>
-          ),
-        }, {
-          title: 'Cost',
-          dataIndex: 'cost',
-          key: 'cost',
-        }
-        ];
-    }  
     componentWillMount() {
         let {FetchUnitsOfMeasurement} = this.props;
         FetchUnitsOfMeasurement();
@@ -46,19 +30,16 @@ class addMaterialForm extends Component {
             visible,
             onCancel,
             onCreate,
-            material,
-            costHistory,
             isSaving,
-            title,
             UnitsOfMeasurement,
-            isEditing
+            Regions
         } = this.props;
         let {getFieldDecorator} = this.props.form;
         
         return (
             <Modal
                 visible={visible}
-                title={title}
+                title={"Add Material"}
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
@@ -66,18 +47,11 @@ class addMaterialForm extends Component {
                     <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Submit </Button >
                     ]}>
                 <Form>
-                    {getFieldDecorator('id', {
-                        initialValue: material.id?material.id:0
-                    })(
-                        <Input type="hidden" />
-                    )}
-  
-                    <FormItem label="Description" style={{marginBottom:"10px"}}>
+                   <FormItem label="Description" style={{marginBottom:"10px"}}>
                     {getFieldDecorator('description', {
                         rules: [
                             { required: true, message: 'Please input material description!' }, 
-                            ],
-                            initialValue: material.description?material.description:""
+                            ]
                     })(
                         <Input  placeholder="Material description" />
                     )}
@@ -89,7 +63,7 @@ class addMaterialForm extends Component {
                             rules: [
                                 { required: true, message: 'Please input material waste!' }, 
                                 ],
-                                initialValue: material.waste?material.waste:0
+                                initialValue: 0
                         })(
                             <Input type="number" placeholder="Material waste" />
                         )}
@@ -101,11 +75,11 @@ class addMaterialForm extends Component {
                             rules: [
                                 { required: true, message: 'Please input Unit of Measurement!' }, 
                                 ],
-                                initialValue: material.unitsOfMeasurementId?material.unitsOfMeasurementId.toString():null
+                                
                         })(
                             <Select
                                 showSearch
-                                placeholder="Select a person"
+                                placeholder="Select a unit of measurement"
                                 optionFilterProp="children"
                                 //onChange={handleChange}
                                 filterOption={(input, option) => {
@@ -119,49 +93,43 @@ class addMaterialForm extends Component {
                          </FormItem>
                     </Col>
                     </FormItem>
-                    <Mayre
-                        of={<Row><Button type="primary" icon="plus" className="add-material-button">Add New Price</Button></Row>}
-                        or={
-                            <FormItem style={{paddingTop:"10px"}}>
-                                <Col span="12">
-                                    <FormItem>
+                     <FormItem style={{paddingTop:"10px"}}>
+                                <Col span="12" >
+                                    <FormItem label="Cost">
                                         {getFieldDecorator('cost', {
                                 rules: [
-                                    { required: true, message: 'Please input initial price!' }, 
+                                    { required: true, message: 'Please input initial cost!' }, 
                                     ],
                                     initialValue: 0
                             })(
-                                <Input type="number" placeholder="Initial price" />
+                                <Input type="number" placeholder="Initial cost" />
                             )}
                                 </FormItem>
                             </Col>
                             <Col span="12">
-                                    <FormItem>
+                                    <FormItem label="Region">
                                         {getFieldDecorator('regionId', {
                                 rules: [
                                     { required: true, message: 'Please select a region' }, 
                                     ],
-                                    initialValue: 0
+                                    
                             })(
-                                <Select />
+                                <Select
+                                showSearch
+                                placeholder="Select a region"
+                                optionFilterProp="children"
+                                //onChange={handleChange}
+                                filterOption={(input, option) => {
+                                    console.log(input,option);
+                                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                }}
+                            >
+                                {Regions.map(o => <Option key={o.id} >{`${o.name}`}</Option>)}
+                            </Select>
                             )}
                                 </FormItem>
                             </Col>
                         </FormItem>
-                        }
-                        when={isEditing}
-                    />
-                    
-                    <Mayre
-                        of={
-                            <FormItem>
-                                <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}} ></Table>
-                            </FormItem>
-                        }
-                        when={isEditing}
-                    />
-                    
-                    
                 </Form>
             </Modal>
         );
@@ -170,13 +138,9 @@ class addMaterialForm extends Component {
 
 addMaterialForm.propTypes = {
     FetchUnitsOfMeasurement: PropTypes.func.isRequired,
-    material: PropTypes.object,
-    costHistory: PropTypes.object.isRequired,
     UnitsOfMeasurement: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired,
-    visible: PropTypes.bool.isRequired,
-    isEditing: PropTypes.bool.isRequired,
+    visible: PropTypes.bool.isRequired
 };
 
 const addMaterial = Form.create()(addMaterialForm);
