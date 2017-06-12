@@ -1,16 +1,16 @@
 import React, {Component, PropTypes } from 'react';
-import Moment from 'react-moment';
-import Mayre from 'mayre';
+//import Moment from 'react-moment';
+//import Mayre from 'mayre';
 import {
     Form,
     Button,
     Modal,
     Input,
-    Icon,
-    Table,
+    //Icon,
+    //Table,
     Col,
-    Select,
-    Row
+    Select
+    //Row
 } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -83,7 +83,7 @@ class addMaterialForm extends Component {
                                 optionFilterProp="children"
                                 //onChange={handleChange}
                                 filterOption={(input, option) => {
-                                    console.log(input,option);
+                                    //console.log(input,option);
                                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                 }}
                             >
@@ -120,7 +120,7 @@ class addMaterialForm extends Component {
                                 optionFilterProp="children"
                                 //onChange={handleChange}
                                 filterOption={(input, option) => {
-                                    console.log(input,option);
+                                    //console.log(input,option);
                                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                 }}
                             >
@@ -139,6 +139,7 @@ class addMaterialForm extends Component {
 addMaterialForm.propTypes = {
     FetchUnitsOfMeasurement: PropTypes.func.isRequired,
     UnitsOfMeasurement: PropTypes.array.isRequired,
+    Regions: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     visible: PropTypes.bool.isRequired
 };

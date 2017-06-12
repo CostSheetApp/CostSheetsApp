@@ -8,6 +8,7 @@ return {
     manPowers: state.manPowers.list, 
     costHistory: state.manPowers.CostHistory, 
     isSaving: state.manPowers.isSaving,
+    loading: state.manPowers.loading,
     Jobs: state.manPowers.Jobs
   };
 };

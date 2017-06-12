@@ -7,8 +7,7 @@ import {
     Modal,
     Input,
     InputNumber,
-    DatePicker,
-    Icon
+    DatePicker
 } from 'antd';
 const FormItem = Form.Item;
 

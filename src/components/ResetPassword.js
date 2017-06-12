@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, Icon, Input, Button, Checkbox, Row, Col,Alert } from 'antd';
+import { Form, Icon, Input, Button, Row, Col,Alert } from 'antd';
 import {ResetPassword} from '../actions/accountActions';
 import { connect } from 'react-redux';
 import '../styles/forgot-password.css';
@@ -10,7 +10,7 @@ class ResetPasswordForm extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
         if (!err) {
-            console.log('Received values of form: ', values);
+            //console.log('Received values of form: ', values);
             let {resetPassword} = this.props;
             resetPassword(values);
         }
@@ -20,15 +20,15 @@ class ResetPasswordForm extends Component {
         let { getFieldDecorator } = this.props.form;
         let {hasError,error} = this.props;
         const query = this.props.location.query;
-        let errorMessage = null
+        let errorMessage = null;
 
         if(hasError){
-            errorMessage =  <Alert message={error} type="error" />
+            errorMessage =  <Alert message={error} type="error" />;
         }
 
         return (
              <Row type="flex" justify="space-around" align="middle">
-        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}></Col>
+        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}/>
         <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
         <Form onSubmit={this.handleSubmit} className="forgot-password-form">
             {getFieldDecorator('access_token', {
@@ -66,7 +66,7 @@ class ResetPasswordForm extends Component {
             </FormItem>
         </Form>
         </Col>
-        <Col xs={{ span: 5, offset: 1 }} lg={{ pan: 6, offset: 2 }}></Col>
+        <Col xs={{ span: 5, offset: 1 }} lg={{ pan: 6, offset: 2 }}/>
         </Row>
         );
     }
@@ -79,19 +79,19 @@ ResetPasswordForm.propTypes = {
 };
 
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         hasError: state.account.hasError,
         error: state.account.error,
-    }
-}
+    };
+};
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         resetPassword: (access_token,password, confirmPassword) => {
-            dispatch(ResetPassword(access_token,password, confirmPassword))
+            dispatch(ResetPassword(access_token,password, confirmPassword));
         }
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(ResetPasswordForm))
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(ResetPasswordForm));

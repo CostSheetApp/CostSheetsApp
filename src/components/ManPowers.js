@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {
     Table,
     Row,
-    Col,
+    //Col,
     Button,
     Icon,
     Tooltip,
@@ -18,10 +18,6 @@ Number.prototype.padZero= function(len, c){
 };
 
 class ManPowers extends Component {
-    state = {
-        isCreateFormVisible: false,
-        isEditFormVisible: false
-    };
     constructor(props) {
         super(props);
         this.columns = [
@@ -75,13 +71,18 @@ class ManPowers extends Component {
         this.title = "Add man power";
         this.manPower = {};
     }
+    state = {
+        isCreateFormVisible: false,
+        isEditFormVisible: false
+    };
     componentWillMount() {
         let {FetchManPowers, entityId} = this.props;
 
         FetchManPowers(entityId);
     }
     onDelete(index, manPower) {
-        console.log(manPower);
+        //console.log(manPower);
+        alert(manPower.id);
         alert(index);
 
     }
@@ -92,7 +93,7 @@ class ManPowers extends Component {
         this.setState({visible: true});
         let {FetchManPowerCostHistory} = this.props;
         FetchManPowerCostHistory(manPower.id);
-        console.log(manPower);
+        //console.log(manPower);
     }
     onCreate() {
         this.handle = this.handleCreate;
@@ -187,6 +188,7 @@ ManPowers.propTypes = {
     costHistory: PropTypes.object.isRequired,
     Jobs: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
     AddManPower: PropTypes.func.isRequired,
     UpdateManPower: PropTypes.func.isRequired,
     entityId: PropTypes.number.isRequired
