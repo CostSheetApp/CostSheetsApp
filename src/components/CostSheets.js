@@ -28,7 +28,7 @@ class CostSheets extends Component {
        AddCostSheet(entityId);
     }
     render() {
-        let {costSheets} = this.props;
+        let {costSheets,ViewCostSheet} = this.props;
         return (
             <Row>
                 <Row>
@@ -43,10 +43,10 @@ class CostSheets extends Component {
                     <Col key={i} span="8" className="separate">
                     <Card title={sheet.description} bordered={true}>
                         <Row>
-                            Minumun Unit: {sheet.minimumUnit.toString()} {sheet.unitsOfMeasurement.abbreviation}
+                            Minimun Unit: {sheet.minimumUnit.toString()} {sheet.unitsOfMeasurement.abbreviation}
                         </Row>
                         <Row>
-                            Minumun Cost: {sheet.minimumCost.toString()}
+                            Minimun Cost: {sheet.minimumCost.toString()}
                         </Row>
                         <Row>
                             Region: <Tag color='green'>{sheet.region.name}</Tag>
@@ -55,7 +55,7 @@ class CostSheets extends Component {
                             Created At:  <Moment fromNow ago>{sheet.createdAt}</Moment> ago
                         </Row>
                         <Row className="action-panel">
-                        <Button type="primary" className="actions">View</Button>
+                        <Button type="primary" className="actions" onClick={() => ViewCostSheet(sheet.id)}>View</Button>
                         </Row>
                         </Card>
                     </Col>
@@ -69,7 +69,8 @@ class CostSheets extends Component {
 CostSheets.propTypes = {
     AddCostSheet: PropTypes.func.isRequired,
     costSheets: PropTypes.array.isRequired,
-    entityId: PropTypes.number.isRequired
+    entityId: PropTypes.number.isRequired,
+    ViewCostSheet: PropTypes.func.isRequired,
 };
 
 export default CostSheets;

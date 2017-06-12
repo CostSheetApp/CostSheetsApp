@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
+
+import AddCostSheetMaterial from './AddCostSheetMaterialForm';
 import {
     Form,
     Button,
@@ -10,80 +12,369 @@ import {
     Table,
     Col,
     Select,
-    Row
+    Row,
+    Tabs,
+    Popconfirm
 } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
+const TabPane = Tabs.TabPane;
+
+Number.prototype.padZero= function(len, c){
+    var s= this.toString(), c= c || '0';
+    while(s.length< len) s= c+ s;
+    return s;
+}
+
+Array.prototype.FirstOrDefault = function(def){
+    if(this.length==0) return def;
+
+    return this[0];
+}
 
 class addCostSheetForm extends Component {
-    
+    constructor(props){
+        super(props);
+        this.state = {
+            AddMaterialToCostSheetFormIsVisible:false
+        };
+        this.materialColumns = [
+            {
+                title: 'Code',
+                key: 'code',
+                render: (text, item) => {
+                    return (<span>{item.material.code.padZero(10)}</span>);
+                }
+            }, {
+                title: 'Description',
+                dataIndex: 'material.description',
+                key: 'description'
+            }, 
+            {
+                title: 'Performance %',
+                dataIndex: 'performance',
+                key: 'performance'
+            },
+            {
+                title: 'Waste %',
+                dataIndex: 'waste',
+                key: 'waste'
+            }, {
+                title: 'Cost',
+                key: 'cost',
+                render: (text, item) => {
+                    if (!item.material || !item.material.materialCostHistories) {
+                        return;
+                    }
+                    return (
+                        <span>
+                            {item.material.materialCostHistories.FirstOrDefault({cost:0}).cost}
+                        </span>
+                        
+                    );
+                }
+            },
+            {
+                title: 'Amount',
+                key: 'amount',
+                render: (text, material) => {
+                    return (
+                        <span>0.0</span>
+                    );
+                }
+            },
+            {
+                title: 'Total',
+                key: 'total',
+                render: (text, material) => {
+                    return (
+                        <span>0.0</span>
+                    );
+                }
+            }, {
+                title: 'Action',
+                key: 'action',
+                width: 120,
+                render: (text, material, index) => (
+                    <span>
+                        <a href="#" onClick={() => this.onEdit(index, material)}>
+                            <Icon type="edit"/>
+                            Edit</a>
+                        <span className="ant-divider"/>
+                        <Popconfirm
+                            title="Are you sure delete this material?"
+                            okText="Yes"
+                            cancelText="No"
+                            onConfirm={() => this.onDelete(index, material)}>
+                            <a href="#">
+                                <Icon type="delete"/>
+                                Delete</a>
+                        </Popconfirm>
+                    </span>
+                )
+            }
+        ];
+        this.manpowerColumns = [
+            {
+                title: 'Code',
+                key: 'code',
+                render: (text, material) => {
+                    return (<span>{material.code.padZero(10)}</span>);
+                }
+            }, {
+                title: 'Description',
+                dataIndex: 'description',
+                key: 'description'
+            }, 
+            {
+                title: 'Performance %',
+                dataIndex: 'performance',
+                key: 'performance'
+            }, {
+                title: 'Cost',
+                key: 'cost',
+                render: (text, material) => {
+                    if (!material.unitsOfMeasurement) {
+                        return;
+                    }
+                    return (
+                        <span>
+                            {/*{material.materialCostHistories[0].cost} <Tooltip title={material.unitsOfMeasurement.description}><span>{material.unitsOfMeasurement.abbreviation}</span></Tooltip>*/}
+                        </span>
+                        
+                    );
+                }
+            },
+            {
+                title: 'Amount',
+                key: 'amount',
+                render: (text, material) => {
+                    return (
+                        <span>0.0</span>
+                    );
+                }
+            },
+            {
+                title: 'Total',
+                key: 'total',
+                render: (text, material) => {
+                    return (
+                        <span>0.0</span>
+                    );
+                }
+            }, {
+                title: 'Action',
+                key: 'action',
+                width: 120,
+                render: (text, material, index) => (
+                    <span>
+                        <a href="#" onClick={() => this.onEdit(index, material)}>
+                            <Icon type="edit"/>
+                            Edit</a>
+                        <span className="ant-divider"/>
+                        <Popconfirm
+                            title="Are you sure delete this material?"
+                            okText="Yes"
+                            cancelText="No"
+                            onConfirm={() => this.onDelete(index, material)}>
+                            <a href="#">
+                                <Icon type="delete"/>
+                                Delete</a>
+                        </Popconfirm>
+                    </span>
+                )
+            }
+        ];
+        this.toolAndEquipmentColumns = [
+            {
+                title: 'Code',
+                key: 'code',
+                render: (text, material) => {
+                    return (<span>{material.code.padZero(10)}</span>);
+                }
+            }, {
+                title: 'Description',
+                dataIndex: 'description',
+                key: 'description'
+            }, 
+            {
+                title: 'Performance %',
+                dataIndex: 'performance',
+                key: 'performance'
+            }, {
+                title: 'Cost',
+                key: 'cost',
+                render: (text, material) => {
+                    if (!material.unitsOfMeasurement) {
+                        return;
+                    }
+                    return (
+                        <span>
+                            {/*{material.materialCostHistories[0].cost} <Tooltip title={material.unitsOfMeasurement.description}><span>{material.unitsOfMeasurement.abbreviation}</span></Tooltip>*/}
+                        </span>
+                        
+                    );
+                }
+            },
+            {
+                title: 'Amount',
+                key: 'amount',
+                render: (text, material) => {
+                    return (
+                        <span>0.0</span>
+                    );
+                }
+            },
+            {
+                title: 'Total',
+                key: 'total',
+                render: (text, material) => {
+                    return (
+                        <span>0.0</span>
+                    );
+                }
+            }, {
+                title: 'Action',
+                key: 'action',
+                width: 120,
+                render: (text, material, index) => (
+                    <span>
+                        <a href="#" onClick={() => this.onEdit(index, material)}>
+                            <Icon type="edit"/>
+                            Edit</a>
+                        <span className="ant-divider"/>
+                        <Popconfirm
+                            title="Are you sure delete this material?"
+                            okText="Yes"
+                            cancelText="No"
+                            onConfirm={() => this.onDelete(index, material)}>
+                            <a href="#">
+                                <Icon type="delete"/>
+                                Delete</a>
+                        </Popconfirm>
+                    </span>
+                )
+            }
+        ];
+        
+    }
+   
     componentWillMount() {
-        let {FetchCostSheet} = this.props;
+        let {FetchCostSheet,FetchCostSheetMaterials,FetchCostSheetManpower,FetchCostSheetToolsAndEquipment} = this.props;
         let {id} = this.props.params;
         console.log("id",id);
         FetchCostSheet(id);
+        FetchCostSheetMaterials(id);
+        FetchCostSheetManpower(id);
+        FetchCostSheetToolsAndEquipment(id);
     }
-    
+    saveAddMaterialToCostSheetFormRef = (form) => {
+        this.AddMaterialToCostSheetForm = form;
+    }
+    CancelAdd = () => {
+        this.setState({AddMaterialToCostSheetFormIsVisible: false});
+    }
+    AddMaterialToCostSheet = () => {
+        const form = this.AddMaterialToCostSheetForm;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+            let {AddMaterial} = this.props;
+            AddMaterial(values.id, values);
+            form.resetFields();
+            this.setState({AddMaterialToCostSheetFormIsVisible: false});
+        });
+    }
+    onAddMaterial(){
+        this.setState({AddMaterialToCostSheetFormIsVisible: true});
+    }
     render() {
         let {getFieldDecorator} = this.props.form;
-        let {costSheet} = this.props;
+        let {costSheet,materials,manpower,toolsAndEquipment,Regions} = this.props;
         return (
-            <Form>
-                <Row gutter={8}>
-                    <Col span={12} >
-                        <FormItem  label="Description">
-                        {getFieldDecorator('description', {
-                            rules: [
-                                { required: true, message: 'Please input material description!' }, 
-                                ],
-                                initialValue: costSheet.description?costSheet.description:""
-                        })(
-                            <Input placeholder="Material description" />
-                        )}
-                        </FormItem>
-                    </Col>
-                    <Col span={2}> 
-                        <FormItem  label="Minimun Cost" >
-                        {getFieldDecorator('minimunCost', {
-                            rules: [
-                                { required: true, message: 'Please input minimun cost!' }, 
-                                ],
-                                initialValue: costSheet.description?costSheet.description:""
-                        })(
-                            <Input placeholder="0.00" />
-                        )}
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row gutter={8}>
-                    <Col span={3} >
-                        <FormItem  label="Default Region">
-                        {getFieldDecorator('regionId', {
-                            rules: [
-                                { required: true, message: 'Please input material description!' }, 
-                                ],
-                                initialValue: costSheet.regionId?costSheet.regionId:null
-                        })(
-                            <Input />
-                        )}
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row><Button type="primary" icon="plus" className="add-material-button">Add Materials</Button></Row>
-                <FormItem>
-                    <Table rowKey={item => item.id} size="small" bordered={true} loading={costSheet.materials.isLoading} dataSource={costSheet.materials.list} columns={this.columns} pagination={{pageSize:5}} ></Table>
-                </FormItem>
+            <Row>
+                <AddCostSheetMaterial
+                    ref={this.saveAddMaterialToCostSheetFormRef}
+                    visible={this.state.AddMaterialToCostSheetFormIsVisible}
+                    onCancel={this.CancelAdd}
+                    onCreate={this.AddMaterialToCostSheet}
+                />
+                {/*<EditCostSheetMaterial />*/}
+                <Form>
+                    <Row gutter={8}>
+                        <Col span={12} >
+                            <FormItem  label="Description">
+                            {getFieldDecorator('description', {
+                                rules: [
+                                    { required: true, message: 'Please input material description!' }, 
+                                    ],
+                                    initialValue: costSheet.description?costSheet.description:""
+                            })(
+                                <Input placeholder="Material description" />
+                            )}
+                            </FormItem>
+                        </Col>
+                        <Col span={2}> 
+                            <FormItem  label="Minimun Cost" >
+                            {getFieldDecorator('minimunCost', {
+                                rules: [
+                                    { required: true, message: 'Please input minimun cost!' }, 
+                                    ],
+                                    initialValue: costSheet.minimunCost?costSheet.minimunCost:""
+                            })(
+                                <Input placeholder="0.00" />
+                            )}
+                            </FormItem>
+                        </Col>
+                        <Col span={3} >
+                            <FormItem label="Default Region">
+                                    {getFieldDecorator('regionId', {
+                                        rules: [
+                                            { required: true, message: 'Please select a region' }, 
+                                            ],
+                                            initialValue: costSheet.regionId?costSheet.regionId.toString():undefined
+                                    })(
+                                        <Select
+                                        showSearch
+                                        placeholder="Select a region"
+                                        optionFilterProp="children"
+                                        //onChange={handleChange}
+                                        filterOption={(input, option) => {
+                                            console.log(input,option);
+                                            return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                        }}
+                                    >
+                                        {Regions.map(o => <Option key={o.id} >{`${o.name}`}</Option>)}
+                                    </Select>
+                                    )}
+                            </FormItem>
 
-                <Row><Button type="primary" icon="plus" className="add-material-button">Add Manpower</Button></Row>
-                <FormItem>
-                    <Table rowKey={item => item.id} size="small" bordered={true} loading={costSheet.manpower.isLoading} dataSource={costSheet.manpower.list} columns={this.columns} pagination={{pageSize:5}} ></Table>
-                </FormItem>
-
-                <Row><Button type="primary" icon="plus" className="add-material-button">Add Tools and equipment</Button></Row>
-                <FormItem>
-                    <Table rowKey={item => item.id} size="small" bordered={true} loading={costSheet.toolsAndEquipment.isLoading} dataSource={costSheet.toolsAndEquipment.list} columns={this.columns} pagination={{pageSize:5}} ></Table>
-                </FormItem>
-            </Form>
+                        </Col>
+                        <Col span={3} >
+                        <FormItem style={{paddingTop:"30px"}}>
+                                <Button type="primary" icon="save">Save</Button>
+                        </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Tabs defaultActiveKey="1">
+                            <TabPane tab="Materials" key="1">
+                                <Row  type="flex" justify="end"><Button type="primary" icon="plus" className="add-material-button" onClick={() => this.onAddMaterial()}>Add</Button></Row>
+                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={materials} columns={this.materialColumns} pagination={{pageSize:5}} />
+                            </TabPane>
+                            <TabPane tab="Manpowers" key="2">
+                                <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-manpower-button" onClick={() => this.onAddManpower()}>Add</Button></Row>
+                                <Table rowKey={item => item.id} size="small" bordered={true}  dataSource={manpower} columns={this.manpowerColumns} pagination={{pageSize:5}} />
+                            </TabPane>
+                            <TabPane tab="Tools And Equipments" key="3">
+                                <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-toolAndEquipment-button" onClick={() => this.onAddToolAndEquipment()}>Add</Button></Row>
+                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={toolsAndEquipment} columns={this.toolAndEquipmentColumns} pagination={{pageSize:5}} />
+                            </TabPane>
+                        </Tabs>                    
+                    </Row>
+                </Form>
+            </Row>            
         );
     }
 }
@@ -91,6 +382,7 @@ class addCostSheetForm extends Component {
 addCostSheetForm.propTypes = {
     costSheet: PropTypes.object.isRequired,
     FetchCostSheet: PropTypes.func.isRequired,
+    Regions: PropTypes.array.isRequired,
 };
 
 const addCostSheet = Form.create()(addCostSheetForm);

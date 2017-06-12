@@ -109,24 +109,24 @@ class addMaterialForm extends Component {
                             <Col span="12">
                                     <FormItem label="Region">
                                         {getFieldDecorator('regionId', {
-                                rules: [
-                                    { required: true, message: 'Please select a region' }, 
-                                    ],
-                                    
-                            })(
-                                <Select
-                                showSearch
-                                placeholder="Select a region"
-                                optionFilterProp="children"
-                                //onChange={handleChange}
-                                filterOption={(input, option) => {
-                                    console.log(input,option);
-                                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-                                }}
-                            >
-                                {Regions.map(o => <Option key={o.id} >{`${o.name}`}</Option>)}
-                            </Select>
-                            )}
+                                            rules: [
+                                                { required: true, message: 'Please select a region' }, 
+                                                ],
+                                                
+                                        })(
+                                            <Select
+                                            showSearch
+                                            placeholder="Select a region"
+                                            optionFilterProp="children"
+                                            //onChange={handleChange}
+                                            filterOption={(input, option) => {
+                                                console.log(input,option);
+                                                return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                            }}
+                                        >
+                                            {Regions.map(o => <Option key={o.id} >{`${o.name}`}</Option>)}
+                                        </Select>
+                                        )}
                                 </FormItem>
                             </Col>
                         </FormItem>

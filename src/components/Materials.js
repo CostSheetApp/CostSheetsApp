@@ -19,10 +19,6 @@ Number.prototype.padZero= function(len, c){
 }
 
 class Materials extends Component {
-    state = {
-        AddMaterialFormIsVisible:false,
-        EditMaterialFormIsVisible:false
-    };
     constructor(props) {
         super(props);
         this.columns = [
@@ -78,6 +74,10 @@ class Materials extends Component {
         ];
         this.material = {};
     }
+    state = {
+        AddMaterialFormIsVisible:false,
+        EditMaterialFormIsVisible:false
+    };
     componentWillMount() {
         let {FetchMaterials,FetchRegions,entityId} = this.props;
         FetchMaterials(entityId);
