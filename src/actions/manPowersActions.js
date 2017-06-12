@@ -14,14 +14,16 @@ import {
     MANPOWER_UPDATED,
     UPDATING_MANPOWER_ERROR,
     MANPOWERS_JOBS_FETCHED,
-    FETCHING_MANPOWERS_JOBS_ERROR
+    FETCHING_MANPOWERS_JOBS_ERROR,
+    MANPOWER_DELETED,
+    DELETING_MANPOWER_ERROR
 } from '../constants/actionTypes';
 
 export const FetchManPowers = (entityId) => (dispatch) => {
     dispatch({type: FETCHING_MANPOWERS});
 
     axios
-        .get(`${API_URL}/Entities/${entityId}/manpowers?filter={"include":"job"}`, {
+        .get(`${API_URL}/Entities/${entityId}/manpowers?filter={"where": {"isDeleted": false },"include":"job"}`, {
         headers: {'Authorization': cookie.load('token')}
     })
         .then((response) => {
@@ -115,14 +117,41 @@ export const UpdateManPower = (id,params) =>
         headers: { 'Authorization': cookie.load('token') }
         })
         .then((response) => {
-            dispatch({type: MANPOWER_UPDATED, payload: response.data});
-            FetchManPowers();
+            axios
+            .get(`${API_URL}/Manpowers/${response.data.id}?filter={"include":"job"}`, {
+            headers: {'Authorization': cookie.load('token')}
+            })
+            .then((response) => {
+                dispatch({type: MANPOWER_UPDATED, payload: response.data});
+            })
+            .catch((error) => {
+                dispatch({
+                    type: UPDATING_MANPOWER_ERROR,
+                    error: error.response.data.error.message
+                });
+            });
         })
         .catch((error) => {
             dispatch({
                 type: UPDATING_MANPOWER_ERROR,
                 error: error.response.data.error.message
             });
-            //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+        });
+    };
+
+export const DeleteManPower = (id) =>
+    (dispatch) => {
+        axios
+        .patch(`${API_URL}/Manpowers/${id}?filter={"include":"job"}`,{isDeleted:true}, {
+        headers: { 'Authorization': cookie.load('token') }
+        })
+        .then((response) => {
+            dispatch({type: MANPOWER_DELETED, id: response.data.id});            
+        })
+        .catch((error) => {
+            dispatch({
+                type: DELETING_MANPOWER_ERROR,
+                error: error.response.data.error.message
+            });
         });
     };

@@ -8,6 +8,7 @@ import {
     MANPOWER_ADDED,
     ADDING_MANPOWER,
     ADDING_MANPOWER_ERROR,
+    MANPOWER_UPDATED,
     MANPOWERS_JOBS_FETCHED
 } from '../constants/actionTypes';
 
@@ -85,6 +86,22 @@ const reducer = (state = initState, action) => {
                 ...state,
                 isSaving: true
             };
+        case MANPOWER_UPDATED:
+        return {
+            ...state,
+            list: state.list.map( (item) => {
+                if(item.id !== action.payload.id) {
+                    // This isn't the item we care about - keep it as-is
+                    return item;
+                }
+
+                // Otherwise, this is the one we want - return an updated value
+                return {
+                    ...item,
+                    ...action.payload
+                };    
+            })
+        };
         case ADDING_MANPOWER_ERROR:
             return {
                 ...state,
