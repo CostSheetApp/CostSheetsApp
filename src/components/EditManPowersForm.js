@@ -14,7 +14,7 @@ import {
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-class addManPowerForm extends Component {
+class editManPowerForm extends Component {
     constructor(props){
       super(props);
       this.columns = [{
@@ -47,16 +47,16 @@ class addManPowerForm extends Component {
             onCreate,
             manPower,
             costHistory,
-            Jobs,
+            Jobs
             //isSaving,
-            title
+            //title
         } = this.props;
         let {getFieldDecorator} = this.props.form;
 
         return (
             <Modal
                 visible={visible}
-                title={title}
+                title={"Edit Man Power"}
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
@@ -111,15 +111,14 @@ class addManPowerForm extends Component {
     }
 }
 
-addManPowerForm.propTypes = {
+editManPowerForm.propTypes = {
     FetchJobs: PropTypes.func.isRequired,
     manPower: PropTypes.object,
     costHistory: PropTypes.object.isRequired,
     Jobs: PropTypes.array.isRequired,
-    isSaving: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired,
+    isSaving: PropTypes.bool.isRequired
 };
 
-const addManPower = Form.create()(addManPowerForm);
+const editManPower = Form.create()(editManPowerForm);
 
-export default addManPower;
+export default editManPower;
