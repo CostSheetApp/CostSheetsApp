@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, Icon, Input, Button, Checkbox, Row, Col,Alert } from 'antd';
+import { Form, Icon, Input, Button, Row, Col,Alert } from 'antd';
 import {ForgotPassword} from '../actions/accountActions';
 import { connect } from 'react-redux';
 import '../styles/forgot-password.css';
@@ -10,7 +10,7 @@ class ForgotPasswordForm extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
         if (!err) {
-            console.log('Received values of form: ', values);
+            //console.log('Received values of form: ', values);
             let {forgotPassword} = this.props;
             forgotPassword(values);
         }
@@ -20,7 +20,7 @@ class ForgotPasswordForm extends Component {
         let { getFieldDecorator } = this.props.form;
         let {hasError,error} = this.props;
 
-        let errorMessage = null
+        let errorMessage = null;
 
         if(hasError){
             errorMessage =  <Alert message={error} type="error" />
@@ -63,14 +63,14 @@ ForgotPasswordForm.propTypes = {
 };
 
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         hasError: state.account.hasError,
         error: state.account.error,
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         forgotPassword: (email) => {
             dispatch(ForgotPassword(email))

@@ -15,7 +15,7 @@ import {
     UPDATING_TOOL_ERROR
 } from '../constants/actionTypes';
 
-export const FetchTools = (entityId) => (dispatch, getState) => {
+export const FetchTools = (entityId) => (dispatch) => {
     dispatch({type: FETCHING_TOOLS});
 
     axios
@@ -26,12 +26,14 @@ export const FetchTools = (entityId) => (dispatch, getState) => {
             dispatch({type: TOOLS_FETCHED, list: response.data});
         })
         .catch((error) => {
-            console.log(error);
-            dispatch({type: FETCHING_TOOLS_ERROR});
+            dispatch({
+                type: FETCHING_TOOLS_ERROR,
+                error: error.response.data.error.message
+            });
         });
 };
 
-export const FetchToolCostHistory = (id) => (dispatch, getState) => {
+export const FetchToolCostHistory = (id) => (dispatch) => {
     dispatch({type: FETCHING_TOOL_COST_HISTORY});
 
     axios
@@ -42,16 +44,18 @@ export const FetchToolCostHistory = (id) => (dispatch, getState) => {
             dispatch({type: TOOL_COST_HISTORY_FETCHED, list: response.data});
         })
         .catch((error) => {
-            console.log(error);
-            dispatch({type: FETCHING_TOOL_COST_HISTORY_ERROR});
+            dispatch({
+                type: FETCHING_TOOL_COST_HISTORY_ERROR,
+                error: error.response.data.error.message
+            });
         });
 };
 
 export const AddTool = (entityId,params) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         dispatch({type: ADDING_TOOL});
         //params.code = 1;
-        console.log(params);
+        //console.log(params);
         axios
         .post(`${API_URL}/Entities/${entityId}/toolsAndEquipments/`,params, {
         headers: {'Authorization': cookie.load('token')}
@@ -66,20 +70,24 @@ export const AddTool = (entityId,params) =>
                 dispatch({type: TOOL_ADDED, payload: response.data});
             })
             .catch((error) => {
-                console.log(error);
-                dispatch({type: ADDING_TOOL_ERROR});
+                dispatch({
+                    type: ADDING_TOOL_ERROR,
+                    error: error.response.data.error.message
+                });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
         })
         .catch((error) => {
-            console.log(error);
-            dispatch({type: ADDING_TOOL_ERROR});
+            dispatch({
+                type: ADDING_TOOL_ERROR,
+                error: error.response.data.error.message
+            });
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
     };
 
 export const UpdateTool = (id,params) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         axios
         .patch(`${API_URL}/ToolsAndEquipments/${id}`,params, {
         headers: { 'Authorization': cookie.load('token') }
@@ -89,8 +97,10 @@ export const UpdateTool = (id,params) =>
             FetchTools();
         })
         .catch((error) => {
-            console.log(error);
-            dispatch({type: UPDATING_TOOL_ERROR});
+            dispatch({
+                type: UPDATING_TOOL_ERROR,
+                error: error.response.data.error.message
+            });
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
     };

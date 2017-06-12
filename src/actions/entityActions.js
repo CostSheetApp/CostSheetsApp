@@ -1,14 +1,14 @@
 import axios from 'axios';
-import cookie from 'react-cookie';
+//import cookie from 'react-cookie';
 import {API_URL} from '../constants/global';
 import {push} from 'react-router-redux';
 import {ENTITY_REGISTER_ERROR} from '../constants/actionTypes';
 
   
   export const Register = ({name,username,email,password}) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         axios.post(`${API_URL}/entities`, {name,username,email,password})
-        .then(response => {
+        .then(() => {
             dispatch(push("/login"));
         })
         .catch((error) => {
@@ -17,4 +17,4 @@ import {ENTITY_REGISTER_ERROR} from '../constants/actionTypes';
                 error: error.response.data.error.message
             });
         });
-    }
+    };

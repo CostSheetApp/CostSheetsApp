@@ -2,13 +2,13 @@ import axios from 'axios';
 import cookie from 'react-cookie';
 import {API_URL} from '../constants/global';
 import {push} from 'react-router-redux';
-import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND,RESET_PASSWORD_ERROR,ACCOUNT_REGISTER,ENTITY_REGISTER_ERROR} from '../constants/actionTypes';
+import {ACCOUNT_LOGIN,ACCOUNT_LOGOUT,AUTHORIZED_ACCOUNT,UNAUTHORIZED_ACCOUNT,EMAIL_NOT_FOUND,RESET_PASSWORD_ERROR} from '../constants/actionTypes';
 
 
 
 export const Login = ({username, password}) =>
-    (dispatch, getState) => {
-        dispatch({type: ACCOUNT_LOGIN})
+    (dispatch) => {
+        dispatch({type: ACCOUNT_LOGIN});
 
         axios.post(`${API_URL}/accounts/login?include=user`, {username, password})
         .then(response => {
@@ -29,13 +29,13 @@ export const Login = ({username, password}) =>
                 error: error.response.data.error.message
             });
         });
-    }
+    };
 
 export const Logout = () =>
-    (dispatch, getState) => {
+    (dispatch) => {
         dispatch({ type: ACCOUNT_LOGOUT });
         axios.post(`${API_URL}/accounts/logout?access_token=${cookie.load('token')}`)
-        .then(response => {
+        .then(()=> {
             cookie.remove('token');
         })
         .catch((error) => {
@@ -44,14 +44,14 @@ export const Logout = () =>
                 error: error.response.data.error.message
             });
         });
-    }
+    };
 
 
 
 export const ForgotPassword = ({email}) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         axios.post(`${API_URL}/accounts/reset`, {email})
-        .then(response => {
+        .then(() => {
             dispatch(push("/login"));
         })
         .catch((error) => {
@@ -60,12 +60,12 @@ export const ForgotPassword = ({email}) =>
                 error: error.response.data.error.message
             });
         });
-    }
+    };
 
 export const ResetPassword = ({access_token,password, confirmPassword}) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         axios.post(`${API_URL}/accounts/reset-password`, {access_token,password, confirmPassword})
-        .then(response => {
+        .then(() => {
             dispatch(push("/login"));
         })
         .catch((error) => {
@@ -74,6 +74,6 @@ export const ResetPassword = ({access_token,password, confirmPassword}) =>
                 error: error.response.data.error.message
             });
         });
-    }
+    };
 
 

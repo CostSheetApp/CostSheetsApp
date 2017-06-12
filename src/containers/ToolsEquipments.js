@@ -7,6 +7,7 @@ return {
     entityId: state.account.entityId,
     toolsEquipments: state.tools.list, 
     costHistory: state.tools.CostHistory, 
+    loading: state.tools.loading,
     isSaving: state.tools.isSaving
   };
 };

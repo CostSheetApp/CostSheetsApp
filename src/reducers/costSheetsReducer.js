@@ -17,7 +17,7 @@ const initState = {
         }
     }
     
-}
+};
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
@@ -36,6 +36,6 @@ const reducer = (state = initState, action) => {
         default:
             return state;
     }
-}
+};
 
 export default reducer;

@@ -52,8 +52,8 @@ const reducer = (state = initState, action) => {
             error: ''
         };
         default:
-            return state
+            return state;
     }
-}
+};
 
-export default reducer
+export default reducer;
