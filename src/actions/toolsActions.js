@@ -140,7 +140,7 @@ export const DeleteTool = (id) =>
 export const DeleteTool = (id) =>
     (dispatch) => {
         axios
-        .patch(`${API_URL}/ToolsAndEquipments/${id}?filter={"include":"Entity"}`,{isDeleted:true}, {
+        .patch(`${API_URL}/ToolsAndEquipments/${id}`,{isDeleted:true}, {
         headers: { 'Authorization': cookie.load('token') }
         })
         .then((response) => {
