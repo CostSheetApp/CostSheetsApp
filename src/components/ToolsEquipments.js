@@ -9,10 +9,13 @@ import {
     Popconfirm
 } from 'antd';
 import '../styles/toolsEquipments.css';
-import ToolsEquipmentsForm from './ToolsEquipmentsForm';
+//import ToolsEquipmentsForm from './ToolsEquipmentsForm';
+import AddToolsEquipmentsForm from './AddToolsEquipmentsForm';
+import EditToolsEquipmentsForm from './EditToolsEquipmentsForm';
 
 Number.prototype.padZero= function(len, c){
-    var s= this.toString(), c= c || '0';
+    let s= this.toString();
+    c= c || '0';
     while(s.length< len) s= c+ s;
     return s;
 };
@@ -54,13 +57,11 @@ class ToolsEquipments extends Component {
                 )
             }
         ];
-        this.handle = this.handleCreate;
-        this.title = "Add Tool and Equipment";
         this.toolsEquipment = {};
     }
     state = {
-        isCreateFormVisible: false,
-        isEditFormVisible: false
+        AddToolsEquipmentsFormIsVisible:false,
+        EditToolsEquipmentsFormIsVisible:false
     };
     componentWillMount() {
         let {FetchTools, entityId} = this.props;
@@ -68,30 +69,27 @@ class ToolsEquipments extends Component {
         FetchTools(entityId);
     }
     onDelete(index, toolsEquipment) {
-        console.log(toolsEquipment);
-        alert(index);
-
+        let {DeleteTool} = this.props;
+        DeleteTool(toolsEquipment.id);
     }
     onEdit(index, toolsEquipment) {
-        this.handle = this.handleEdit;
-        this.title = "Edit Tool and Equipment";
         this.toolsEquipment = toolsEquipment;
-        this.setState({visible: true});
+        this.setState({EditToolsEquipmentsFormIsVisible: true});
         let {FetchToolCostHistory} = this.props;
         FetchToolCostHistory(toolsEquipment.id);
-        console.log(toolsEquipment);
     }
     onCreate() {
-        this.handle = this.handleCreate;
-        this.title = "Add Tool and Equipment";
         this.toolsEquipment = {};
-        this.setState({visible: true});
+        this.setState({AddToolsEquipmentsFormIsVisible: true});
     }
-    handleCancel = () => {
-        this.setState({visible: false});
+    CancelAdd = () => {
+        this.setState({AddToolsEquipmentsFormIsVisible: false});
     }
-    handleCreate = () => {
-        const form = this.form;
+    CancelEdit = () => {
+        this.setState({EditToolsEquipmentsFormIsVisible: false});
+    }
+    Create = () => {
+        const form = this.addForm;
         form.validateFields((err, values) => {
             if (err) {
                 return;
@@ -100,12 +98,12 @@ class ToolsEquipments extends Component {
             delete values.id;
             AddTool(entityId,values);
             form.resetFields();
-            this.setState({visible: false});
+            this.setState({AddToolsEquipmentsFormIsVisible: false});
         });
     }
-    handleEdit = () => {
+    Edit = () => {
 
-        const form = this.form;
+        const form = this.editForm;
         form.validateFields((err, values) => {
             if (err) {
                 return;
@@ -113,11 +111,14 @@ class ToolsEquipments extends Component {
             let {UpdateTool} = this.props;
             UpdateTool(values.id, values);
             form.resetFields();
-            this.setState({visible: false});
+            this.setState({EditToolsEquipmentsFormIsVisible: false});
         });
     }
-    saveFormRef = (form) => {
-        this.form = form;
+    saveEditFormRef = (form) => {
+        this.editForm = form;
+    }
+    saveAddFormRef = (form) => {
+        this.addForm = form;
     }
     render() {
         let {
@@ -128,15 +129,24 @@ class ToolsEquipments extends Component {
         } = this.props;
         return (
             <Row>
-                <ToolsEquipmentsForm
-                    ref={this.saveFormRef}
-                    visible={this.state.visible}
-                    onCancel={this.handleCancel}
-                    onCreate={this.handle}
+                <AddToolsEquipmentsForm
+                    ref={this.saveAddFormRef}
+                    visible={this.state.AddToolsEquipmentsFormIsVisible}
+                    onCancel={this.CancelAdd}
+                    onCreate={this.Create}
                     toolsEquipment={this.toolsEquipment}
                     costHistory={costHistory}
                     isSaving={isSaving}
-                    title={this.title}
+                />
+
+                <EditToolsEquipmentsForm
+                    ref={this.saveEditFormRef}
+                    visible={this.state.EditToolsEquipmentsFormIsVisible}
+                    onCancel={this.CancelEdit}
+                    onCreate={this.Edit}
+                    toolsEquipment={this.toolsEquipment}
+                    costHistory={costHistory}
+                    isSaving={isSaving}
                 />
 
                 <Row>
@@ -171,6 +181,7 @@ ToolsEquipments.propTypes = {
     isSaving: PropTypes.bool.isRequired,
     AddTool: PropTypes.func.isRequired,
     UpdateTool: PropTypes.func.isRequired,
+    DeleteTool: PropTypes.func.isRequired,
     entityId: PropTypes.number.isRequired
 };
 

@@ -7,7 +7,9 @@ import {
     FETCHING_TOOL_COST_HISTORY_ERROR,
     TOOL_ADDED,
     ADDING_TOOL,
-    ADDING_TOOL_ERROR
+    ADDING_TOOL_ERROR,
+    TOOL_UPDATED,
+    TOOL_DELETED
 } from '../constants/actionTypes';
 
 const initState = {
@@ -79,11 +81,32 @@ const reducer = (state = initState, action) => {
                 ...state,
                 isSaving: true
             };
+        case TOOL_UPDATED:
+        return {
+            ...state,
+            list: state.list.map( (item) => {
+                if(item.id !== action.payload.id) {
+                    // This isn't the item we care about - keep it as-is
+                    return item;
+                }
+
+                // Otherwise, this is the one we want - return an updated value
+                return {
+                    ...item,
+                    ...action.payload
+                };    
+            })
+        };
         case ADDING_TOOL_ERROR:
             return {
                 ...state,
                 isSaving: false
             };
+        case TOOL_DELETED:
+        return {
+            ...state,
+            list: state.list.filter((item) => item.id !== action.id)
+        };
         default:
             return state;
     }

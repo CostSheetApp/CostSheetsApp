@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import ManPowers from '../components/ManPowers';
-import {FetchManPowers, FetchManPowerCostHistory, FetchJobs, AddManPower, UpdateManPower} from '../actions/manPowersActions';
+import {FetchManPowers, FetchManPowerCostHistory, FetchJobs, AddManPower, UpdateManPower,DeleteManPower} from '../actions/manPowersActions';
 
 const mapStateToProps = (state) => {
 return {
@@ -8,6 +8,7 @@ return {
     manPowers: state.manPowers.list, 
     costHistory: state.manPowers.CostHistory, 
     isSaving: state.manPowers.isSaving,
+    loading: state.manPowers.loading,
     Jobs: state.manPowers.Jobs
   };
 };
@@ -28,6 +29,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         UpdateManPower: (id, values) => {
             dispatch(UpdateManPower(id, values));
+        },
+        DeleteManPower: (id) => {
+            dispatch(DeleteManPower(id));
         }
     };
 };

@@ -5,16 +5,16 @@ import {
     Button,
     Modal,
     Input,
-    Icon,
+    //Icon,
     Table,
-    Col,
+    //Col,
     Select,
     Row
 } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-class addManPowerForm extends Component {
+class editManPowerForm extends Component {
     constructor(props){
       super(props);
       this.columns = [{
@@ -24,7 +24,7 @@ class addManPowerForm extends Component {
         }, {
           title: 'Created At',
           key: 'createdAt',
-           render: (text, record, index) => (
+           render: (text, record) => (
             <span>
                 <Moment fromNow>{record.createdAt}</Moment>
             </span>
@@ -47,16 +47,16 @@ class addManPowerForm extends Component {
             onCreate,
             manPower,
             costHistory,
-            Jobs,
-            isSaving,
-            title
+            Jobs
+            //isSaving,
+            //title
         } = this.props;
         let {getFieldDecorator} = this.props.form;
 
         return (
             <Modal
                 visible={visible}
-                title={title}
+                title={"Edit Man Power"}
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
@@ -92,7 +92,7 @@ class addManPowerForm extends Component {
                                 optionFilterProp="children"
                                 //onChange={handleChange}
                                 filterOption={(input, option) => {
-                                    console.log(input,option);
+                                    //console.log(input,option);
                                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                 }}
                             >
@@ -102,7 +102,7 @@ class addManPowerForm extends Component {
                          </FormItem>
                     <Row><Button type="primary" icon="plus" className="add-manPowers-button">Add New Price</Button></Row>
                     <FormItem>
-                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}} ></Table>
+                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}}/>
                     </FormItem>
                 </Form>
             </Modal>
@@ -111,15 +111,14 @@ class addManPowerForm extends Component {
     }
 }
 
-addManPowerForm.propTypes = {
+editManPowerForm.propTypes = {
     FetchJobs: PropTypes.func.isRequired,
     manPower: PropTypes.object,
     costHistory: PropTypes.object.isRequired,
     Jobs: PropTypes.array.isRequired,
-    isSaving: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired,
+    isSaving: PropTypes.bool.isRequired
 };
 
-const addManPower = Form.create()(addManPowerForm);
+const editManPower = Form.create()(editManPowerForm);
 
-export default addManPower;
+export default editManPower;

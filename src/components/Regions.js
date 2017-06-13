@@ -4,10 +4,6 @@ import '../styles/regions.css';
 import RegionForm from './RegionForm';
 
 class Regions extends Component {
-    state = { 
-      isCreateFormVisible: false,
-      isEditFormVisible: false 
-    };
     constructor(props){
       super(props);
       this.columns = [{
@@ -20,7 +16,7 @@ class Regions extends Component {
           width: 120,
           render: (text, region, index) => (
             <span>
-              <a href="#" onClick={() => this.onEdit(index,region) } > <Icon type="edit" /> Edit</a>
+              <a href="#" onClick={() => this.onEdit(index,region)} > <Icon type="edit" /> Edit</a>
               <span className="ant-divider" />
               <Popconfirm title="Are you sure delete this region?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,region)}>
                   <a href="#"> <Icon type="delete" /> Delete</a>
@@ -31,13 +27,18 @@ class Regions extends Component {
         this.handle = this.handleCreate;
         this.title = "Add Region";
         this.region={};
-    }  
+    } 
+    state = { 
+      isCreateFormVisible: false,
+      isEditFormVisible: false 
+    };
     componentWillMount() {
-        let { FetchRegions,entityId } = this.props
+        let { FetchRegions,entityId } = this.props;
         FetchRegions(entityId);
     }
     onDelete(index,region){
-      console.log(region);
+      //console.log(region);
+      alert(region.id);
       alert(index);
 
     }
@@ -46,7 +47,7 @@ class Regions extends Component {
         this.title = "Edit Region";
         this.region = region;
         this.setState({ visible: true });
-        console.log(region);      
+        //console.log(region);      
     }
     onCreate(){
         this.handle = this.handleCreate;
@@ -78,9 +79,7 @@ class Regions extends Component {
             return;
         }
         let { EditRegion } = this.props;
-        var id = values.id;
-        delete values.id;
-        EditRegion(id, values);
+        EditRegion(values.id, values);
         form.resetFields();
         this.setState({ visible: false });
         });
@@ -111,8 +110,11 @@ class Regions extends Component {
 
 Regions.propTypes = {
     FetchRegions: PropTypes.func.isRequired,
+    AddRegion: PropTypes.func.isRequired,
+    EditRegion: PropTypes.func.isRequired,
     regions: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
     entityId: PropTypes.number.isRequired
 };
 

@@ -8,7 +8,7 @@ class LoginForm extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
         if (!err) {
-            console.log('Received values of form: ', values);
+            //console.log('Received values of form: ', values);
             let {login} = this.props;
             login(values);
         }
@@ -18,15 +18,15 @@ class LoginForm extends Component {
         let { getFieldDecorator } = this.props.form;
         let {hasError,error} = this.props;
 
-        let errorMessage = null
+        let errorMessage = null;
 
         if(hasError){
-            errorMessage =  <Alert message={error} type="error" />
+            errorMessage =  <Alert message={error} type="error" />;
         }
 
         return (           
             <Row type="flex" justify="space-around" align="middle">
-        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}></Col>
+        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}/>
         <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
         <Form onSubmit={this.handleSubmit} className="login-form">
             <FormItem>
@@ -59,7 +59,7 @@ class LoginForm extends Component {
             </FormItem>
         </Form>
         </Col>
-        <Col xs={{ span: 5, offset: 1 }} lg={{ pan: 6, offset: 2 }}></Col>
+        <Col xs={{ span: 5, offset: 1 }} lg={{ pan: 6, offset: 2 }}/>
         </Row>
         );
     }

@@ -6,7 +6,8 @@ const mapStateToProps = (state) => {
     return {
         entityId: state.account.entityId,
         projects: state.projects.list,
-        isSaving: state.projects.isSaving
+        isSaving: state.projects.isSaving,
+        loading: state.projects.loading
     };
 };
 

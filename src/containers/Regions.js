@@ -8,7 +8,8 @@ const mapStateToProps = (state) => {
     return {
         entityId: state.account.entityId,
         regions: state.regions.list,
-        isSaving: state.regions.isSaving
+        isSaving: state.regions.isSaving,
+        loading: state.regions.loading
     };
 };
 

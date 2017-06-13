@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import ToolsEquipments from '../components/ToolsEquipments';
-import {FetchTools, FetchToolCostHistory, AddTool, UpdateTool} from '../actions/toolsActions';
+import {FetchTools, FetchToolCostHistory, AddTool, UpdateTool, DeleteTool} from '../actions/toolsActions';
 
 const mapStateToProps = (state) => {
 return {
@@ -25,6 +25,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         UpdateTool: (id, values) => {
             dispatch(UpdateTool(id, values));
+        },
+        DeleteTool: (id) => {
+            dispatch(DeleteTool(id));
         }
     };
 };

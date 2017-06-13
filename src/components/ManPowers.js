@@ -2,14 +2,15 @@ import React, {Component, PropTypes} from 'react';
 import {
     Table,
     Row,
-    Col,
+    //Col,
     Button,
     Icon,
     Tooltip,
     Popconfirm
 } from 'antd';
 import '../styles/manPowers.css';
-import ManPowersForm from './ManPowersForm';
+import AddManPowersForm from './AddManPowersForm';
+import EditManPowersForm from './EditManPowersForm';
 
 Number.prototype.padZero= function(len, c){
     var s= this.toString(), c= c || '0';
@@ -18,10 +19,6 @@ Number.prototype.padZero= function(len, c){
 };
 
 class ManPowers extends Component {
-    state = {
-        isCreateFormVisible: false,
-        isEditFormVisible: false
-    };
     constructor(props) {
         super(props);
         this.columns = [
@@ -71,40 +68,41 @@ class ManPowers extends Component {
                 )
             }
         ];
-        this.handle = this.handleCreate;
-        this.title = "Add man power";
         this.manPower = {};
     }
+    state = {
+        AddManPowersFormIsVisible:false,
+        EditManPowersFormIsVisible:false
+    };
     componentWillMount() {
         let {FetchManPowers, entityId} = this.props;
 
         FetchManPowers(entityId);
     }
     onDelete(index, manPower) {
-        console.log(manPower);
-        alert(index);
+        let {DeleteManPower} = this.props;
+        DeleteManPower(manPower.id);
 
     }
     onEdit(index, manPower) {
-        this.handle = this.handleEdit;
-        this.title = "Edit man power";
         this.manPower = manPower;
-        this.setState({visible: true});
+        this.setState({EditManPowersFormIsVisible: true});
         let {FetchManPowerCostHistory} = this.props;
         FetchManPowerCostHistory(manPower.id);
-        console.log(manPower);
+        //console.log(manPower);
     }
-    onCreate() {
-        this.handle = this.handleCreate;
-        this.title = "Add man power";
+    onCreateManPower() {
         this.manPower = {};
-        this.setState({visible: true});
+        this.setState({AddManPowersFormIsVisible: true});
     }
-    handleCancel = () => {
-        this.setState({visible: false});
+    CancelAdd = () => {
+        this.setState({AddManPowersFormIsVisible: false});
     }
-    handleCreate = () => {
-        const form = this.form;
+    CancelEdit = () => {
+        this.setState({EditManPowersFormIsVisible: false});
+    }
+    Create = () => {
+        const form = this.addForm;
         form.validateFields((err, values) => {
             if (err) {
                 return;
@@ -113,12 +111,11 @@ class ManPowers extends Component {
             delete values.id;
             AddManPower(entityId,values);
             form.resetFields();
-            this.setState({visible: false});
+            this.setState({AddManPowersFormIsVisible: false});
         });
     }
-    handleEdit = () => {
-
-        const form = this.form;
+    Edit = () => {
+        const form = this.editForm;
         form.validateFields((err, values) => {
             if (err) {
                 return;
@@ -126,11 +123,14 @@ class ManPowers extends Component {
             let {UpdateManPower} = this.props;
             UpdateManPower(values.id, values);
             form.resetFields();
-            this.setState({visible: false});
+            this.setState({EditManPowersFormIsVisible: false});
         });
     }
-    saveFormRef = (form) => {
-        this.form = form;
+    saveEditFormRef = (form) => {
+        this.editForm = form;
+    }
+    saveAddFormRef = (form) => {
+        this.addForm = form;
     }
     render() {
         let {
@@ -143,17 +143,28 @@ class ManPowers extends Component {
         } = this.props;
         return (
             <Row>
-                <ManPowersForm
-                    ref={this.saveFormRef}
-                    visible={this.state.visible}
-                    onCancel={this.handleCancel}
-                    onCreate={this.handle}
+                <EditManPowersForm
+                    ref={this.saveEditFormRef}
+                    visible={this.state.EditManPowersFormIsVisible}
+                    onCancel={this.CancelEdit}
+                    onCreate={this.Edit}
                     FetchJobs={FetchJobs}
                     manPower={this.manPower}
                     Jobs={Jobs}
                     costHistory={costHistory}
                     isSaving={isSaving}
-                    title={this.title}
+                />
+
+                <AddManPowersForm
+                    ref={this.saveAddFormRef}
+                    visible={this.state.AddManPowersFormIsVisible}
+                    onCancel={this.CancelAdd}
+                    onCreate={this.Create}
+                    FetchJobs={FetchJobs}
+                    manPower={this.manPower}
+                    Jobs={Jobs}
+                    costHistory={costHistory}
+                    isSaving={isSaving}
                 />
 
                 <Row>
@@ -161,7 +172,7 @@ class ManPowers extends Component {
                         type="primary"
                         icon="plus"
                         className="add-manPowers-button"
-                        onClick={() => this.onCreate()}>Add</Button>
+                        onClick={() => this.onCreateManPower()}>Add</Button>
                 </Row>
                 <Table
                     rowKey={item => item.id}
@@ -187,8 +198,10 @@ ManPowers.propTypes = {
     costHistory: PropTypes.object.isRequired,
     Jobs: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
     AddManPower: PropTypes.func.isRequired,
     UpdateManPower: PropTypes.func.isRequired,
+    DeleteManPower: PropTypes.func.isRequired,
     entityId: PropTypes.number.isRequired
 };
 

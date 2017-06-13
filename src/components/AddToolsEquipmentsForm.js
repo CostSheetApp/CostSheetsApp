@@ -5,14 +5,14 @@ import {
     Button,
     Modal,
     Input,
-    Icon,
+    //Icon,
     Table,
-    Col,
-    Select,
+    //Col,
+    //Select,
     Row
 } from 'antd';
 const FormItem = Form.Item;
-const Option = Select.Option;
+//const Option = Select.Option;
 
 class addToolsEquipmentForm extends Component {
     constructor(props){
@@ -24,7 +24,7 @@ class addToolsEquipmentForm extends Component {
         }, {
           title: 'Created At',
           key: 'createdAt',
-           render: (text, record, index) => (
+           render: (text, record) => (
             <span>
                 <Moment fromNow>{record.createdAt}</Moment>
             </span>
@@ -42,16 +42,15 @@ class addToolsEquipmentForm extends Component {
             onCancel,
             onCreate,
             toolsEquipment,
-            costHistory,
-            isSaving,
-            title
+            costHistory
+            //isSaving,
         } = this.props;
         let {getFieldDecorator} = this.props.form;
 
         return (
             <Modal
                 visible={visible}
-                title={title}
+                title={"Add Tools"}
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
@@ -76,7 +75,7 @@ class addToolsEquipmentForm extends Component {
                     </FormItem>
                     <Row><Button type="primary" icon="plus" className="add-toolsEquipments-button">Add New Price</Button></Row>
                     <FormItem>
-                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}} ></Table>
+                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}}/>
                     </FormItem>
                 </Form>
             </Modal>
@@ -88,8 +87,7 @@ class addToolsEquipmentForm extends Component {
 addToolsEquipmentForm.propTypes = {
     toolsEquipment: PropTypes.object,
     costHistory: PropTypes.object.isRequired,
-    isSaving: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired,
+    isSaving: PropTypes.bool.isRequired
 };
 
 const addToolsEquipment = Form.create()(addToolsEquipmentForm);
