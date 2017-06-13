@@ -75,20 +75,14 @@ class addCostSheetForm extends Component {
                 }
             },
             {
-                title: 'Amount',
-                key: 'amount',
-                render: (text, material) => {
-                    return (
-                        <span>0.0</span>
-                    );
-                }
-            },
-            {
                 title: 'Total',
                 key: 'total',
-                render: (text, material) => {
+                render: (text, item) => {
+                    let total = 0;
+
+                    total = item.performance * item.waste * item.material.materialCostHistories.FirstOrDefault({cost:0}).cost;
                     return (
-                        <span>0.0</span>
+                        <span>{total}</span>
                     );
                 }
             }, {
@@ -142,15 +136,6 @@ class addCostSheetForm extends Component {
                             {/*{material.materialCostHistories[0].cost} <Tooltip title={material.unitsOfMeasurement.description}><span>{material.unitsOfMeasurement.abbreviation}</span></Tooltip>*/}
                         </span>
                         
-                    );
-                }
-            },
-            {
-                title: 'Amount',
-                key: 'amount',
-                render: (text, material) => {
-                    return (
-                        <span>0.0</span>
                     );
                 }
             },
@@ -213,15 +198,6 @@ class addCostSheetForm extends Component {
                             {/*{material.materialCostHistories[0].cost} <Tooltip title={material.unitsOfMeasurement.description}><span>{material.unitsOfMeasurement.abbreviation}</span></Tooltip>*/}
                         </span>
                         
-                    );
-                }
-            },
-            {
-                title: 'Amount',
-                key: 'amount',
-                render: (text, material) => {
-                    return (
-                        <span>0.0</span>
                     );
                 }
             },
