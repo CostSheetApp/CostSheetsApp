@@ -21,13 +21,15 @@ Array.prototype.first = function () {
 };
 
 Number.prototype.padZero= function(len, c){
-    var s= this.toString(), c= c || '0';
+    var s= this.toString();
+     c= c || '0';
     while(s.length< len) s= c+ s;
     return s;
 };
 
 class AddCostSheetMaterialForm extends Component {
-    selectMaterialToBeAdd(id) {
+    //selectMaterialToBeAdd(id) {
+    selectMaterialToBeAdd() {
         // let {materials} = this.props;
         // this.material = materials.filter(function(item){return item.id == id})[0];
         // console.log("material",this.material);

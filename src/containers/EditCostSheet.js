@@ -4,10 +4,11 @@ import {
 FetchCostSheet,
 FetchCostSheetMaterials,
 FetchCostSheetManpower,
-FetchCostSheetToolsAndEquipment
+FetchCostSheetToolsAndEquipment,
+SelectMaterialToBeAddToCostSheet
 } from '../actions/costSheetActions';
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         costSheet: state.costSheets.toEdit,
         csmaterials: state.costSheets.materialsToEdit,
@@ -20,7 +21,7 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         FetchCostSheet: (id) => {
             dispatch(FetchCostSheet(id));
