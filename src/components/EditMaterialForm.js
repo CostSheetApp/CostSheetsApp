@@ -140,6 +140,8 @@ editMaterialForm.propTypes = {
     isSaving: PropTypes.bool.isRequired,
     visible: PropTypes.bool.isRequired,
     Regions: PropTypes.array.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onCreate: PropTypes.func.isRequired
 };
 
 const editMaterial = Form.create()(editMaterialForm);

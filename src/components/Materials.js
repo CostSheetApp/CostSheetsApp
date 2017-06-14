@@ -13,7 +13,8 @@ import AddMaterialForm from './AddMaterialForm';
 import EditMaterialForm from './EditMaterialForm';
 
 Number.prototype.padZero= function(len, c){
-    var s= this.toString(), c= c || '0';
+    let s= this.toString();
+    c = c || '0';
     while(s.length< len) s= c+ s;
     return s;
 };

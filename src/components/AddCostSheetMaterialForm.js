@@ -1,16 +1,16 @@
 import React, {Component, PropTypes } from 'react';
-import Moment from 'react-moment';
-import Mayre from 'mayre';
+//import Moment from 'react-moment';
+//import Mayre from 'mayre';
 import {
     Form,
     Button,
     Modal,
-    Input,
-    Icon,
-    Table,
-    Col,
-    Select,
-    Row
+    //Input,
+    //Icon,
+    //Table,
+    //Col,
+    Select
+    //Row
 } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -82,6 +82,9 @@ class AddCostSheetMaterialForm extends Component {
 AddCostSheetMaterialForm.propTypes = {
     visible: PropTypes.bool.isRequired,
     materials: PropTypes.array.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onCreate: PropTypes.func.isRequired
 };
 
 const AddCostSheetMaterial = Form.create()(AddCostSheetMaterialForm);

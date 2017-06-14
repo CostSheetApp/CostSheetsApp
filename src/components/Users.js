@@ -45,9 +45,8 @@ class Users extends Component {
         FetchUsers(entityId);
     }
     onDelete(index,user){
-      //console.log(user);
-      alert(user.id);
-      alert(index);
+        let { DeleteUser } = this.props;
+        DeleteUser(user.id);
 
     }
     onEdit(index,user){
@@ -120,6 +119,7 @@ Users.propTypes = {
     FetchUsers: PropTypes.func.isRequired,
     AddUser: PropTypes.func.isRequired,
     EditUser: PropTypes.func.isRequired,
+    DeleteUser: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,

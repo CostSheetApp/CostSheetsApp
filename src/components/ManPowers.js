@@ -13,7 +13,8 @@ import AddManPowersForm from './AddManPowersForm';
 import EditManPowersForm from './EditManPowersForm';
 
 Number.prototype.padZero= function(len, c){
-    var s= this.toString(), c= c || '0';
+    let s= this.toString(); 
+    c = c || '0';
     while(s.length< len) s= c+ s;
     return s;
 };

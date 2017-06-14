@@ -1,4 +1,4 @@
-import {PROJECTS_FETCHED,FETCHING_PROJECTS,FETCHING_PROJECTS_ERROR,PROJECT_ADDED,ADDING_PROJECT,ADDING_PROJECT_ERROR,PROJECT_EDITED,EDITING_PROJECT,EDITING_PROJECT_ERROR} from '../constants/actionTypes';
+import {PROJECTS_FETCHED,FETCHING_PROJECTS,FETCHING_PROJECTS_ERROR,PROJECT_ADDED,ADDING_PROJECT,ADDING_PROJECT_ERROR,PROJECT_EDITED,PROJECT_DELETED} from '../constants/actionTypes';
 
 const initState = {
     list: [],
@@ -46,21 +46,23 @@ const reducer = (state = initState, action) => {
         case PROJECT_EDITED:
         return {
             ...state,
-            isSaving: false,
-            list: [
-                action.payload,
-                ...state.list                
-            ]
+            list: state.list.map( (item) => {
+                if(item.id !== action.payload.id) {
+                    // This isn't the item we care about - keep it as-is
+                    return item;
+                }
+
+                // Otherwise, this is the one we want - return an updated value
+                return {
+                    ...item,
+                    ...action.payload
+                };    
+            })
         };
-        case EDITING_PROJECT:
-        return{
+        case PROJECT_DELETED:
+        return {
             ...state,
-            isSaving: true
-        };
-        case EDITING_PROJECT_ERROR:
-        return{
-            ...state,
-            isSaving: false
+            list: state.list.filter((item) => item.id !== action.id)
         };
         default:
             return state;
