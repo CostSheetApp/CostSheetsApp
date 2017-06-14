@@ -267,7 +267,7 @@ class addCostSheetForm extends Component {
     }
     render() {
         let {getFieldDecorator} = this.props.form;
-        let {costSheet,materials,manpower,toolsAndEquipment,Regions} = this.props;
+        let {costSheet,csmaterials,csmanpower,cstoolsAndEquipment,Regions,materials,SelectMaterialToBeAddToCostSheet} = this.props;
         return (
             <Row>
                 <AddCostSheetMaterial
@@ -275,6 +275,8 @@ class addCostSheetForm extends Component {
                     visible={this.state.AddMaterialToCostSheetFormIsVisible}
                     onCancel={this.CancelAdd}
                     onCreate={this.AddMaterialToCostSheet}
+                    materials={materials}
+                    SelectMaterialToBeAddToCostSheet={SelectMaterialToBeAddToCostSheet}
                 />
                 {/*<EditCostSheetMaterial />*/}
                 <Form>
@@ -337,15 +339,15 @@ class addCostSheetForm extends Component {
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="Materials" key="1">
                                 <Row  type="flex" justify="end"><Button type="primary" icon="plus" className="add-material-button" onClick={() => this.onAddMaterial()}>Add</Button></Row>
-                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={materials} columns={this.materialColumns} pagination={{pageSize:5}} />
+                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={csmaterials} columns={this.materialColumns} pagination={{pageSize:5}} />
                             </TabPane>
                             <TabPane tab="Manpowers" key="2">
                                 <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-manpower-button" onClick={() => this.onAddManpower()}>Add</Button></Row>
-                                <Table rowKey={item => item.id} size="small" bordered={true}  dataSource={manpower} columns={this.manpowerColumns} pagination={{pageSize:5}} />
+                                <Table rowKey={item => item.id} size="small" bordered={true}  dataSource={csmanpower} columns={this.manpowerColumns} pagination={{pageSize:5}} />
                             </TabPane>
                             <TabPane tab="Tools And Equipments" key="3">
                                 <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-toolAndEquipment-button" onClick={() => this.onAddToolAndEquipment()}>Add</Button></Row>
-                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={toolsAndEquipment} columns={this.toolAndEquipmentColumns} pagination={{pageSize:5}} />
+                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={cstoolsAndEquipment} columns={this.toolAndEquipmentColumns} pagination={{pageSize:5}} />
                             </TabPane>
                         </Tabs>                    
                     </Row>
@@ -359,6 +361,10 @@ addCostSheetForm.propTypes = {
     costSheet: PropTypes.object.isRequired,
     FetchCostSheet: PropTypes.func.isRequired,
     Regions: PropTypes.array.isRequired,
+    materials: PropTypes.array.isRequired,
+    manpowers: PropTypes.array.isRequired,
+    toolsAndEquipments: PropTypes.array.isRequired,
+    SelectMaterialToBeAddToCostSheet: PropTypes.func.isRequired,
 };
 
 const addCostSheet = Form.create()(addCostSheetForm);

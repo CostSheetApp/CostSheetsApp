@@ -10,10 +10,13 @@ FetchCostSheetToolsAndEquipment
 const mapStateToProps = (state, ownProps) => {
     return {
         costSheet: state.costSheets.toEdit,
-        materials: state.costSheets.materialsToEdit,
-        manpower: state.costSheets.manpowersToEdit,
-        toolsAndEquipment: state.costSheets.toolsAndEquipmentsToEdit,
+        csmaterials: state.costSheets.materialsToEdit,
+        csmanpower: state.costSheets.manpowersToEdit,
+        cstoolsAndEquipment: state.costSheets.toolsAndEquipmentsToEdit,
         Regions: state.regions.list,
+        materials: state.materials.list,
+        manpowers: state.manPowers.list,
+        toolsAndEquipments: state.tools.list
     };
 };
 
@@ -31,6 +34,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         FetchCostSheetToolsAndEquipment: (id) => {
             dispatch(FetchCostSheetToolsAndEquipment(id));
         },
+        SelectMaterialToBeAddToCostSheet: (id) => {
+            dispatch(SelectMaterialToBeAddToCostSheet(id));
+        }
     };
 };
 
