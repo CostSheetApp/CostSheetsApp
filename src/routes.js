@@ -64,6 +64,7 @@ export default (
       <Route path="cost-sheets" component={CostSheets}/>
       <Route path="cost-sheets/:id" component={EditCostSheet}/>
       <Route path="projects" component={Projects}/>
+      <Route path="projects/:id" component={DashboardProject}/>
       <Route path="regions" component={Regions}/> 
       <Route path="materials" component={Materiasl}/>      
       <Route path="users" component={Users}/>

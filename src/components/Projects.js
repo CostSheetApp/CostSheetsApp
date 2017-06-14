@@ -30,9 +30,11 @@ class Projects extends Component {
         }, {
           title: 'Action',
           key: 'action',
-          width: 120,
+          width: 220,
           render: (text, project, index) => (
             <span>
+              <Button icon="search" onClick={() => this.ViewProject(project.id)}>View</Button>
+              <span className="ant-divider" />
               <a href="#" onClick={() => this.onEdit(index,project)} > <Icon type="edit" /> Edit</a>
               <span className="ant-divider" />
               <Popconfirm title="Are you sure delete this project?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,project)}>
@@ -54,9 +56,8 @@ class Projects extends Component {
         FetchProjects(entityId);
     }
     onDelete(index,project){
-      //console.log(project);
-      alert(project.id);
-      alert(index);
+        let { DeleteProject } = this.props;
+        DeleteProject(project.id);
 
     }
     onEdit(index,project){
@@ -104,6 +105,10 @@ class Projects extends Component {
     saveFormRef = (form) => {
         this.form = form;
     }
+    ViewProject(id){
+        let { ViewProject } = this.props;
+        ViewProject(id);
+    }
     render() {
         let {projects,loading,isSaving} = this.props;
         return (
@@ -129,6 +134,8 @@ Projects.propTypes = {
     FetchProjects: PropTypes.func.isRequired,
     AddProject: PropTypes.func.isRequired,
     EditProject: PropTypes.func.isRequired,
+    DeleteProject: PropTypes.func.isRequired,
+    ViewProject: PropTypes.func.isRequired,
     projects: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,

@@ -59,7 +59,7 @@ class ForgotPasswordForm extends Component {
 ForgotPasswordForm.propTypes = {
     hasError: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
-    forgotPassword: PropTypes.func.isRequired,
+    forgotPassword: PropTypes.func.isRequired
 };
 
 

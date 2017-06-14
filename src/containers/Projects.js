@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Projects from '../components/Projects';
-import {FetchProjects,AddProject,EditProject} from '../actions/projectActions';
+import {FetchProjects,AddProject,EditProject,DeleteProject,ViewProject} from '../actions/projectActions';
 
 const mapStateToProps = (state) => {
     return {
@@ -22,6 +22,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         EditProject: (id,params) => {
             dispatch(EditProject(id,params));
+        },
+        DeleteProject: (id) => {
+            dispatch(DeleteProject(id));
+        },
+        ViewProject: (id) => {
+            dispatch(ViewProject(id));
         }
     };
 };

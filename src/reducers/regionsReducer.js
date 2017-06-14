@@ -1,4 +1,4 @@
-import {REGIONS_FETCHED,FETCHING_REGIONS,FETCHING_REGIONS_ERROR,REGION_ADDED,ADDING_REGION,ADDING_REGION_ERROR,REGION_EDITED,EDITING_REGION,EDITING_REGION_ERROR} from '../constants/actionTypes';
+import {REGIONS_FETCHED,FETCHING_REGIONS,FETCHING_REGIONS_ERROR,REGION_ADDED,ADDING_REGION,ADDING_REGION_ERROR,REGION_EDITED,TOOL_DELETED} from '../constants/actionTypes';
 
 const initState = {
     list: [],
@@ -46,21 +46,23 @@ const reducer = (state = initState, action) => {
         case REGION_EDITED:
         return {
             ...state,
-            isSaving: false,
-            list: [
-                action.payload,
-                ...state.list                
-            ]
+            list: state.list.map( (item) => {
+                if(item.id !== action.payload.id) {
+                    // This isn't the item we care about - keep it as-is
+                    return item;
+                }
+
+                // Otherwise, this is the one we want - return an updated value
+                return {
+                    ...item,
+                    ...action.payload
+                };    
+            })
         };
-        case EDITING_REGION:
-        return{
+        case TOOL_DELETED:
+        return {
             ...state,
-            isSaving: true
-        };
-        case EDITING_REGION_ERROR:
-        return{
-            ...state,
-            isSaving: false
+            list: state.list.filter((item) => item.id !== action.id)
         };
         default:
             return state;

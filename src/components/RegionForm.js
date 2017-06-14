@@ -51,6 +51,9 @@ addRegionForm.propTypes = {
     region: PropTypes.object,
     isSaving: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
+    visible: PropTypes.bool,
+    onCancel: PropTypes.func.isRequired,
+    onCreate: PropTypes.func.isRequired
 };
 
 const addRegion = Form.create()(addRegionForm);

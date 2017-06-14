@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Regions from '../components/Regions';
-import {FetchRegions,AddRegion,EditRegion} from '../actions/regionActions';
+import {FetchRegions,AddRegion,EditRegion,DeleteRegion} from '../actions/regionActions';
 //import {EditRegion} from '../actions/regionActions';
 //import * as courseActions from '../../actions/catActions';  
 
@@ -24,6 +24,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         EditRegion: (id,params) => {
             dispatch(EditRegion(id,params));
+        },
+        DeleteRegion: (id) => {
+            dispatch(DeleteRegion(id));
         }
     };
 };

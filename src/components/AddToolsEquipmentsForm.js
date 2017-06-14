@@ -87,7 +87,10 @@ class addToolsEquipmentForm extends Component {
 addToolsEquipmentForm.propTypes = {
     toolsEquipment: PropTypes.object,
     costHistory: PropTypes.object.isRequired,
-    isSaving: PropTypes.bool.isRequired
+    isSaving: PropTypes.bool.isRequired,
+    visible: PropTypes.bool.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onCreate: PropTypes.func.isRequired
 };
 
 const addToolsEquipment = Form.create()(addToolsEquipmentForm);

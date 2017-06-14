@@ -1,19 +1,19 @@
 import React, {Component, PropTypes } from 'react';
-import Moment from 'react-moment';
-import Mayre from 'mayre';
+//import Moment from 'react-moment';
+//import Mayre from 'mayre';
 import {
     Form,
     Button,
-    Modal,
-    Input,
-    Icon,
-    Table,
-    Col,
-    Select,
-    Row
+    Modal
+    //Input,
+    //Icon,
+    //Table,
+    //Col,
+    //Select
+    //Row
 } from 'antd';
-const FormItem = Form.Item;
-const Option = Select.Option;
+//const FormItem = Form.Item;
+//const Option = Select.Option;
 
 Array.prototype.first = function () {
     if(this.length<=0) return;
@@ -31,7 +31,7 @@ class AddCostSheetMaterialForm extends Component {
             onCreate,
             isSaving
         } = this.props;
-        let {getFieldDecorator} = this.props.form;
+        //let {getFieldDecorator} = this.props.form;
         
         return (
             <Modal
@@ -52,7 +52,10 @@ class AddCostSheetMaterialForm extends Component {
 }
 
 AddCostSheetMaterialForm.propTypes = {
-    visible: PropTypes.bool.isRequired
+    visible: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onCreate: PropTypes.func.isRequired
 };
 
 const AddCostSheetMaterial = Form.create()(AddCostSheetMaterialForm);
