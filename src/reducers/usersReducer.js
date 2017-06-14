@@ -1,4 +1,4 @@
-import {USER_ADDED,ADDING_USER,ADDING_USER_ERROR,USER_EDITED,EDITING_USER,EDITING_USER_ERROR,USERS_FETCHED,FETCHING_USERS,FETCHING_USERS_ERROR} from '../constants/actionTypes';
+import {USER_ADDED,ADDING_USER,ADDING_USER_ERROR,USER_EDITED,USERS_FETCHED,FETCHING_USERS,FETCHING_USERS_ERROR,USER_DELETED} from '../constants/actionTypes';
 
 const initState = {
     list: [],
@@ -46,21 +46,23 @@ const reducer = (state = initState, action) => {
         case USER_EDITED:
         return {
             ...state,
-            isSaving: false,
-            list: [
-                action.payload,
-                ...state.list                
-            ]
+            list: state.list.map( (item) => {
+                if(item.id !== action.payload.id) {
+                    // This isn't the item we care about - keep it as-is
+                    return item;
+                }
+
+                // Otherwise, this is the one we want - return an updated value
+                return {
+                    ...item,
+                    ...action.payload
+                };    
+            })
         };
-        case EDITING_USER:
-        return{
+        case USER_DELETED:
+        return {
             ...state,
-            isSaving: true
-        };
-        case EDITING_USER_ERROR:
-        return{
-            ...state,
-            isSaving: false
+            list: state.list.filter((item) => item.id !== action.id)
         };
         default:
             return state;

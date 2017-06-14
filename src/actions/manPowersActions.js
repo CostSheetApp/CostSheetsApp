@@ -59,7 +59,7 @@ export const FetchManPowerCostHistory = (id) => (dispatch) => {
 export const FetchJobs = () => (dispatch) => {
 
         axios
-        .get(`${API_URL}/Jobs`, {
+        .get(`${API_URL}/Jobs?filter={"where": {"isDeleted": false }}`, {
         headers: {'Authorization': cookie.load('token')}
         })
         .then((response) => {

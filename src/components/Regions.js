@@ -37,10 +37,8 @@ class Regions extends Component {
         FetchRegions(entityId);
     }
     onDelete(index,region){
-      //console.log(region);
-      alert(region.id);
-      alert(index);
-
+        let {DeleteRegion} = this.props;
+        DeleteRegion(region.id);
     }
     onEdit(index,region){
         this.handle = this.handleEdit;
@@ -112,6 +110,7 @@ Regions.propTypes = {
     FetchRegions: PropTypes.func.isRequired,
     AddRegion: PropTypes.func.isRequired,
     EditRegion: PropTypes.func.isRequired,
+    DeleteRegion: PropTypes.func.isRequired,
     regions: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,

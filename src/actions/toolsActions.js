@@ -115,7 +115,7 @@ export const UpdateTool = (id,params) =>
                 error: error.response.data.error.message
             });
         });
-    }
+    };
 
 /*
 export const DeleteTool = (id) =>

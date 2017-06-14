@@ -116,7 +116,11 @@ addManPowerForm.propTypes = {
     manPower: PropTypes.object,
     costHistory: PropTypes.object.isRequired,
     Jobs: PropTypes.array.isRequired,
-    isSaving: PropTypes.bool.isRequired
+    visible: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    onCreate: PropTypes.func.isRequired
+    //form: this
 };
 
 const addManPower = Form.create()(addManPowerForm);
