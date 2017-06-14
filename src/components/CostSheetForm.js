@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Moment from 'react-moment';
+//import Moment from 'react-moment';
 
 import AddCostSheetMaterial from './AddCostSheetMaterialForm';
 import {
     Form,
     Button,
-    Modal,
+    //Modal,
     Input,
     Icon,
     Table,
@@ -21,7 +21,8 @@ const Option = Select.Option;
 const TabPane = Tabs.TabPane;
 
 Number.prototype.padZero= function(len, c){
-    var s= this.toString(), c= c || '0';
+    let s= this.toString()
+    c= c || '0';
     while(s.length< len) s= c+ s;
     return s;
 }
@@ -142,9 +143,11 @@ class addCostSheetForm extends Component {
             {
                 title: 'Total',
                 key: 'total',
-                render: (text, material) => {
+                render: (text) => {
+                    if(text)
+                        text;
                     return (
-                        <span>0.0</span>
+                        <span>{0.0}</span>
                     );
                 }
             }, {
@@ -204,7 +207,9 @@ class addCostSheetForm extends Component {
             {
                 title: 'Total',
                 key: 'total',
-                render: (text, material) => {
+                render: (text) => {
+                    if(text)
+                        text;
                     return (
                         <span>0.0</span>
                     );
