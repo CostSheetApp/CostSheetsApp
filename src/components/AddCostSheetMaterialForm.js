@@ -20,16 +20,25 @@ Array.prototype.first = function () {
     return this[0];
 };
 
+Number.prototype.padZero= function(len, c){
+    var s= this.toString(), c= c || '0';
+    while(s.length< len) s= c+ s;
+    return s;
+};
+
 class AddCostSheetMaterialForm extends Component {
-    componentWillMount() {
- 
+    selectMaterialToBeAdd(id) {
+        // let {materials} = this.props;
+        // this.material = materials.filter(function(item){return item.id == id})[0];
+        // console.log("material",this.material);
     }
     render() {
         let {
             visible,
             onCancel,
             onCreate,
-            isSaving
+            isSaving,
+            materials
         } = this.props;
         let {getFieldDecorator} = this.props.form;
         
@@ -41,10 +50,29 @@ class AddCostSheetMaterialForm extends Component {
                 onOk={onCreate}
                 footer={[
                     <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                    <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Submit </Button >
+                    <Button key = "submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Submit </Button >
                     ]}>
+                
+                
                 <Form>
-                  
+                  <FormItem label="Material">
+                        {getFieldDecorator('materialId', {
+                            rules: [
+                                { required: true, message: 'Please select a material' }, 
+                                ]
+                        })(
+                            <Select
+                                showSearch
+                                style={{ width: '100%' }}
+                                placeholder="search material"
+                                optionFilterProp="children"
+                                onChange={this.selectMaterialToBeAdd}
+                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 }
+                            >
+                                {materials.map(o => <Option key={o.id.toString()}>{`${o.code.padZero(10)} - ${o.description}`}</Option>)}
+                            </Select>
+                        )}
+                </FormItem>
                 </Form>
             </Modal>
         );
@@ -52,7 +80,8 @@ class AddCostSheetMaterialForm extends Component {
 }
 
 AddCostSheetMaterialForm.propTypes = {
-    visible: PropTypes.bool.isRequired
+    visible: PropTypes.bool.isRequired,
+    materials: PropTypes.array.isRequired,
 };
 
 const AddCostSheetMaterial = Form.create()(AddCostSheetMaterialForm);

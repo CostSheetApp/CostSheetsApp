@@ -5,15 +5,19 @@ import {
     COST_SHEET_MATERIALS_FETCHED,
     FETCHED_COST_SHEET_MATERIALS_ERROR,
     COST_SHEET_MANPOWER_FETCHED,
-    COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED
+    COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED,
+    SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET
 } from '../constants/actionTypes';
 
 const initState = {
     list: [],
     toEdit: {},
     materialsToEdit: [],
+    materialToBeAddToCostSheet: {},
     manpowersToEdit: [],
-    toolsAndEquipmentsToEdit: []
+    manpowerToBeAddToCostSheet: {},
+    toolsAndEquipmentsToEdit: [],
+    toolsAndEquipmentToBeAddToCostSheet: {},
 };
 
 const reducer = (state = initState, action) => {
@@ -43,6 +47,11 @@ const reducer = (state = initState, action) => {
                 ...state,
                 toolsAndEquipmentsToEdit:action.payload
             }
+        case SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET:
+        return {
+            ...state,
+            materialToBeAddToCostSheet: action.id
+        }
         default:
             return state;
     }

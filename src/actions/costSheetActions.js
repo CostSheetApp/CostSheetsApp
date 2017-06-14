@@ -16,6 +16,7 @@ import {
     FETCHED_COST_SHEET_MANPOWER_ERROR,
     COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED,
     FETCHED_COST_SHEET_TOOLS_AND_EQUIPMENT_ERROR,
+    SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET
 } from '../constants/actionTypes';
 
 export const FetchCostSheets = (entityId) =>
@@ -112,3 +113,7 @@ export const ViewCostSheet = (id) =>
     }
 
 
+export const SelectMaterialToBeAddToCostSheet = (id) =>
+    (dispatch, getState) => {
+        dispatch({type: SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET, id:id});
+    }
