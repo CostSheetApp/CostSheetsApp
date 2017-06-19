@@ -140,6 +140,7 @@ class Materials extends Component {
             materials,
             loading,
             FetchUnitsOfMeasurement,
+            AddCostMaterial,
             costHistory,
             UnitsOfMeasurement,
             isSaving,
@@ -153,6 +154,7 @@ class Materials extends Component {
                     onCancel={this.CancelEdit}
                     onCreate={this.Edit}
                     FetchUnitsOfMeasurement={FetchUnitsOfMeasurement}
+                    AddCostMaterial={AddCostMaterial}
                     material={this.material}
                     UnitsOfMeasurement={UnitsOfMeasurement}
                     costHistory={costHistory}
@@ -204,9 +206,10 @@ Materials.propTypes = {
     AddMaterial: PropTypes.func.isRequired,
     UpdateMaterial: PropTypes.func.isRequired,
     DeleteMaterial: PropTypes.func.isRequired,
+    AddCostMaterial: PropTypes.func.isRequired,
     entityId: PropTypes.number.isRequired,
     FetchRegions: PropTypes.func.isRequired,
-    regions: PropTypes.array.isRequired,
+    regions: PropTypes.array.isRequired
 };
 
 export default Materials;

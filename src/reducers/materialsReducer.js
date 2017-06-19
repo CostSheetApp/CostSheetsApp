@@ -4,6 +4,7 @@ import {
     FETCHING_MATERIALS_ERROR,
     FETCHING_MATERIAL_COST_HISTORY,
     MATERIAL_COST_HISTORY_FETCHED,
+    MATERIAL_COST_HISTORY_FETCHED_ADD,
     FETCHING_MATERIAL_COST_HISTORY_ERROR,
     MATERIAL_UNITS_OF_MEASUREMENT_FETCHED,
     //FETCHING_MATERIAL_UNITS_OF_MEASUREMENT_ERROR,
@@ -61,11 +62,21 @@ const reducer = (state = initState, action) => {
                     loading: false
                 }
             };
-        case FETCHING_MATERIAL_COST_HISTORY_ERROR:
+        case MATERIAL_COST_HISTORY_FETCHED_ADD:
             return {
                 ...state,
                 CostHistory: {
                     ...state.CostHistory,
+                    list: [action.payload,state.CostHistory.list],
+                    loading: false
+                }
+            };
+        case FETCHING_MATERIAL_COST_HISTORY_ERROR:
+           return {
+                ...state,
+                CostHistory: {
+                    ...state.CostHistory,
+                    list: [],
                     loading: false
                 }
             };

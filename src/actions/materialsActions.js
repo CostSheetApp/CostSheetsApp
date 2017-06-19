@@ -7,6 +7,7 @@ import {
     FETCHING_MATERIALS_ERROR,
     FETCHING_MATERIAL_COST_HISTORY,
     MATERIAL_COST_HISTORY_FETCHED,
+    //MATERIAL_COST_HISTORY_FETCHED_ADD,
     FETCHING_MATERIAL_COST_HISTORY_ERROR,
     MATERIAL_UNITS_OF_MEASUREMENT_FETCHED,
     FETCHING_MATERIAL_UNITS_OF_MEASUREMENT_ERROR,
@@ -158,5 +159,40 @@ export const DeleteMaterial = (id) =>
                 type: DELETING_MATERIAL_ERROR,
                 error: error.response.data.error.message
             });
+        });
+    };
+
+
+export const AddCostMaterial = (params) =>
+    (dispatch) => {
+        axios
+        .post(`${API_URL}/MaterialCostHistories/`,params, {
+        headers: {'Authorization': cookie.load('token')}
+        })
+        .then((response) => {
+            dispatch({type: FETCHING_MATERIAL_COST_HISTORY});
+            axios
+            .get(`${API_URL}/Materials/${response.data.materialId}/materialCostHistories?filter={"include":"region"}`, {
+            headers: {'Authorization': cookie.load('token')}
+            })
+            .then((response) => {
+                dispatch({type: MATERIAL_COST_HISTORY_FETCHED, list: response.data});
+            })
+            .catch((error) => {
+                
+                dispatch({
+                    type: FETCHING_MATERIAL_COST_HISTORY_ERROR,
+                    error: error.response.data.error.message
+                });
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+        })
+        .catch((error) => {
+            
+            dispatch({
+                type: UPDATING_MATERIAL_ERROR,
+                error: error.response.data.error.message
+            });
+            //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
     };

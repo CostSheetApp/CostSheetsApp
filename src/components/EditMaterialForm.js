@@ -12,8 +12,11 @@ import {
     Select,
     Row
 } from 'antd';
+import '../styles/materials.css';
+import AddCostMaterialForm from './AddCostMaterialForm';
 const FormItem = Form.Item;
 const Option = Select.Option;
+
 
 class editMaterialForm extends Component {
     constructor(props){
@@ -36,10 +39,35 @@ class editMaterialForm extends Component {
           key: 'cost',
         }
         ];
-    }  
+    }
+    state = {
+        AddCostMaterialFormIsVisible:false
+    };
     componentWillMount() {
         let {FetchUnitsOfMeasurement} = this.props;
         FetchUnitsOfMeasurement();
+    }
+    onCreateMaterialCost(material) {
+        this.material = material;
+        this.setState({AddCostMaterialFormIsVisible: true});
+    }
+    CancelCreateCost = () => {
+        this.setState({AddCostMaterialFormIsVisible: false});
+    }
+    CreateCost = () => {
+        const form = this.addCostForm;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+            let {AddCostMaterial} = this.props;
+            AddCostMaterial(values);
+            form.resetFields();
+            this.setState({AddCostMaterialFormIsVisible: false});
+        });
+    }
+    saveAddCostFormRef = (form) => {
+        this.addCostForm = form;
     }
     render() {
         let {
@@ -49,85 +77,100 @@ class editMaterialForm extends Component {
             material,
             costHistory,
             isSaving,
-            UnitsOfMeasurement
-            //Regions
+            UnitsOfMeasurement,
+            Regions
         } = this.props;
         let {getFieldDecorator} = this.props.form;
         
         return (
-            <Modal
-                visible={visible}
-                title={"Edit Material"}
-                onCancel={onCancel}
-                onOk={onCreate}
-                footer={[
-                    <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                    <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Submit </Button >
-                    ]}>
-                <Form>
-                    {getFieldDecorator('id', {
-                        initialValue: material.id?material.id:0
-                    })(
-                        <Input type="hidden" />
-                    )}
-  
-                    <FormItem label="Description" style={{marginBottom:"10px"}}>
-                    {getFieldDecorator('description', {
-                        rules: [
-                            { required: true, message: 'Please input material description!' }, 
-                            ],
-                            initialValue: material.description?material.description:""
-                    })(
-                        <Input  placeholder="Material description" />
-                    )}
-                    </FormItem>
-                    <FormItem >
-                    <Col span="12">
-                    <FormItem label="Waste">
-                        {getFieldDecorator('waste', {
-                            rules: [
-                                { required: true, message: 'Please input material waste!' }, 
-                                ],
-                                initialValue: material.waste?material.waste:0
+            <Row>
+                <AddCostMaterialForm
+                    ref={this.saveAddCostFormRef}
+                    visible={this.state.AddCostMaterialFormIsVisible}
+                    onCancel={this.CancelCreateCost}
+                    onCreate={this.CreateCost}
+                    material={this.material}
+                    costHistory={costHistory}
+                    isSaving={isSaving}
+                    Regions={Regions}
+                    materialId={this.material?this.material.id:0}
+                    />
+                
+                <Modal
+                    visible={visible}
+                    title={"Edit Material"}
+                    onCancel={onCancel}
+                    onOk={onCreate}
+                    footer={[
+                        <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
+                        <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Submit </Button >
+                        ]}>
+                    <Form>
+                        {getFieldDecorator('id', {
+                            initialValue: material.id?material.id:0
                         })(
-                            <Input type="number" placeholder="Material waste" />
+                            <Input type="hidden" />
                         )}
-                         </FormItem>
-                    </Col>
-                    <Col span="12">
-                    <FormItem label="Unit of Measurement">
-                        {getFieldDecorator('unitsOfMeasurementId', {
+    
+                        <FormItem label="Description" style={{marginBottom:"10px"}}>
+                        {getFieldDecorator('description', {
                             rules: [
-                                { required: true, message: 'Please input Unit of Measurement!' }, 
+                                { required: true, message: 'Please input material description!' }, 
                                 ],
-                                initialValue: material.unitsOfMeasurementId?material.unitsOfMeasurementId.toString():null
+                                initialValue: material.description?material.description:""
                         })(
-                            <Select
-                                showSearch
-                                placeholder="Select a unit of measurement"
-                                optionFilterProp="children"
-                                //onChange={handleChange}
-                                filterOption={(input, option) => {
-                                    //console.log(input,option);
-                                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-                                }}
-                            >
-                                {UnitsOfMeasurement.map(o => <Option key={o.id} >{`${o.description} (${o.abbreviation})`}</Option>)}
-                            </Select>
+                            <Input  placeholder="Material description" />
                         )}
-                         </FormItem>
-                    </Col>
-                    </FormItem>
-                    
-                    <Row><Button type="primary" icon="plus" className="add-material-button">Add New Price</Button></Row>
-                    
-                    <FormItem>
-                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}}/>
-                    </FormItem>
-                    
-                    
-                </Form>
-            </Modal>
+                        </FormItem>
+                        <FormItem >
+                            <Col span="12">
+                            <FormItem label="Waste">
+                                {getFieldDecorator('waste', {
+                                    rules: [
+                                        { required: true, message: 'Please input material waste!' }, 
+                                        ],
+                                        initialValue: material.waste?material.waste:0
+                                })(
+                                    <Input type="number" placeholder="Material waste" />
+                                )}
+                                </FormItem>
+                            </Col>
+                            <Col span="12">
+                            <FormItem label="Unit of Measurement">
+                                {getFieldDecorator('unitsOfMeasurementId', {
+                                    rules: [
+                                        { required: true, message: 'Please input Unit of Measurement!' }, 
+                                        ],
+                                        initialValue: material.unitsOfMeasurementId?material.unitsOfMeasurementId.toString():null
+                                })(
+                                    <Select
+                                        showSearch
+                                        placeholder="Select a unit of measurement"
+                                        optionFilterProp="children"
+                                        //onChange={handleChange}
+                                        filterOption={(input, option) => {
+                                            //console.log(input,option);
+                                            return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                        }}
+                                    >
+                                        {UnitsOfMeasurement.map(o => <Option key={o.id} >{`${o.description} (${o.abbreviation})`}</Option>)}
+                                    </Select>
+                                )}
+                                </FormItem>
+                            </Col>
+                        </FormItem>
+                        
+                        <Row><Button type="primary" icon="plus" className="add-material-button" onClick={() => this.onCreateMaterialCost(material)}>Add New Price</Button></Row>
+                        
+                        <FormItem>
+                            <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}}/>
+                        </FormItem>
+                        
+                        
+                    </Form>
+                </Modal>
+
+            </Row>
         );
     }
 }
@@ -141,7 +184,8 @@ editMaterialForm.propTypes = {
     visible: PropTypes.bool.isRequired,
     Regions: PropTypes.array.isRequired,
     onCancel: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired
+    onCreate: PropTypes.func.isRequired,
+    AddCostMaterial: PropTypes.func.isRequired
 };
 
 const editMaterial = Form.create()(editMaterialForm);

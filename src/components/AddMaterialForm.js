@@ -120,7 +120,7 @@ class addMaterialForm extends Component {
                                             optionFilterProp="children"
                                             //onChange={handleChange}
                                             filterOption={(input, option) => {
-                                                console.log(input,option);
+                                                //console.log(input,option);
                                                 return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                             }}
                                         >
