@@ -57,12 +57,12 @@ const reducer = (state = initState, action) => {
                 ...state,
                 CostHistory: {
                     ...state.CostHistory,
-                    list: action.list,
+                    list: [action.list,state.CostHistory.list],
                     loading: false
                 }
             };
         case FETCHING_MATERIAL_COST_HISTORY_ERROR:
-            return {
+           return {
                 ...state,
                 CostHistory: {
                     ...state.CostHistory,

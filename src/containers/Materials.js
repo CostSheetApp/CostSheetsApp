@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import Materials from '../components/Materials';
-import {FetchMaterials, FetchMaterialCostHistory, FetchUnitsOfMeasurement, AddMaterial, UpdateMaterial, DeleteMaterial} from '../actions/materialsActions';
+import {FetchMaterials, FetchMaterialCostHistory, FetchUnitsOfMeasurement, AddMaterial, UpdateMaterial, DeleteMaterial,AddCostMaterial} from '../actions/materialsActions';
 import {FetchRegions} from '../actions/regionActions';
 
 const mapStateToProps = (state) => {
@@ -38,6 +38,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         FetchRegions: (entityId) => {
             dispatch(FetchRegions(entityId));
+        },
+        AddCostMaterial: (values)=> {
+            dispatch(AddCostMaterial(values));
         },
     };
 };

@@ -160,3 +160,38 @@ export const DeleteMaterial = (id) =>
             });
         });
     };
+
+
+export const AddCostMaterial = (params) =>
+    (dispatch) => {
+        axios
+        .post(`${API_URL}/MaterialCostHistories/`,params, {
+        headers: {'Authorization': cookie.load('token')}
+        })
+        .then((response) => {
+            dispatch({type: FETCHING_MATERIAL_COST_HISTORY});
+            axios
+            .get(`${API_URL}/MaterialCostHistories/${response.data.id}?filter={"include":"region"}`, {
+            headers: {'Authorization': cookie.load('token')}
+            })
+            .then((response) => {
+                dispatch({type: MATERIAL_COST_HISTORY_FETCHED, list: response.data});
+            })
+            .catch((error) => {
+                
+                dispatch({
+                    type: UPDATING_MATERIAL_ERROR,
+                    error: error.response.data.error.message
+                });
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+        })
+        .catch((error) => {
+            
+            dispatch({
+                type: UPDATING_MATERIAL_ERROR,
+                error: error.response.data.error.message
+            });
+            //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+        });
+    };
