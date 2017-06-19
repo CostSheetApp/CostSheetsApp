@@ -84,7 +84,7 @@ class AddCostSheetMaterialForm extends Component {
 AddCostSheetMaterialForm.propTypes = {
     visible: PropTypes.bool.isRequired,
     materials: PropTypes.array.isRequired,
-    isSaving: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired
 };

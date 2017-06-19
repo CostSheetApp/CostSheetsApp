@@ -18,17 +18,13 @@ class MainMenu extends Component {
               <Icon type="file" />
               <span className="nav-text">Cost Sheets</span>
             </Menu.Item>
-            <Menu.Item key="/materials">
-              <CubesIcon className="anticon"/>
-              <span className="nav-text">Materials</span>
-            </Menu.Item>
-            <Menu.Item key="/users" >
-              <Icon type="usergroup-add" />
-              <span className="nav-text">Users</span>
-            </Menu.Item>
             <Menu.Item key="/regions" >
               <Icon type="folder" />
               <span className="nav-text">Regions</span>
+            </Menu.Item>
+            <Menu.Item key="/materials">
+              <CubesIcon className="anticon"/>
+              <span className="nav-text">Materials</span>
             </Menu.Item>
             <Menu.Item key="/tools-equipments" >
               <Icon type="tool" />
@@ -37,6 +33,12 @@ class MainMenu extends Component {
             <Menu.Item key="/man-powers" >
               <Icon type="line-chart" />
               <span className="nav-text">Man Powers</span>
+            </Menu.Item>
+            
+            
+            <Menu.Item key="/users" >
+              <Icon type="usergroup-add" />
+              <span className="nav-text">Users</span>
             </Menu.Item>
             {/*<Menu.Item key="/reports">
               <Icon type="copy" />

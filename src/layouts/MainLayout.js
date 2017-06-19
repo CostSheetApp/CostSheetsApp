@@ -25,9 +25,7 @@ class MainLayout extends Component {
     <Menu.Item key="0">
       <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">My account</a>
     </Menu.Item>
-    <Menu.Item key="1">
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
-    </Menu.Item>
+    
     <Menu.Divider />
     <Menu.Item key="3" ><Icon type="logout" /> Log Out</Menu.Item>
   </Menu>
