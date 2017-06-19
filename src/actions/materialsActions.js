@@ -7,6 +7,7 @@ import {
     FETCHING_MATERIALS_ERROR,
     FETCHING_MATERIAL_COST_HISTORY,
     MATERIAL_COST_HISTORY_FETCHED,
+    //MATERIAL_COST_HISTORY_FETCHED_ADD,
     FETCHING_MATERIAL_COST_HISTORY_ERROR,
     MATERIAL_UNITS_OF_MEASUREMENT_FETCHED,
     FETCHING_MATERIAL_UNITS_OF_MEASUREMENT_ERROR,
@@ -171,7 +172,7 @@ export const AddCostMaterial = (params) =>
         .then((response) => {
             dispatch({type: FETCHING_MATERIAL_COST_HISTORY});
             axios
-            .get(`${API_URL}/MaterialCostHistories/${response.data.id}?filter={"include":"region"}`, {
+            .get(`${API_URL}/Materials/${response.data.materialId}/materialCostHistories?filter={"include":"region"}`, {
             headers: {'Authorization': cookie.load('token')}
             })
             .then((response) => {
@@ -180,7 +181,7 @@ export const AddCostMaterial = (params) =>
             .catch((error) => {
                 
                 dispatch({
-                    type: UPDATING_MATERIAL_ERROR,
+                    type: FETCHING_MATERIAL_COST_HISTORY_ERROR,
                     error: error.response.data.error.message
                 });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
