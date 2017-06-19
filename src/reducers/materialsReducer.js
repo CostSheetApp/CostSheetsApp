@@ -76,7 +76,7 @@ const reducer = (state = initState, action) => {
                 ...state,
                 CostHistory: {
                     ...state.CostHistory,
-                    list: [state.CostHistory.list],
+                    list: [],
                     loading: false
                 }
             };
