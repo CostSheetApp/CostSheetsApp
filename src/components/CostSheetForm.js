@@ -113,12 +113,12 @@ class addCostSheetForm extends Component {
             {
                 title: 'Code',
                 key: 'code',
-                render: (text, material) => {
-                    return (<span>{material.code.padZero(10)}</span>);
+                render: (text, item) => {
+                    return (<span>{item.manpower.code.padZero(10)}</span>);
                 }
             }, {
                 title: 'Description',
-                dataIndex: 'description',
+                dataIndex: 'manpower.description',
                 key: 'description'
             }, 
             {
@@ -128,13 +128,13 @@ class addCostSheetForm extends Component {
             }, {
                 title: 'Cost',
                 key: 'cost',
-                render: (text, material) => {
-                    if (!material.unitsOfMeasurement) {
+                render: (text, item) => {
+                    if (!item.material || !item.material.materialCostHistories) {
                         return;
                     }
                     return (
                         <span>
-                            {/*{material.materialCostHistories[0].cost} <Tooltip title={material.unitsOfMeasurement.description}><span>{material.unitsOfMeasurement.abbreviation}</span></Tooltip>*/}
+                            {item.material.materialCostHistories.FirstOrDefault({cost:0}).cost}
                         </span>
                         
                     );
@@ -143,11 +143,12 @@ class addCostSheetForm extends Component {
             {
                 title: 'Total',
                 key: 'total',
-                render: (text) => {
-                    if(text)
-                        text;
+                render: (text, item) => {
+                    let total = 0;
+
+                    total = item.performance * item.manpower.manpowerCostHistories.FirstOrDefault({cost:0}).cost;
                     return (
-                        <span>{0.0}</span>
+                        <span>{total}</span>
                     );
                 }
             }, {
@@ -177,12 +178,12 @@ class addCostSheetForm extends Component {
             {
                 title: 'Code',
                 key: 'code',
-                render: (text, material) => {
-                    return (<span>{material.code.padZero(10)}</span>);
+                render: (text, item) => {
+                    return (<span>{item.toolsAndEquipment.code.padZero(10)}</span>);
                 }
             }, {
                 title: 'Description',
-                dataIndex: 'description',
+                dataIndex: 'toolsAndEquipment.description',
                 key: 'description'
             }, 
             {
@@ -207,11 +208,12 @@ class addCostSheetForm extends Component {
             {
                 title: 'Total',
                 key: 'total',
-                render: (text) => {
-                    if(text)
-                        text;
+                render: (text, item) => {
+                    let total = 0;
+
+                    total = item.performance  * item.material.materialCostHistories.FirstOrDefault({cost:0}).cost;
                     return (
-                        <span>0.0</span>
+                        <span>{total}</span>
                     );
                 }
             }, {
