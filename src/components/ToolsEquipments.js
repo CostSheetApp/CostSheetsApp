@@ -64,9 +64,9 @@ class ToolsEquipments extends Component {
         EditToolsEquipmentsFormIsVisible:false
     };
     componentWillMount() {
-        let {FetchTools, entityId} = this.props;
-
+        let {FetchTools,FetchRegions, entityId} = this.props;
         FetchTools(entityId);
+        FetchRegions(entityId);
     }
     onDelete(index, toolsEquipment) {
         let {DeleteTool} = this.props;
@@ -125,6 +125,8 @@ class ToolsEquipments extends Component {
             toolsEquipments,
             loading,
             costHistory,
+            regions,
+            AddCostTool,
             isSaving
         } = this.props;
         return (
@@ -144,8 +146,10 @@ class ToolsEquipments extends Component {
                     visible={this.state.EditToolsEquipmentsFormIsVisible}
                     onCancel={this.CancelEdit}
                     onCreate={this.Edit}
+                    AddCostTool={AddCostTool}
                     toolsEquipment={this.toolsEquipment}
                     costHistory={costHistory}
+                    Regions={regions}
                     isSaving={isSaving}
                 />
 
@@ -182,7 +186,10 @@ ToolsEquipments.propTypes = {
     AddTool: PropTypes.func.isRequired,
     UpdateTool: PropTypes.func.isRequired,
     DeleteTool: PropTypes.func.isRequired,
-    entityId: PropTypes.number.isRequired
+    AddCostTool: PropTypes.func.isRequired,
+    FetchRegions: PropTypes.func.isRequired,
+    entityId: PropTypes.number.isRequired,
+    regions: PropTypes.array.isRequired
 };
 
 export default ToolsEquipments;

@@ -117,25 +117,6 @@ export const UpdateTool = (id,params) =>
         });
     };
 
-/*
-export const DeleteTool = (id) =>
-    (dispatch) => {
-        //console.log(`${API_URL}/ToolsAndEquipments/${id}?isDeleted=true&access_token=${cookie.load('token')}`);
-        axios
-        .patch(`${API_URL}/ToolsAndEquipments/${id}?filter={"include":"entity"}`,{isDeleted:true}, {
-        headers: { 'Authorization': cookie.load('token') }
-        })
-        .then((response) => {
-            dispatch({type: TOOL_DELETED, id: response.data.id});            
-        })
-        .catch((error) => {
-            dispatch({
-                type: DELETING_TOOL_ERROR,
-                error: error.response.data.error.message
-            });
-        });
-    };
-*/
 
 export const DeleteTool = (id) =>
     (dispatch) => {
@@ -151,5 +132,39 @@ export const DeleteTool = (id) =>
                 type: DELETING_TOOL_ERROR,
                 error: error.response.data.error.message
             });
+        });
+    };
+
+export const AddCostTool = (params) =>
+    (dispatch) => {
+        axios
+        .post(`${API_URL}/ToolsAndEquipmentCostHistories/`,params, {
+        headers: {'Authorization': cookie.load('token')}
+        })
+        .then((response) => {
+            dispatch({type: FETCHING_TOOL_COST_HISTORY});
+            axios
+            .get(`${API_URL}/ToolsAndEquipments/${response.data.toolsAndEquipmentId}/toolsAndEquipmentCostHistories?filter={"include":"region"}`, {
+            headers: {'Authorization': cookie.load('token')}
+            })
+            .then((response) => {
+                dispatch({type: TOOL_COST_HISTORY_FETCHED, list: response.data});
+            })
+            .catch((error) => {
+                
+                dispatch({
+                    type: FETCHING_TOOL_COST_HISTORY_ERROR,
+                    error: error.response.data.error.message
+                });
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+        })
+        .catch((error) => {
+            
+            dispatch({
+                type: UPDATING_TOOL_ERROR,
+                error: error.response.data.error.message
+            });
+            //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
     };
