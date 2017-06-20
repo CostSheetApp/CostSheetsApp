@@ -155,3 +155,39 @@ export const DeleteManPower = (id) =>
             });
         });
     };
+
+
+export const AddCostManPower = (params) =>
+    (dispatch) => {
+        axios
+        .post(`${API_URL}/ManpowerCostHistories/`,params, {
+        headers: {'Authorization': cookie.load('token')}
+        })
+        .then((response) => {
+            dispatch({type: FETCHING_MANPOWER_COST_HISTORY});
+            axios
+            .get(`${API_URL}/Manpowers/${response.data.manpowerId}/manpowerCostHistories?filter={"include":"region"}`, {
+            headers: {'Authorization': cookie.load('token')}
+            })
+            .then((response) => {
+                dispatch({type: MANPOWER_COST_HISTORY_FETCHED, list: response.data});
+            })
+            .catch((error) => {
+                
+                dispatch({
+                    type: FETCHING_MANPOWERS_ERROR,
+                    error: error.response.data.error.message
+                });
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+        })
+        .catch((error) => {
+            
+            dispatch({
+                type: UPDATING_MANPOWER_ERROR,
+                error: error.response.data.error.message
+            });
+            //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+        });
+    };
+
