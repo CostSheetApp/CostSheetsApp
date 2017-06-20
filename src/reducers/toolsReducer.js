@@ -4,6 +4,7 @@ import {
     FETCHING_TOOLS_ERROR,
     FETCHING_TOOL_COST_HISTORY,
     TOOL_COST_HISTORY_FETCHED,
+    TOOL_COST_HISTORY_FETCHED_ADD,
     FETCHING_TOOL_COST_HISTORY_ERROR,
     TOOL_ADDED,
     ADDING_TOOL,
@@ -55,6 +56,15 @@ const reducer = (state = initState, action) => {
                 CostHistory: {
                     ...state.CostHistory,
                     list: action.list,
+                    loading: false
+                }
+            };
+        case TOOL_COST_HISTORY_FETCHED_ADD:
+            return {
+                ...state,
+                CostHistory: {
+                    ...state.CostHistory,
+                    list: [action.payload,state.CostHistory.list],
                     loading: false
                 }
             };

@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import ToolsEquipments from '../components/ToolsEquipments';
-import {FetchTools, FetchToolCostHistory, AddTool, UpdateTool, DeleteTool} from '../actions/toolsActions';
+import {FetchTools, FetchToolCostHistory, AddTool, UpdateTool, DeleteTool, AddCostTool} from '../actions/toolsActions';
+import {FetchRegions} from '../actions/regionActions';
 
 const mapStateToProps = (state) => {
 return {
@@ -8,7 +9,8 @@ return {
     toolsEquipments: state.tools.list, 
     costHistory: state.tools.CostHistory, 
     loading: state.tools.loading,
-    isSaving: state.tools.isSaving
+    isSaving: state.tools.isSaving,
+    regions: state.regions.list
   };
 };
 
@@ -28,6 +30,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         DeleteTool: (id) => {
             dispatch(DeleteTool(id));
+        },
+        FetchRegions: (entityId) => {
+            dispatch(FetchRegions(entityId));
+        },
+         AddCostTool: (values) => {
+            dispatch(AddCostTool(values));
         }
     };
 };
