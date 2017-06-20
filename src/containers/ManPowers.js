@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import ManPowers from '../components/ManPowers';
-import {FetchManPowers, FetchManPowerCostHistory, FetchJobs, AddManPower, UpdateManPower,DeleteManPower} from '../actions/manPowersActions';
+import {FetchManPowers, FetchManPowerCostHistory, FetchJobs, AddManPower, UpdateManPower,DeleteManPower,AddCostManPower} from '../actions/manPowersActions';
+import {FetchRegions} from '../actions/regionActions';
 
 const mapStateToProps = (state) => {
 return {
@@ -9,7 +10,8 @@ return {
     costHistory: state.manPowers.CostHistory, 
     isSaving: state.manPowers.isSaving,
     loading: state.manPowers.loading,
-    Jobs: state.manPowers.Jobs
+    Jobs: state.manPowers.Jobs,
+    regions: state.regions.list
   };
 };
 
@@ -32,6 +34,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         DeleteManPower: (id) => {
             dispatch(DeleteManPower(id));
+        },
+        FetchRegions: (entityId) => {
+            dispatch(FetchRegions(entityId));
+        },
+        AddCostManPower: (values) => {
+            dispatch(AddCostManPower(values));
         }
     };
 };

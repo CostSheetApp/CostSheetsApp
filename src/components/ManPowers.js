@@ -76,8 +76,8 @@ class ManPowers extends Component {
         EditManPowersFormIsVisible:false
     };
     componentWillMount() {
-        let {FetchManPowers, entityId} = this.props;
-
+        let {FetchManPowers,FetchRegions, entityId} = this.props;
+        FetchRegions(entityId);
         FetchManPowers(entityId);
     }
     onDelete(index, manPower) {
@@ -139,6 +139,8 @@ class ManPowers extends Component {
             loading,
             FetchJobs,
             costHistory,
+            regions,
+            AddCostManPower,
             Jobs,
             isSaving
         } = this.props;
@@ -149,11 +151,13 @@ class ManPowers extends Component {
                     visible={this.state.EditManPowersFormIsVisible}
                     onCancel={this.CancelEdit}
                     onCreate={this.Edit}
+                    AddCostManPower={AddCostManPower}
                     FetchJobs={FetchJobs}
                     manPower={this.manPower}
                     Jobs={Jobs}
                     costHistory={costHistory}
                     isSaving={isSaving}
+                    Regions={regions}
                 />
 
                 <AddManPowersForm
@@ -203,7 +207,11 @@ ManPowers.propTypes = {
     AddManPower: PropTypes.func.isRequired,
     UpdateManPower: PropTypes.func.isRequired,
     DeleteManPower: PropTypes.func.isRequired,
+    AddCostManPower: PropTypes.func.isRequired,
+    FetchRegions: PropTypes.func.isRequired,
+    regions: PropTypes.array.isRequired,
     entityId: PropTypes.number.isRequired
+    
 };
 
 export default ManPowers;
