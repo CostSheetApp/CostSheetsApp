@@ -27,6 +27,7 @@ import Regions from './containers/Regions';
 import DashboardProject from './containers/DashboardProject';
 import ToolsEquipments from './containers/ToolsEquipments';
 import ManPowers from './containers/ManPowers';
+import Jobs from './containers/Jobs';
 
 
 const UserIsNotAuthenticated = UserAuthWrapper({
@@ -71,6 +72,7 @@ export default (
       <Route path="dashboard-project" component={DashboardProject}/>
       <Route path="tools-equipments" component={ToolsEquipments}/>
       <Route path="man-powers" component={ManPowers}/>
+      <Route path="jobs" component={Jobs}/>
       <Route path="fuel-savings" component={FuelSavingsPage}/>
     </Route>
     <Route path="*" component={NotFoundPage}/>

@@ -11,6 +11,7 @@ import projectReducer from './projectsReducer';
 import toolReducer from './toolsReducer';
 import manPowerReducer from './manPowersReducer';
 import projectCostSheetReducer from './projectCostSheetReducer';
+import jobReducer from './jobsReducer';
 
 const rootReducer = combineReducers({
   fuelSavings,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
   projects: projectReducer,
   tools: toolReducer,
   manPowers: manPowerReducer,
-  projectCostSheet: projectCostSheetReducer
+  projectCostSheet: projectCostSheetReducer,
+  jobs: jobReducer
 });
 
 export default rootReducer;
