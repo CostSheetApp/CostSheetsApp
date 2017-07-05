@@ -7,43 +7,44 @@ class MainMenu extends Component {
         return (
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['/']} onClick={({ key }) => changeLocationTo(key)}>
             <Menu.Item key="/">
-              <Icon type="appstore" />
-              <span className="nav-text">Dashboard</span>
+              <Icon type="home" />
+              <span className="nav-text">Inicio</span>
             </Menu.Item>
             <Menu.Item key="/projects">
-              <Icon type="rocket" />
-              <span className="nav-text">Projects</span>
+              <Icon type="wallet" />
+              <span className="nav-text">Proyectos</span>
             </Menu.Item>
             <Menu.Item key="/cost-sheets">
               <Icon type="file" />
-              <span className="nav-text">Cost Sheets</span>
+              <span className="nav-text">Fichas de Costos</span>
             </Menu.Item>
             <Menu.Item key="/regions" >
               <Icon type="folder" />
-              <span className="nav-text">Regions</span>
+              <span className="nav-text">Regiones</span>
             </Menu.Item>
             <Menu.Item key="/materials">
               <CubesIcon className="anticon"/>
-              <span className="nav-text">Materials</span>
+              <span className="nav-text">Materiales</span>
             </Menu.Item>
             <Menu.Item key="/tools-equipments" >
               <Icon type="tool" />
-              <span className="nav-text">Tools and Equipments</span>
+              <span className="nav-text">Herramientas y Equipo</span>
             </Menu.Item>
             <Menu.Item key="/man-powers" >
               <Icon type="line-chart" />
-              <span className="nav-text">Man Powers</span>
+              <span className="nav-text">Mano de Obra</span>
             </Menu.Item>
             <Menu.Item key="/jobs" >
               <Icon type="idcard" />
-              <span className="nav-text">Jobs</span>
+              <span className="nav-text">Puestos de Trabajo</span>
             </Menu.Item>
             
-            
+            {/*
             <Menu.Item key="/users" >
               <Icon type="usergroup-add" />
               <span className="nav-text">Users</span>
             </Menu.Item>
+            */}
             {/*<Menu.Item key="/reports">
               <Icon type="copy" />
               <span className="nav-text">Reports</span>
