@@ -24,21 +24,21 @@ class Materials extends Component {
         super(props);
         this.columns = [
             {
-                title: 'Code',
+                title: 'Código',
                 key: 'code',
                 render: (text, material) => {
                     return (<span>{material.code.padZero(10)}</span>);
                 }
             }, {
-                title: 'Description',
+                title: 'Descripción',
                 dataIndex: 'description',
                 key: 'description'
             }, {
-                title: 'Waste %',
+                title: '% Desperdicio',
                 dataIndex: 'waste',
                 key: 'waste'
             }, {
-                title: 'Unit Of Measurement',
+                title: 'Unidad de Medida',
                 key: 'unitsOfMeasurementId',
                 render: (text, material) => {
                     if (!material.unitsOfMeasurement) {
@@ -51,23 +51,23 @@ class Materials extends Component {
                     );
                 }
             }, {
-                title: 'Action',
+                title: 'Acción',
                 key: 'action',
                 width: 120,
                 render: (text, material, index) => (
                     <span>
                         <a href="#" onClick={() => this.onEdit(index, material)}>
                             <Icon type="edit"/>
-                            Edit</a>
+                            Editar</a>
                         <span className="ant-divider"/>
                         <Popconfirm
-                            title="Are you sure delete this material?"
-                            okText="Yes"
+                            title="¿Esta seguro de borrar este material?"
+                            okText="Si"
                             cancelText="No"
                             onConfirm={() => this.onDelete(index, material)}>
                             <a href="#">
                                 <Icon type="delete"/>
-                                Delete</a>
+                                Borrar</a>
                         </Popconfirm>
                     </span>
                 )
@@ -177,7 +177,7 @@ class Materials extends Component {
                         type="primary"
                         icon="plus"
                         className="add-material-button"
-                        onClick={() => this.onCreateMaterial()}>Add</Button>
+                        onClick={() => this.onCreateMaterial()}>Agregar</Button>
                 </Row>
                 <Table
                     rowKey={item => item.id}

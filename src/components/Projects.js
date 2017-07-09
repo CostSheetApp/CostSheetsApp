@@ -8,19 +8,19 @@ class Projects extends Component {
     constructor(props){
       super(props);
       this.columns = [{
-          title: 'Name',
+          title: 'Nombre',
           dataIndex: 'name',
           key: 'name'
         }, {
-          title: 'Budget',
+          title: 'Presupuesto',
           dataIndex: 'budget',
           key: 'budget'
         }, {
-          title: 'Profit Percentage',
+          title: 'Porcentaje ganancia',
           dataIndex: 'profitPercentage',
           key: 'profitPercentage'
         }, {
-          title: 'Start Date',
+          title: 'Fecha inicio',
           render: (text, record) => (
             <span>
                 <Moment fromNow>{record.startDate}</Moment>
@@ -28,23 +28,23 @@ class Projects extends Component {
           ),
           key: 'startDate'
         }, {
-          title: 'Action',
+          title: 'Acción',
           key: 'action',
-          width: 220,
+          width: 190,
           render: (text, project, index) => (
             <span>
-              <Button icon="search" onClick={() => this.ViewProject(project.id)}>View</Button>
+              <a href="#" onClick={() => this.ViewProject(project.id)} > <Icon type="search" /> Ver</a>
               <span className="ant-divider" />
-              <a href="#" onClick={() => this.onEdit(index,project)} > <Icon type="edit" /> Edit</a>
+              <a href="#" onClick={() => this.onEdit(index,project)} > <Icon type="edit" /> Editar</a>
               <span className="ant-divider" />
-              <Popconfirm title="Are you sure delete this project?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,project)}>
-                  <a href="#"> <Icon type="delete" /> Delete</a>
+              <Popconfirm title="¿Esta seguro de borrar este proyecto?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,project)}>
+                  <a href="#"> <Icon type="delete" /> Borrar</a>
               </Popconfirm>
             </span>
           ),
         }];
         this.handle = this.handleCreate;
-        this.title = "Add Project";
+        this.title = "Agregar Proyecto";
         this.project={};
     }  
     state = { 
@@ -62,14 +62,14 @@ class Projects extends Component {
     }
     onEdit(index,project){
         this.handle = this.handleEdit;
-        this.title = "Edit Project";
+        this.title = "Editar Proyecto";
         this.project = project;
         this.setState({ visible: true });
         //console.log(project);      
     }
     onCreate(){
         this.handle = this.handleCreate;
-        this.title = "Add Project";
+        this.title = "Agregar Proyecto";
         this.project = {};
         this.setState({ visible: true });
     }
@@ -123,7 +123,7 @@ class Projects extends Component {
                 title={this.title}
                 />
 
-                <Row><Button type="primary" icon="plus" className="add-project-button" onClick={()=>this.onCreate()}>Add</Button></Row>
+                <Row><Button type="primary" icon="plus" className="add-project-button" onClick={()=>this.onCreate()}>Agregar</Button></Row>
                 <Table rowKey={item => item.id} size="middle" bordered={true} loading={loading} dataSource={projects} columns={this.columns} pagination={{pageSize:20}} />
             </Row>
         );

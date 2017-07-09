@@ -31,14 +31,14 @@ class LoginForm extends Component {
         <Form onSubmit={this.handleSubmit} className="login-form">
             <FormItem>
             {getFieldDecorator('username', {
-                rules: [{ required: true, message: 'Please input your username!' }],
+                rules: [{ required: true, message: 'Por favor ingrese el usuario' }],
             })(
                 <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />
             )}
             </FormItem>
             <FormItem>
             {getFieldDecorator('password', {
-                rules: [{ required: true, message: 'Please input your Password!' }],
+                rules: [{ required: true, message: 'Por favor ingrese la contraseña' }],
             })(
                 <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
             )}
@@ -49,13 +49,13 @@ class LoginForm extends Component {
                 valuePropName: 'checked',
                 initialValue: true,
             })(
-                <Checkbox>Remember me</Checkbox>
+                <Checkbox>Recordarme</Checkbox>
             )}
-            <a className="login-form-forgot" href="/forgot-password">Forgot password</a>
+            <a className="login-form-forgot" href="/forgot-password">Olvide mi contraseña</a>
             <Button type="primary" htmlType="submit" className="login-form-button">
-                Log in
+                Iniciar Sesión
             </Button>
-            Or <a href="/register-user">register now!</a>
+            Or <a href="/register-user">Registrar</a>
             </FormItem>
         </Form>
         </Col>

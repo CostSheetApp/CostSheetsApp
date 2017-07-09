@@ -1,61 +1,49 @@
 import React, {Component, PropTypes } from 'react';
-import Moment from 'react-moment';
+//import Moment from 'react-moment';
 import {
     Form,
     Button,
     Modal,
     Input,
     //Icon,
-    Table,
-    //Col,
-    //Select,
-    Row
+    //Table,
+    Col,
+    Select
+    //Row
 } from 'antd';
 const FormItem = Form.Item;
-//const Option = Select.Option;
+const Option = Select.Option;
+
+Array.prototype.first = function () {
+    if(this.length<=0) return;
+    return this[0];
+};
 
 class addToolsEquipmentForm extends Component {
-    constructor(props){
-      super(props);
-      this.columns = [{
-          title: 'Description',
-          dataIndex: 'toolsEquipment.description',
-          key: 'toolsEquipment.description'
-        }, {
-          title: 'Created At',
-          key: 'createdAt',
-           render: (text, record) => (
-            <span>
-                <Moment fromNow>{record.createdAt}</Moment>
-            </span>
-          ),
-        }, {
-          title: 'Cost',
-          dataIndex: 'cost',
-          key: 'cost',
-        }
-        ];
+    componentWillMount() {
+        //let {FetchUnitsOfMeasurement} = this.props;
+        //FetchUnitsOfMeasurement();
     }
     render() {
         let {
             visible,
             onCancel,
             onCreate,
+            isSaving,
             toolsEquipment,
-            costHistory
-            //isSaving,
+            Regions
         } = this.props;
         let {getFieldDecorator} = this.props.form;
 
         return (
             <Modal
                 visible={visible}
-                title={"Add Tools"}
+                title={"Agregar Herramientas y Equipo"}
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
-                    <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                    <Button key="submit" type="primary" size="large" onClick={onCreate} > Submit </Button >
+                    <Button key = "back" size = "large" onClick = {onCancel} > Cancelar </Button>, 
+                    <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving} > Aceptar </Button >
                     ]}>
                 <Form>
                     {getFieldDecorator('id', {
@@ -63,20 +51,53 @@ class addToolsEquipmentForm extends Component {
                     })(
                         <Input type="hidden" />
                     )}
-                    <FormItem label="Description">
+                    <FormItem label="Descripción">
                     {getFieldDecorator('description', {
                         rules: [
-                            { required: true, message: 'Please input tool and equipment description!' }, 
+                            { required: true, message: '¡Por favor ingrese la descripción!' }, 
                             ],
                             initialValue: toolsEquipment.description?toolsEquipment.description:""
                     })(
-                        <Input  placeholder="Tool and Equipment description" />
+                        <Input  placeholder="Descripción de la herramienta y equipo" />
                     )}
                     </FormItem>
-                    <Row><Button type="primary" icon="plus" className="add-toolsEquipments-button">Add New Price</Button></Row>
-                    <FormItem>
-                        <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}}/>
-                    </FormItem>
+                    <FormItem style={{paddingTop:"10px"}}>
+                                <Col span="12" >
+                                    <FormItem label="Costo">
+                                        {getFieldDecorator('cost', {
+                                rules: [
+                                    { required: true, message: '¡Por favor ingrese el costo inicial!' }, 
+                                    ],
+                                    initialValue: 0
+                            })(
+                                <Input type="number" placeholder="Costo inicial" />
+                            )}
+                                </FormItem>
+                            </Col>
+                            <Col span="12">
+                                    <FormItem label="Región">
+                                        {getFieldDecorator('regionId', {
+                                            rules: [
+                                                { required: true, message: '¡Por favor seleccione una región' }, 
+                                                ],
+                                                
+                                        })(
+                                            <Select
+                                            showSearch
+                                            placeholder="selecciona una región"
+                                            optionFilterProp="children"
+                                            //onChange={handleChange}
+                                            filterOption={(input, option) => {
+                                                //console.log(input,option);
+                                                return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                            }}
+                                        >
+                                            {Regions.map(o => <Option key={o.id} >{`${o.name}`}</Option>)}
+                                        </Select>
+                                        )}
+                                </FormItem>
+                            </Col>
+                     </FormItem>
                 </Form>
             </Modal>
         );
@@ -86,7 +107,7 @@ class addToolsEquipmentForm extends Component {
 
 addToolsEquipmentForm.propTypes = {
     toolsEquipment: PropTypes.object,
-    costHistory: PropTypes.object.isRequired,
+    Regions: PropTypes.array.isRequired,
     isSaving: PropTypes.bool.isRequired,
     visible: PropTypes.bool.isRequired,
     onCancel: PropTypes.func.isRequired,

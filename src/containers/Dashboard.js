@@ -2,7 +2,7 @@ import React from 'react';
 const Dashboard = () => {
   return (
     <div>
-      dashboard
+      <h1>¡Bienvenidos al Portal de Fichas de Costos!</h1>
     </div>
   );
 };

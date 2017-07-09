@@ -25,33 +25,33 @@ class ToolsEquipments extends Component {
         super(props);
         this.columns = [
             {
-                title: 'Code',
+                title: 'Código',
                 key: 'code',
                 render: (text, toolsEquipment) => {
                     return (<span>{toolsEquipment.code.padZero(10)}</span>);
                 }
             }, {
-                title: 'Description',
+                title: 'Descripción',
                 dataIndex: 'description',
                 key: 'description'
             }, {
-                title: 'Action',
+                title: 'Acción',
                 key: 'action',
                 width: 120,
                 render: (text, toolsEquipment, index) => (
                     <span>
                         <a href="#" onClick={() => this.onEdit(index, toolsEquipment)}>
                             <Icon type="edit"/>
-                            Edit</a>
+                            Editar</a>
                         <span className="ant-divider"/>
                         <Popconfirm
-                            title="Are you sure delete this tools and equipment?"
-                            okText="Yes"
+                            title="¿Esta seguro de borrar esta herramienta y equipo?"
+                            okText="Si"
                             cancelText="No"
                             onConfirm={() => this.onDelete(index, toolsEquipment)}>
                             <a href="#">
                                 <Icon type="delete"/>
-                                Delete</a>
+                                Borrar</a>
                         </Popconfirm>
                     </span>
                 )
@@ -138,6 +138,7 @@ class ToolsEquipments extends Component {
                     onCreate={this.Create}
                     toolsEquipment={this.toolsEquipment}
                     costHistory={costHistory}
+                    Regions={regions}
                     isSaving={isSaving}
                 />
 
@@ -158,7 +159,7 @@ class ToolsEquipments extends Component {
                         type="primary"
                         icon="plus"
                         className="add-toolsEquipments-button"
-                        onClick={() => this.onCreate()}>Add</Button>
+                        onClick={() => this.onCreate()}>Agregar</Button>
                 </Row>
                 <Table
                     rowKey={item => item.id}

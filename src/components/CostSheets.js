@@ -36,26 +36,26 @@ class CostSheets extends Component {
                         type="primary"
                         icon="plus"
                         className="add-cost-sheet-button"
-                        onClick={() => this.onCreate()}>Add</Button>
+                        onClick={() => this.onCreate()}>Agregar</Button>
                 </Row>
                 <Row>
                     {costSheets.map((sheet,i) => 
                     <Col key={i} span="8" className="separate">
                     <Card title={sheet.description} bordered={true}>
                         <Row>
-                            Minimun Unit: {sheet.minimumUnit.toString()} {sheet.unitsOfMeasurement.abbreviation}
+                            Unidad Mínima: {sheet.minimumUnit.toString()} {sheet.unitsOfMeasurement.abbreviation}
                         </Row>
                         <Row>
-                            Minimun Cost: {sheet.minimumCost.toString()}
+                            Costo Mínimo: {sheet.minimumCost.toString()}
                         </Row>
                         <Row>
-                            Region: <Tag color='green'>{sheet.region.name}</Tag>
+                            Región: <Tag color='green'>{sheet.region.name}</Tag>
                         </Row>
                         <Row>
-                            Created At:  <Moment fromNow ago>{sheet.createdAt}</Moment> ago
+                            Fecha:  <Moment fromNow ago>{sheet.createdAt}</Moment> ago
                         </Row>
                         <Row className="action-panel">
-                        <Button type="primary" className="actions" onClick={() => ViewCostSheet(sheet.id)}>View</Button>
+                        <Button type="primary" className="actions" onClick={() => ViewCostSheet(sheet.id)}>Ver</Button>
                         </Row>
                         </Card>
                     </Col>

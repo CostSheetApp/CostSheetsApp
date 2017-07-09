@@ -24,17 +24,17 @@ class ManPowers extends Component {
         super(props);
         this.columns = [
             {
-                title: 'Code',
+                title: 'Código',
                 key: 'code',
                 render: (text, manPower) => {
                     return (<span>{manPower.code.padZero(10)}</span>);
                 }
             }, {
-                title: 'Description',
+                title: 'Descripción',
                 dataIndex: 'description',
                 key: 'description'
             }, {
-                title: 'Job',
+                title: 'Puesto de Trabajo',
                 key: 'jobId',
                 render: (text, manPower) => {
                     if (!manPower.job) {
@@ -47,23 +47,23 @@ class ManPowers extends Component {
                     );
                 }
             }, {
-                title: 'Action',
+                title: 'Acción',
                 key: 'action',
                 width: 120,
                 render: (text, manPower, index) => (
                     <span>
                         <a href="#" onClick={() => this.onEdit(index, manPower)}>
                             <Icon type="edit"/>
-                            Edit</a>
+                            Editar</a>
                         <span className="ant-divider"/>
                         <Popconfirm
-                            title="Are you sure delete this man power?"
+                            title="¿Esta seguro de borrar esta mano de obra?"
                             okText="Yes"
                             cancelText="No"
                             onConfirm={() => this.onDelete(index, manPower)}>
                             <a href="#">
                                 <Icon type="delete"/>
-                                Delete</a>
+                                Borrar</a>
                         </Popconfirm>
                     </span>
                 )
@@ -170,6 +170,7 @@ class ManPowers extends Component {
                     Jobs={Jobs}
                     costHistory={costHistory}
                     isSaving={isSaving}
+                    Regions={regions}
                 />
 
                 <Row>
@@ -177,7 +178,7 @@ class ManPowers extends Component {
                         type="primary"
                         icon="plus"
                         className="add-manPowers-button"
-                        onClick={() => this.onCreateManPower()}>Add</Button>
+                        onClick={() => this.onCreateManPower()}>Agregar</Button>
                 </Row>
                 <Table
                     rowKey={item => item.id}

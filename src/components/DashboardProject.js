@@ -25,7 +25,7 @@ class CostSheets extends Component {
         FetchProjectsCostSheet(id);
     }
     onCreate() {
-       alert('New Cost Sheet');
+       alert('Nueva ficha de costo');
        //let {AddCostSheet,entityId} = this.props;
        //AddCostSheet(entityId);
     }
@@ -38,7 +38,7 @@ class CostSheets extends Component {
                         type="primary"
                         icon="plus"
                         className="add-cost-sheet-button"
-                        onClick={() => this.onCreate()}>Add</Button>
+                        onClick={() => this.onCreate()}>Agregar Ficha de Costo</Button>
                 </Row>
                 
             </Row>

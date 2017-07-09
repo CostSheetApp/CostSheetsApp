@@ -22,8 +22,8 @@ class addRegionForm extends Component {
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
-                    <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                    <Button key="submit" type="primary" size="large" onClick={onCreate}> Submit </Button >
+                    <Button key = "back" size = "large" onClick = {onCancel} > Cancelar </Button>, 
+                    <Button key="submit" type="primary" size="large" onClick={onCreate}> Aceptar </Button >
                     ]}>
                 <Form>
                     {getFieldDecorator('id', {
@@ -31,14 +31,14 @@ class addRegionForm extends Component {
                     })(
                         <Input type="hidden" />
                     )}
-                    <FormItem label="Name">
+                    <FormItem label="Descripción">
                     {getFieldDecorator('name', {
                         rules: [
-                            { required: true, message: 'Please input Region description!' }, 
+                            { required: true, message: '¡Por favor ingrese la descripción!' }, 
                             ],
                             initialValue: region.name?region.name:""
                     })(
-                        <Input  placeholder="Region description" />
+                        <Input  placeholder="Descripción de la región" />
                     )}
                     </FormItem>
                 </Form>

@@ -30,12 +30,12 @@ class addCostToolForm extends Component {
         return (
             <Modal
                 visible={visible}
-                title={"Add Cost"}
+                title={"Agregar Costo"}
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
-                    <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                    <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Submit </Button >
+                    <Button key = "back" size = "large" onClick = {onCancel} > Cancelar </Button>, 
+                    <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Aceptar </Button >
                     ]}
             >
                 <Form>
@@ -46,28 +46,28 @@ class addCostToolForm extends Component {
                         )}
                     <FormItem style={{paddingTop:"10px"}}>
                         <Col span="12" >
-                            <FormItem label="Cost">
+                            <FormItem label="Costo">
                                 {getFieldDecorator('cost', {
                         rules: [
-                            { required: true, message: 'Please input new cost!' }, 
+                            { required: true, message: '¡Por favor ingrese el nuevo costo!' }, 
                             ],
                             initialValue: 0
                         })(
-                            <Input type="number" placeholder="New cost" />
+                            <Input type="number" placeholder="Nuevo costo" />
                         )}
                             </FormItem>
                         </Col>
                         <Col span="12">
-                                <FormItem label="Region">
+                                <FormItem label="Región">
                                     {getFieldDecorator('regionId', {
                                         rules: [
-                                            { required: true, message: 'Please select a region' }, 
+                                            { required: true, message: '¡Por favor seleccione una región!' }, 
                                             ],
                                             
                                     })(
                                         <Select
                                         showSearch
-                                        placeholder="Select a region"
+                                        placeholder="Seleccione una región"
                                         optionFilterProp="children"
                                         //onChange={handleChange}
                                         filterOption={(input, option) => {

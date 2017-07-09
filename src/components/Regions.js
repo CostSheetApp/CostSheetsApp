@@ -7,25 +7,25 @@ class Regions extends Component {
     constructor(props){
       super(props);
       this.columns = [{
-          title: 'Name',
+          title: 'Descripción',
           dataIndex: 'name',
           key: 'name'
         }, {
-          title: 'Action',
+          title: 'Acción',
           key: 'action',
-          width: 120,
+          width: 140,
           render: (text, region, index) => (
             <span>
-              <a href="#" onClick={() => this.onEdit(index,region)} > <Icon type="edit" /> Edit</a>
+              <a href="#" onClick={() => this.onEdit(index,region)} > <Icon type="edit" /> Editar</a>
               <span className="ant-divider" />
-              <Popconfirm title="Are you sure delete this region?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,region)}>
-                  <a href="#"> <Icon type="delete" /> Delete</a>
+              <Popconfirm title="¿Esta seguro de borrar esta región?" okText="Si" cancelText="No" onConfirm={() => this.onDelete(index,region)}>
+                  <a href="#"> <Icon type="delete" /> Borrar</a>
               </Popconfirm>
             </span>
           ),
         }];
         this.handle = this.handleCreate;
-        this.title = "Add Region";
+        this.title = "Agregar Región";
         this.region={};
     } 
     state = { 
@@ -42,14 +42,14 @@ class Regions extends Component {
     }
     onEdit(index,region){
         this.handle = this.handleEdit;
-        this.title = "Edit Region";
+        this.title = "Editar Región";
         this.region = region;
         this.setState({ visible: true });
         //console.log(region);      
     }
     onCreate(){
         this.handle = this.handleCreate;
-        this.title = "Add Region";
+        this.title = "Agregar Región";
         this.region = {};
         this.setState({ visible: true });
     }
@@ -99,7 +99,7 @@ class Regions extends Component {
                 title={this.title}
                 />
 
-                <Row><Button type="primary" icon="plus" className="add-region-button" onClick={()=>this.onCreate()}>Add</Button></Row>
+                <Row><Button type="primary" icon="plus" className="add-region-button" onClick={()=>this.onCreate()}>Agregar</Button></Row>
                 <Table rowKey={item => item.id} size="middle" bordered={true} loading={loading} dataSource={regions} columns={this.columns} pagination={{pageSize:20}} />
             </Row>
         );

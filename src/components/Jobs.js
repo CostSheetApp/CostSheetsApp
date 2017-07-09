@@ -16,31 +16,31 @@ class Jobs extends Component {
       super(props);
       this.columns = [
          {
-            title: 'Code',
+            title: 'Código',
             key: 'code',
             render: (text, job) => {
                 return (<span>{job.code.padZero(10)}</span>);
             }
         }, {
-          title: 'Description',
+          title: 'Descripción',
           dataIndex: 'description',
           key: 'description'
         }, {
-          title: 'Action',
+          title: 'Acción',
           key: 'action',
           width: 220,
           render: (text, job, index) => (
             <span>
-              <a href="#" onClick={() => this.onEdit(index,job)} > <Icon type="edit" /> Edit</a>
+              <a href="#" onClick={() => this.onEdit(index,job)} > <Icon type="edit" /> Editar</a>
               <span className="ant-divider" />
-              <Popconfirm title="Are you sure delete this job?" okText="Yes" cancelText="No" onConfirm={() => this.onDelete(index,job)}>
-                  <a href="#"> <Icon type="delete" /> Delete</a>
+              <Popconfirm title="¿Esta seguro de borrar este puesto de trabajo?" okText="Si" cancelText="No" onConfirm={() => this.onDelete(index,job)}>
+                  <a href="#"> <Icon type="delete" /> Borrar</a>
               </Popconfirm>
             </span>
           ),
         }];
         this.handle = this.handleCreate;
-        this.title = "Add Job";
+        this.title = "Agregar Puesto de Trabajo";
         this.job={};
     }  
     state = { 
@@ -58,14 +58,14 @@ class Jobs extends Component {
     }
     onEdit(index,job){
         this.handle = this.handleEdit;
-        this.title = "Edit Job";
+        this.title = "Editar Puesto de Trabajo";
         this.job = job;
         this.setState({ visible: true });
         //console.log(project);      
     }
     onCreate(){
         this.handle = this.handleCreate;
-        this.title = "Add Job";
+        this.title = "Agregar Puesto de Trabajo";
         this.job = {};
         this.setState({ visible: true });
     }
@@ -115,7 +115,7 @@ class Jobs extends Component {
                 title={this.title}
                 />
 
-                <Row><Button type="primary" icon="plus" className="add-job-button" onClick={()=>this.onCreate()}>Add</Button></Row>
+                <Row><Button type="primary" icon="plus" className="add-job-button" onClick={()=>this.onCreate()}>Agregar</Button></Row>
                 <Table rowKey={item => item.id} size="middle" bordered={true} loading={loading} dataSource={jobs} columns={this.columns} pagination={{pageSize:20}} />
             </Row>
         );

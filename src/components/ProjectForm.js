@@ -26,8 +26,8 @@ class addProjectForm extends Component {
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
-                    <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                    <Button key="submit" type="primary" size="large" onClick={onCreate}> Submit </Button >
+                    <Button key = "back" size = "large" onClick = {onCancel} > Cancelar </Button>, 
+                    <Button key="submit" type="primary" size="large" onClick={onCreate}> Aceptar </Button >
                     ]}>
                 <Form>
                     {getFieldDecorator('id', {
@@ -35,50 +35,50 @@ class addProjectForm extends Component {
                     })(
                         <Input type="hidden" />
                     )}
-                    <FormItem label = "Name">
+                    <FormItem label = "Nombre">
                     {getFieldDecorator('name', {
                         rules: [
-                            { required: true, message: 'Please input name!' }, 
+                            { required: true, message: '¡Por favor ingrese el nombre!' }, 
                             ],
                             initialValue: project.name?project.name:""
                     })(
-                        <Input  placeholder="name" />
+                        <Input  placeholder="Nombre" />
                     )}
                     </FormItem>
-                    <FormItem label="Budget">
+                    <FormItem label="Presupuesto">
                     {getFieldDecorator('budget', {
                         rules: [
-                            { required: true, message: 'Please input Budget!' }, 
+                            { required: true, message: '¡Por favor ingrese el presupuesto!' }, 
                             ],
                             initialValue: project.budget?project.budget:0
                     })(
                         <InputNumber 
                             min={0}
-                            placeholder="Budget"
+                            placeholder="Presupuesto"
                         />
                     )}
                     </FormItem>
-                    <FormItem label="Profit Percentage">
+                    <FormItem label="Porcentaje Ganancia">
                     {getFieldDecorator('profitPercentage', {
                         rules: [
-                            { required: true, message: 'Please input Profit Percentage!' }, 
+                            { required: true, message: '¡Por favor ingrese porcentaje Ganancia!' }, 
                             ],
                             initialValue: project.profitPercentage?project.profitPercentage:0
                     })(
                         <InputNumber 
                             min={0}
                             max={100}
-                            placeholder="Profit Percentage"
+                            placeholder="Porcentaje Ganancia"
                         />
                     )}
                     </FormItem>
-                    <FormItem label="Start Date">
+                    <FormItem label="Fecha Inicio">
                     {getFieldDecorator('startDate', {
                         rules: [
-                            { required: true, message: 'Please input Start Date!' },  ],
+                            { required: true, message: '¡Por favor ingrese Fecha Inicio!' },  ],
                             initialValue: project.startDate?moment(project.startDate): moment()
                     })(
-                        <DatePicker placeholder="Start Date" />
+                        <DatePicker placeholder="Fecha Inicio" />
                     )}
                     </FormItem>
                 </Form>

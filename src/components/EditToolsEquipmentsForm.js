@@ -19,11 +19,11 @@ class editToolsEquipmentForm extends Component {
     constructor(props){
       super(props);
       this.columns = [{
-          title: 'Region',
+          title: 'Región',
           dataIndex: 'region.name',
           key: 'region.name'
         }, {
-          title: 'Created At',
+          title: 'Fecha',
           key: 'createdAt',
            render: (text, record) => (
             <span>
@@ -31,7 +31,7 @@ class editToolsEquipmentForm extends Component {
             </span>
           ),
         }, {
-          title: 'Cost',
+          title: 'Costo',
           dataIndex: 'cost',
           key: 'cost',
         }
@@ -89,12 +89,12 @@ class editToolsEquipmentForm extends Component {
                 />
                 <Modal
                     visible={visible}
-                    title={"Edit Tools"}
+                    title={"Editar Herramienta y Equipo"}
                     onCancel={onCancel}
                     onOk={onCreate}
                     footer={[
-                        <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                        <Button key="submit" type="primary" size="large" onClick={onCreate} > Submit </Button >
+                        <Button key = "back" size = "large" onClick = {onCancel} > Cancelar </Button>, 
+                        <Button key="submit" type="primary" size="large" onClick={onCreate} > Aceptar </Button >
                         ]}>
                     <Form>
                         {getFieldDecorator('id', {
@@ -102,17 +102,17 @@ class editToolsEquipmentForm extends Component {
                         })(
                             <Input type="hidden" />
                         )}
-                        <FormItem label="Description">
+                        <FormItem label="Descripción">
                         {getFieldDecorator('description', {
                             rules: [
-                                { required: true, message: 'Please input tool and equipment description!' }, 
+                                { required: true, message: '¡Por favor ingrese la descripción!' }, 
                                 ],
                                 initialValue: toolsEquipment.description?toolsEquipment.description:""
                         })(
-                            <Input  placeholder="Tool and Equipment description" />
+                            <Input  placeholder="Descripción de la herramienta y equipo" />
                         )}
                         </FormItem>
-                        <Row><Button type="primary" icon="plus" className="add-toolsEquipments-button" onClick={() => this.onCreateToolCost(toolsEquipment)}>Add New Price</Button></Row>
+                        <Row><Button type="primary" icon="plus" className="add-toolsEquipments-button" onClick={() => this.onCreateToolCost(toolsEquipment)}>Agregar nuevo costo</Button></Row>
                         <FormItem>
                             <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}}/>
                         </FormItem>
