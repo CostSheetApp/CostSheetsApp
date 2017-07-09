@@ -22,8 +22,8 @@ class addJobForm extends Component {
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
-                    <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                    <Button key="submit" type="primary" size="large" onClick={onCreate}> Submit </Button >
+                    <Button key = "back" size = "large" onClick = {onCancel} > Cancelar </Button>, 
+                    <Button key="submit" type="primary" size="large" onClick={onCreate}> Aceptar </Button >
                     ]}>
                 <Form>
                     {getFieldDecorator('id', {
@@ -31,14 +31,14 @@ class addJobForm extends Component {
                     })(
                         <Input type="hidden" />
                     )}
-                    <FormItem label="Description">
+                    <FormItem label="Descripción">
                     {getFieldDecorator('description', {
                         rules: [
-                            { required: true, message: 'Please input Region description!' }, 
+                            { required: true, message: '¡Por favor ingrese la descripción!' }, 
                             ],
                             initialValue: job.description?job.description:""
                     })(
-                        <Input  placeholder="Job description" />
+                        <Input  placeholder="Descripción del puesto de trabajo" />
                     )}
                     </FormItem>
                 </Form>

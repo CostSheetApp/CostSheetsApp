@@ -19,11 +19,11 @@ class editManPowerForm extends Component {
     constructor(props){
       super(props);
       this.columns = [{
-          title: 'Region',
+          title: 'Región',
           dataIndex: 'region.name',
           key: 'region.name'
         }, {
-          title: 'Created At',
+          title: 'Fecha',
           key: 'createdAt',
            render: (text, record) => (
             <span>
@@ -31,7 +31,7 @@ class editManPowerForm extends Component {
             </span>
           ),
         }, {
-          title: 'Cost',
+          title: 'Costo',
           dataIndex: 'cost',
           key: 'cost',
         }
@@ -95,12 +95,12 @@ class editManPowerForm extends Component {
                 />
                 <Modal
                     visible={visible}
-                    title={"Edit Man Power"}
+                    title={"Editar Mano de Obra"}
                     onCancel={onCancel}
                     onOk={onCreate}
                     footer={[
-                        <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                        <Button key="submit" type="primary" size="large" onClick={onCreate} > Submit </Button >
+                        <Button key = "back" size = "large" onClick = {onCancel} > Cancelar </Button>, 
+                        <Button key="submit" type="primary" size="large" onClick={onCreate} > Aceptar </Button >
                         ]}>
                     <Form>
                         {getFieldDecorator('id', {
@@ -108,26 +108,26 @@ class editManPowerForm extends Component {
                         })(
                             <Input type="hidden" />
                         )}
-                        <FormItem label="Description">
+                        <FormItem label="Descripción">
                         {getFieldDecorator('description', {
                             rules: [
-                                { required: true, message: 'Please input tool and equipment description!' }, 
+                                { required: true, message: '¡Por favor ingrese la descripción!' }, 
                                 ],
                                 initialValue: manPower.description?manPower.description:""
                         })(
-                            <Input  placeholder="Tool and Equipment description" />
+                            <Input  placeholder="Descripción de la Mano de Obra" />
                         )}
                         </FormItem>
-                        <FormItem label="Job">
+                        <FormItem label="Puesto de Trabajo">
                             {getFieldDecorator('jobId', {
                                 rules: [
-                                    { required: true, message: 'Please input Job!' }, 
+                                    { required: true, message: 'Por favor selecciona un puesto de trabajo!' }, 
                                     ],
                                     initialValue: manPower.jobId?manPower.jobId.toString():null
                             })(
                                 <Select
                                     showSearch
-                                    placeholder="Select a job"
+                                    placeholder="Selecciona un Puesto de Trabajo"
                                     optionFilterProp="children"
                                     //onChange={handleChange}
                                     filterOption={(input, option) => {
@@ -139,7 +139,7 @@ class editManPowerForm extends Component {
                                 </Select>
                             )}
                             </FormItem>
-                        <Row><Button type="primary" icon="plus" className="add-manPowers-button" onClick={() => this.onCreateManPowerCost(manPower)}>Add New Price</Button></Row>
+                        <Row><Button type="primary" icon="plus" className="add-manPowers-button" onClick={() => this.onCreateManPowerCost(manPower)}>Agregar nuevo costo</Button></Row>
                         <FormItem>
                             <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}}/>
                         </FormItem>

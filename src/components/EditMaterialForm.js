@@ -22,11 +22,11 @@ class editMaterialForm extends Component {
     constructor(props){
       super(props);
       this.columns = [{
-          title: 'Region',
+          title: 'Región',
           dataIndex: 'region.name',
           key: 'region.name'
         }, {
-          title: 'Created At',
+          title: 'Fecha',
           key: 'createdAt',
            render: (text, record) => (
             <span>
@@ -34,7 +34,7 @@ class editMaterialForm extends Component {
             </span>
           ),
         }, {
-          title: 'Cost',
+          title: 'Costo',
           dataIndex: 'cost',
           key: 'cost',
         }
@@ -98,12 +98,12 @@ class editMaterialForm extends Component {
                 
                 <Modal
                     visible={visible}
-                    title={"Edit Material"}
+                    title={"Editar Material"}
                     onCancel={onCancel}
                     onOk={onCreate}
                     footer={[
-                        <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                        <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Submit </Button >
+                        <Button key = "back" size = "large" onClick = {onCancel} > Cancelar </Button>, 
+                        <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Aceptar </Button >
                         ]}>
                     <Form>
                         {getFieldDecorator('id', {
@@ -112,40 +112,40 @@ class editMaterialForm extends Component {
                             <Input type="hidden" />
                         )}
     
-                        <FormItem label="Description" style={{marginBottom:"10px"}}>
+                        <FormItem label="Descripción" style={{marginBottom:"10px"}}>
                         {getFieldDecorator('description', {
                             rules: [
-                                { required: true, message: 'Please input material description!' }, 
+                                { required: true, message: '¡Por favor ingrese la descripción!' }, 
                                 ],
                                 initialValue: material.description?material.description:""
                         })(
-                            <Input  placeholder="Material description" />
+                            <Input  placeholder="Descripción del material" />
                         )}
                         </FormItem>
                         <FormItem >
                             <Col span="12">
-                            <FormItem label="Waste">
+                            <FormItem label="Desperdicio">
                                 {getFieldDecorator('waste', {
                                     rules: [
-                                        { required: true, message: 'Please input material waste!' }, 
+                                        { required: true, message: '¡Por favor ingrese el desperdicio del material!' }, 
                                         ],
                                         initialValue: material.waste?material.waste:0
                                 })(
-                                    <Input type="number" placeholder="Material waste" />
+                                    <Input type="number" placeholder="Desperdicio del material" />
                                 )}
                                 </FormItem>
                             </Col>
                             <Col span="12">
-                            <FormItem label="Unit of Measurement">
+                            <FormItem label="Unidad de Medida">
                                 {getFieldDecorator('unitsOfMeasurementId', {
                                     rules: [
-                                        { required: true, message: 'Please input Unit of Measurement!' }, 
+                                        { required: true, message: '¡Por favor seleccione una unidad de medida!' }, 
                                         ],
                                         initialValue: material.unitsOfMeasurementId?material.unitsOfMeasurementId.toString():null
                                 })(
                                     <Select
                                         showSearch
-                                        placeholder="Select a unit of measurement"
+                                        placeholder="Seleccione una unidad de medida"
                                         optionFilterProp="children"
                                         //onChange={handleChange}
                                         filterOption={(input, option) => {
@@ -160,7 +160,7 @@ class editMaterialForm extends Component {
                             </Col>
                         </FormItem>
                         
-                        <Row><Button type="primary" icon="plus" className="add-material-button" onClick={() => this.onCreateMaterialCost(material)}>Add New Price</Button></Row>
+                        <Row><Button type="primary" icon="plus" className="add-material-button" onClick={() => this.onCreateMaterialCost(material)}>Agregar nuevo costo</Button></Row>
                         
                         <FormItem>
                             <Table rowKey={item => item.id} size="small" bordered={true} loading={costHistory.loading} dataSource={costHistory.list} columns={this.columns} pagination={{pageSize:5}}/>

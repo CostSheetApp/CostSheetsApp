@@ -39,47 +39,47 @@ class addMaterialForm extends Component {
         return (
             <Modal
                 visible={visible}
-                title={"Add Material"}
+                title={"Agregar Material"}
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
-                    <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                    <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Submit </Button >
+                    <Button key = "back" size = "large" onClick = {onCancel} > Cancelar </Button>, 
+                    <Button key="submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Aceptar </Button >
                     ]}>
                 <Form>
-                   <FormItem label="Description" style={{marginBottom:"10px"}}>
+                   <FormItem label="Descripción" style={{marginBottom:"10px"}}>
                     {getFieldDecorator('description', {
                         rules: [
-                            { required: true, message: 'Please input material description!' }, 
+                            { required: true, message: '¡Por favor ingrese la descripción!' }, 
                             ]
                     })(
-                        <Input  placeholder="Material description" />
+                        <Input  placeholder="Descripción del material" />
                     )}
                     </FormItem>
                     <FormItem >
                     <Col span="12">
-                    <FormItem label="Waste">
+                    <FormItem label="Desperdicio">
                         {getFieldDecorator('waste', {
                             rules: [
-                                { required: true, message: 'Please input material waste!' }, 
+                                { required: true, message: '¡Por favor ingrese el desperdicio!' }, 
                                 ],
                                 initialValue: 0
                         })(
-                            <Input type="number" placeholder="Material waste" />
+                            <Input type="number" placeholder="Desperdicio" />
                         )}
                          </FormItem>
                     </Col>
                     <Col span="12">
-                    <FormItem label="Unit of Measurement">
+                    <FormItem label="Unidad de medida">
                         {getFieldDecorator('unitsOfMeasurementId', {
                             rules: [
-                                { required: true, message: 'Please input Unit of Measurement!' }, 
+                                { required: true, message: '¡Por favor ingrese la unidad de medida!' }, 
                                 ],
                                 
                         })(
                             <Select
                                 showSearch
-                                placeholder="Select a unit of measurement"
+                                placeholder="Seleccione una unidad de medida"
                                 optionFilterProp="children"
                                 //onChange={handleChange}
                                 filterOption={(input, option) => {
@@ -95,28 +95,28 @@ class addMaterialForm extends Component {
                     </FormItem>
                      <FormItem style={{paddingTop:"10px"}}>
                                 <Col span="12" >
-                                    <FormItem label="Cost">
+                                    <FormItem label="Costo">
                                         {getFieldDecorator('cost', {
                                 rules: [
-                                    { required: true, message: 'Please input initial cost!' }, 
+                                    { required: true, message: '¡Por favor ingrese el costo inicial!' }, 
                                     ],
                                     initialValue: 0
                             })(
-                                <Input type="number" placeholder="Initial cost" />
+                                <Input type="number" placeholder="Costo inicial" />
                             )}
                                 </FormItem>
                             </Col>
                             <Col span="12">
-                                    <FormItem label="Region">
+                                    <FormItem label="Región">
                                         {getFieldDecorator('regionId', {
                                             rules: [
-                                                { required: true, message: 'Please select a region' }, 
+                                                { required: true, message: '¡Por favor seleccione una región' }, 
                                                 ],
                                                 
                                         })(
                                             <Select
                                             showSearch
-                                            placeholder="Select a region"
+                                            placeholder="selecciona una región"
                                             optionFilterProp="children"
                                             //onChange={handleChange}
                                             filterOption={(input, option) => {
@@ -129,7 +129,7 @@ class addMaterialForm extends Component {
                                         )}
                                 </FormItem>
                             </Col>
-                        </FormItem>
+                     </FormItem>
                 </Form>
             </Modal>
         );
