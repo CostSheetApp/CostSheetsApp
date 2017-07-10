@@ -6,6 +6,7 @@ import {
     Button,
     Modal,
     Input,
+    InputNumber,
     //Icon,
     //Table,
     Col,
@@ -53,7 +54,12 @@ class addCostToolForm extends Component {
                             ],
                             initialValue: 0
                         })(
-                            <Input type="number" placeholder="Nuevo costo" />
+                            <InputNumber
+                                min={0}
+                                max={2147483645.99}
+                                formatter={value => `L. ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                                parser={value => value.replace(/\L.\s?|(,*)/g, '')}
+                            />
                         )}
                             </FormItem>
                         </Col>

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {Table,Row,Button, Icon,Popconfirm} from 'antd';
 import Moment from 'react-moment';
+import NumberFormat from 'react-number-format';
 import '../styles/projects.css';
 import ProjectForm from './ProjectForm';
 
@@ -14,16 +15,33 @@ class Projects extends Component {
         }, {
           title: 'Presupuesto',
           dataIndex: 'budget',
+          render: (text, record) => (
+            <NumberFormat value={record.budget} 
+                displayType={'text'}
+                thousandSeparator={true} 
+                prefix={'L.'} 
+                decimalPrecision={2}
+            />
+          ),
           key: 'budget'
         }, {
           title: 'Porcentaje ganancia',
           dataIndex: 'profitPercentage',
+          render: (text, record) => (
+            <NumberFormat 
+                value={record.profitPercentage}
+                displayType={'text'}
+                thousandSeparator={true}
+                suffix={'%'}
+                decimalPrecision={2}
+            />
+          ),
           key: 'profitPercentage'
         }, {
           title: 'Fecha inicio',
           render: (text, record) => (
             <span>
-                <Moment fromNow>{record.startDate}</Moment>
+                <Moment fromNow>{record.createdAt}</Moment>
             </span>
           ),
           key: 'startDate'

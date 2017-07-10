@@ -1,5 +1,6 @@
 import React, {Component, PropTypes } from 'react';
 import Moment from 'react-moment';
+import NumberFormat from 'react-number-format';
 //import Mayre from 'mayre';
 import {
     Form,
@@ -36,6 +37,15 @@ class editMaterialForm extends Component {
         }, {
           title: 'Costo',
           dataIndex: 'cost',
+          render: (text, record) => (
+            <NumberFormat
+                value={record.cost} 
+                displayType={'text'}
+                thousandSeparator={true} 
+                prefix={'L.'} 
+                decimalPrecision={2}
+            />
+          ),
           key: 'cost',
         }
         ];

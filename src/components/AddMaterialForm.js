@@ -6,6 +6,7 @@ import {
     Button,
     Modal,
     Input,
+    InputNumber,
     //Icon,
     //Table,
     Col,
@@ -65,7 +66,13 @@ class addMaterialForm extends Component {
                                 ],
                                 initialValue: 0
                         })(
-                            <Input type="number" placeholder="Desperdicio" />
+                            //<Input type="number" placeholder="Desperdicio" />
+                            <InputNumber
+                                min={0}
+                                max={2147483645.99}
+                                formatter={value => `${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                                parser={value => value.replace(/\L.\s?|(,*)/g, '')}
+                            />
                         )}
                          </FormItem>
                     </Col>
@@ -102,7 +109,12 @@ class addMaterialForm extends Component {
                                     ],
                                     initialValue: 0
                             })(
-                                <Input type="number" placeholder="Costo inicial" />
+                                <InputNumber
+                                    min={0}
+                                    max={2147483645.99}
+                                    formatter={value => `L. ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                                    parser={value => value.replace(/\L.\s?|(,*)/g, '')}
+                                />
                             )}
                                 </FormItem>
                             </Col>
