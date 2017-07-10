@@ -34,7 +34,7 @@ class Materials extends Component {
                 dataIndex: 'description',
                 key: 'description'
             }, {
-                title: '% Desperdicio',
+                title: 'Desperdicio',
                 dataIndex: 'waste',
                 key: 'waste'
             }, {
