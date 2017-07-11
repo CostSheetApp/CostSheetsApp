@@ -26,19 +26,20 @@ class LoginForm extends Component {
 
         return (           
             <Row type="flex" justify="space-around" align="middle">
-        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}/>
-        <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-        <Form onSubmit={this.handleSubmit} className="login-form">
+            <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 1 }}/>
+            <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 0 }}>
+            <center><h2>Iniciar Sesión</h2></center>
+            <Form onSubmit={this.handleSubmit} className="login-form">
             <FormItem>
             {getFieldDecorator('username', {
-                rules: [{ required: true, message: 'Por favor ingrese el usuario' }],
+                rules: [{ required: true, message: '¡Por favor ingrese el usuario' }],
             })(
                 <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />
             )}
             </FormItem>
             <FormItem>
             {getFieldDecorator('password', {
-                rules: [{ required: true, message: 'Por favor ingrese la contraseña' }],
+                rules: [{ required: true, message: '¡Por favor ingrese la contraseña' }],
             })(
                 <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
             )}

@@ -14,11 +14,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        FetchJobs: () => {
-            dispatch(FetchJobs());
+        FetchJobs: (entityId) => {
+            dispatch(FetchJobs(entityId));
         },
-        AddJob: (params) => {
-            dispatch(AddJob(params));
+        AddJob: (entityId,params) => {
+            dispatch(AddJob(entityId,params));
         },
         EditJob: (id,params) => {
             dispatch(EditJob(id,params));

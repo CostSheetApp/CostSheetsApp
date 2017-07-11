@@ -15,12 +15,12 @@ import {
          ,DELETING_JOB_ERROR
        } from '../constants/actionTypes';
 
-export const FetchJobs = () =>
+export const FetchJobs = (entityId) =>
     (dispatch) => {
         dispatch({type: FETCHING_JOBS});
 
         axios
-            .get(`${API_URL}/Jobs?filter={"where": {"isDeleted": false }}`,{
+            .get(`${API_URL}/Entities/${entityId}/Jobs?filter={"where": {"isDeleted": false }}`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
@@ -36,11 +36,11 @@ export const FetchJobs = () =>
             });
     };
 
-export const AddJob = (params) =>
+export const AddJob = (entityId,params) =>
     (dispatch) => {
         //console.log(params);
         dispatch({type: ADDING_JOB});
-        axios.post(`${API_URL}/Jobs`, params , {
+        axios.post(`${API_URL}/Entities/${entityId}/Jobs`, params , {
         headers: { 'Authorization': cookie.load('token') }
         })
             .then((response) => {

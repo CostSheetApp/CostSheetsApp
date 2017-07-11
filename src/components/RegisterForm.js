@@ -17,6 +17,29 @@ class RegisterUserForm extends Component {
         }
         });
     }
+    state = {
+        confirmDirty: false,
+        autoCompleteResult: [],
+    };
+    handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+    }
+    checkPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && value !== form.getFieldValue('password')) {
+            callback('Las dos contraseñas no son iguales!');
+        } else {
+            callback();
+        }
+    }
+    checkConfirm = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && this.state.confirmDirty) {
+            form.validateFields(['confirm'], { force: true });
+        }
+        callback();
+    }
 
     render() {
         let { getFieldDecorator } = this.props.form;
@@ -30,41 +53,55 @@ class RegisterUserForm extends Component {
 
         return (
             <Row type="flex" justify="space-around" align="middle">
-            <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}/>
-            <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+            <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 1 }}/>
+            <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 0 }}>
+            <center><h2>Registrar Usuario</h2></center>
             <Form onSubmit={this.handleSubmit} className="register-form">
                 <FormItem label="Name">
                     {getFieldDecorator('name', {
-                        rules: [{ required: true, message: 'Please input your name!' }],
+                        rules: [{ required: true, message: '¡Por favor ingrese su nombre!' }],
                     })(
                         <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Name" />
                     )}
                 </FormItem>
                 <FormItem label ="Username">
                     {getFieldDecorator('username', {
-                        rules: [{ required: true, message: 'Please input your username!' }],
+                        rules: [{ required: true, message: '¡Por favor ingrese el nombre de usuario!' }],
                     })(
-                        <Input prefix={<Icon type="email" style={{ fontSize: 13 }} />} placeholder="username" />
+                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="username" />
                     )}
                 </FormItem>
                 <FormItem label="Email">
                     {getFieldDecorator('email', {
-                        rules: [{ required: true, message: 'Please input your email!' }],
+                        rules: [{ type: 'email', message: '¡Este no es un E-mail valido!',}, 
+                                { required: true, message: '¡Por favor ingrese su E-mail!' }],
                     })(
-                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="email" />
+                        <Input prefix={<Icon type="mail" style={{ fontSize: 13 }} />} placeholder="email" />
                     )}
                 </FormItem>
-                <FormItem label="Password">
+                <FormItem label="Contraseña">
                     {getFieldDecorator('password', {
-                        rules: [{ required: true, message: 'Please input your Password!' }],
+                        rules: [{ required: true, message: '¡Por favor ingrese la Contraseña!' },
+                        { validator: this.checkConfirm,}],
                     })(
-                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
+                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Contraseña" />
                     )}
                 </FormItem>
+                
+                <FormItem label="Confirmar Contraseña">
+                    {getFieldDecorator('confirm', {
+                        rules: [{required: true, message: '¡Por favor confirme la contraseña!',}, 
+                        { validator: this.checkPassword,}],
+                    })(
+                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" onBlur={this.handleConfirmBlur}  placeholder="Contraseña" />
+                    )}
+                </FormItem>
+
                 {errorMessage}
                 <Button type="primary" htmlType="submit" className="register-form-button">
                     Register
                 </Button>
+                <a href="/login">Cancelar</a>
             </Form>
             </Col>
             <Col xs={{ span: 5, offset: 1 }} lg={{ pan: 6, offset: 2 }}/>
