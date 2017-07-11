@@ -52,7 +52,7 @@ class CostSheets extends Component {
                             Región: <Tag color='green'>{sheet.region.name}</Tag>
                         </Row>
                         <Row>
-                            Fecha:  <Moment fromNow ago>{sheet.createdAt}</Moment> ago
+                            Fecha:  <Moment format="DD/MM/YYYY">{sheet.createdAt}</Moment>
                         </Row>
                         <Row className="action-panel">
                         <Button type="primary" className="actions" onClick={() => ViewCostSheet(sheet.id)}>Ver</Button>

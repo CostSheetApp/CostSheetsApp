@@ -26,9 +26,9 @@ class editToolsEquipmentForm extends Component {
         }, {
           title: 'Fecha',
           key: 'createdAt',
-           render: (text, record) => (
+          render: (text, record) => (
             <span>
-                <Moment fromNow>{record.createdAt}</Moment>
+                <Moment format="DD/MM/YYYY">{record.createdAt}</Moment>
             </span>
           ),
         }, {

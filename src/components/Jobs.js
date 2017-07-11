@@ -48,8 +48,8 @@ class Jobs extends Component {
       isEditFormVisible: false 
     };
     componentWillMount() {
-        let { FetchJobs } = this.props;
-        FetchJobs();
+        let { FetchJobs,entityId } = this.props;
+        FetchJobs(entityId);
     }
     onDelete(index,job){
         let { DeleteJob } = this.props;
@@ -78,9 +78,9 @@ class Jobs extends Component {
         if (err) {
             return;
         }
-        let { AddJob } = this.props;
+        let { AddJob,entityId } = this.props;
         delete values.id;
-        AddJob(values);
+        AddJob(entityId,values);
         form.resetFields();
         this.setState({ visible: false });
         });
