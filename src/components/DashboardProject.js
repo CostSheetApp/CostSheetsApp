@@ -29,6 +29,11 @@ class CostSheets extends Component {
        //let {AddCostSheet,entityId} = this.props;
        //AddCostSheet(entityId);
     }
+    onConsolidate() {
+       alert('Consolidados');
+       //let {AddCostSheet,entityId} = this.props;
+       //AddCostSheet(entityId);
+    }
     render() {
         //let {costSheets,ViewCostSheet} = this.props;
         return (
@@ -39,6 +44,14 @@ class CostSheets extends Component {
                         icon="plus"
                         className="add-cost-sheet-button"
                         onClick={() => this.onCreate()}>Agregar Ficha de Costo</Button>
+                </Row>
+
+                <Row>
+                    <Button
+                        type="primary"
+                        icon="plus"
+                        className="add-cost-sheet-button"
+                        onClick={() => this.onConsolidate()}>Generar Consolidados</Button>
                 </Row>
                 
             </Row>
