@@ -1,11 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Menu, Icon } from 'antd';
 import CubesIcon from 'react-icons/lib/fa/cubes';
+
+const SubMenu = Menu.SubMenu;
+
 class MainMenu extends Component {
     render() {
         let {changeLocationTo}=this.props;
         return (
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={['/']} onClick={({ key }) => changeLocationTo(key)}>
+            <Menu theme="dark" mode="vertical" defaultSelectedKeys={['/']} onClick={({ key }) => changeLocationTo(key)}>
             <Menu.Item key="/">
               <Icon type="home" />
               <span className="nav-text">Inicio</span>
@@ -39,6 +42,14 @@ class MainMenu extends Component {
               <span className="nav-text">Puestos de Trabajo</span>
             </Menu.Item>
             
+            <SubMenu key="/reports" title={<span> <Icon type="idcard" /> <span className="nav-text">Reportes</span> </span>}>
+              <Menu.Item key="/reports/consolidate" >
+                <Icon type="idcard" />
+                <span className="nav-text">Consolidados de Proyecto</span>
+              </Menu.Item>
+
+            </SubMenu>
+
             {/*
             <Menu.Item key="/users" >
               <Icon type="usergroup-add" />

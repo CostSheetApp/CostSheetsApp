@@ -18,7 +18,7 @@ const reducer = (state = initState, action) => {
             ...state,
             list: action.list,
             loading:false
-        };        
+        };     
         case FETCHING_PROJECTS_ERROR:
         return{
             ...state,
