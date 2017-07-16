@@ -14,6 +14,10 @@ import projectCostSheetReducer from './projectCostSheetReducer';
 import jobReducer from './jobsReducer';
 import consolidateReducer from './projectConsolidate';
 
+import historyCostMaterialReducer from './reportHistoyCostMaterialReducer';
+import historyCostManPowerReducer from './reportHistoyCostManPowerReducer';
+import historyCostToolsAndEquipmentReducer from './reportHistoyCostToolsAndEquipmentReducer';
+
 const rootReducer = combineReducers({
   fuelSavings,
   routing: routerReducer,
@@ -28,7 +32,10 @@ const rootReducer = combineReducers({
   manPowers: manPowerReducer,
   projectCostSheet: projectCostSheetReducer,
   jobs: jobReducer,
-  consolidate: consolidateReducer
+  consolidate: consolidateReducer,
+  historyMaterial: historyCostMaterialReducer,
+  historyManPower: historyCostManPowerReducer,
+  historyTools: historyCostToolsAndEquipmentReducer
 });
 
 export default rootReducer;

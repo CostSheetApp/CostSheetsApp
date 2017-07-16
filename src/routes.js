@@ -30,6 +30,10 @@ import ManPowers from './containers/ManPowers';
 import Jobs from './containers/Jobs';
 import Consolidate from './containers/ProjectConsolidate';
 
+import HistoryMaterial from './containers/HistoryMaterial';
+import HistoryManPower from './containers/HistoryManPower';
+import HistoryTool from './containers/HistoryToolsEquipment';
+
 
 const UserIsNotAuthenticated = UserAuthWrapper({
   authSelector: state => state.account,
@@ -75,6 +79,9 @@ export default (
       <Route path="man-powers" component={ManPowers}/>
       <Route path="jobs" component={Jobs}/>
       <Route path="reports/consolidate" component={Consolidate}/>
+      <Route path="reports/materialcosthistory" component={HistoryMaterial}/>
+      <Route path="reports/manpowercosthistory" component={HistoryManPower}/>
+      <Route path="reports/toolsandequipmentcosthistory" component={HistoryTool}/>
       <Route path="fuel-savings" component={FuelSavingsPage}/>
     </Route>
     <Route path="*" component={NotFoundPage}/>
