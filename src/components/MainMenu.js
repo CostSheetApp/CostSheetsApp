@@ -48,6 +48,21 @@ class MainMenu extends Component {
                 <span className="nav-text">Consolidados de Proyecto</span>
               </Menu.Item>
 
+              <Menu.Item key="/reports/materialcosthistory" >
+                <Icon type="idcard" />
+                <span className="nav-text">Historico Costos de Materiales</span>
+              </Menu.Item>
+
+              <Menu.Item key="/reports/manpowercosthistory" >
+                <Icon type="idcard" />
+                <span className="nav-text">Historico Costos de Mano de Obra</span>
+              </Menu.Item>
+
+              <Menu.Item key="/reports/toolsandequipmentcosthistory" >
+                <Icon type="idcard" />
+                <span className="nav-text">Historico Costos de Herramientas y Equipo</span>
+              </Menu.Item>
+
             </SubMenu>
 
             {/*

@@ -9,8 +9,7 @@ import {
     //Icon,
     //Table,
     Col,
-    Select,
-    Row
+    Select
 } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
