@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {Table,Row,Button, Icon,Popconfirm} from 'antd';
 //import Moment from 'react-moment';
-import '../styles/projects.css';
+import '../styles/job.css';
 import JobForm from './JobForm';
 
 Number.prototype.padZero= function(len, c){

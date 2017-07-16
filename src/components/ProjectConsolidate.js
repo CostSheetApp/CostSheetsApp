@@ -13,13 +13,22 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
 
+Number.prototype.padZero= function(len, c){
+    let s= this.toString();
+    c = c || '0';
+    while(s.length< len) s= c+ s;
+    return s;
+};
+
 class Consolidate extends Component {
     constructor(props){
       super(props);
       this.columnsMaterial = [{
-          title: 'Codigo',
-          dataIndex: 'code',
-          key: 'code'
+          title: 'Código',
+          key: 'code',
+          render: (text, material) => {
+              return (<span>{material.code.padZero(10)}</span>);
+          }
         },{
           title: 'Material',
           dataIndex: 'description',
@@ -54,9 +63,11 @@ class Consolidate extends Component {
         }];
 
         this.columnsManPower = [{
-          title: 'Codigo',
-          dataIndex: 'code',
-          key: 'code'
+          title: 'Código',
+          key: 'code',
+          render: (text, manPower) => {
+              return (<span>{manPower.code.padZero(10)}</span>);
+          }
         },{
           title: 'Mano de Obra',
           dataIndex: 'description',
@@ -87,9 +98,11 @@ class Consolidate extends Component {
         }];
 
         this.columnsToolEquipment = [{
-          title: 'Codigo',
-          dataIndex: 'code',
-          key: 'code'
+          title: 'Código',
+          key: 'code',
+          render: (text, tool) => {
+              return (<span>{tool.code.padZero(10)}</span>);
+          }
         },{
           title: 'Mano de Obra',
           dataIndex: 'description',
@@ -130,17 +143,14 @@ class Consolidate extends Component {
         let { FetchProjects,entityId } = this.props;
         FetchProjects(entityId);
     }
-    onChangeProject= (id) =>{
-        console.log(id);
-
+    onChangeProject= (id) => {
         let { FetchConsolidateMaterial,FetchConsolidateManPower,FetchConsolidateToolsAndEquipment } = this.props;
         FetchConsolidateMaterial(id);
         FetchConsolidateManPower(id);
         FetchConsolidateToolsAndEquipment(id);
         
     }
-    render() {
-        //let {getFieldDecorator} = this.props.form;
+    render(){
         let {Projects
              ,Materials
              ,ManPowers
@@ -151,12 +161,12 @@ class Consolidate extends Component {
             <Row>
                 <Form>
                     <Row>
-                        <Col span={3} >
-                            <FormItem label="Default Region">
+                        <Col span={15} >
+                            <FormItem label="Proyecto">
                                     {(
                                         <Select
                                         showSearch
-                                        placeholder="Select a region"
+                                        placeholder="Seleccione un proyecto"
                                         optionFilterProp="children"
                                         onChange={this.onChangeProject}
                                         filterOption={(input, option) => {

@@ -70,6 +70,7 @@ class addMaterialForm extends Component {
                             <InputNumber
                                 min={0}
                                 max={2147483645.99}
+                                style={{ width: '100%' }}
                                 formatter={value => `${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
                                 parser={value => value.replace(/\L.\s?|(,*)/g, '')}
                             />
@@ -112,6 +113,7 @@ class addMaterialForm extends Component {
                                 <InputNumber
                                     min={0}
                                     max={2147483645.99}
+                                    style={{ width: '100%' }}
                                     formatter={value => `L. ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
                                     parser={value => value.replace(/\L.\s?|(,*)/g, '')}
                                 />
