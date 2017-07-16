@@ -55,6 +55,7 @@ class addProjectForm extends Component {
                         <InputNumber
                             min={0}
                             max={2147483645.99}
+                            style={{ width: '40%' }}
                             formatter={value => `L. ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
                             parser={value => value.replace(/\L.\s?|(,*)/g, '')}
                         />
@@ -70,6 +71,7 @@ class addProjectForm extends Component {
                         <InputNumber 
                             min={0}
                             max={100}
+                            style={{ width: '20%' }}
                             formatter={value => `${value}%`}
                             parser={value => value.replace('%', '')}
                             placeholder="Porcentaje Ganancia"

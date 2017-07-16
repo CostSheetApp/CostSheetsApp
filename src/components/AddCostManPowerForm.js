@@ -45,25 +45,26 @@ class addCostToolForm extends Component {
                         })(
                             <Input type="hidden" />
                         )}
-                    <FormItem style={{paddingTop:"10px"}}>
-                        <Col span="12" >
+                    <FormItem style={{paddingTop:"2px"}}>
+                        <Col span={12}> 
                             <FormItem label="Costo">
                                 {getFieldDecorator('cost', {
-                        rules: [
-                            { required: true, message: '¡Por favor ingrese el nuevo costo!' }, 
-                            ],
-                            initialValue: 0
-                        })(
-                            <InputNumber
-                                min={0}
-                                max={2147483645.99}
-                                formatter={value => `L. ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
-                                parser={value => value.replace(/\L.\s?|(,*)/g, '')}
-                            />
-                        )}
+                                rules: [
+                                    { required: true, message: '¡Por favor ingrese el nuevo costo!' }, 
+                                    ],
+                                    initialValue: 0
+                                })(
+                                <InputNumber
+                                    min={0}
+                                    max={2147483645.99}
+                                    style={{ width: '100%' }}
+                                    formatter={value => `L. ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                                    parser={value => value.replace(/\L.\s?|(,*)/g, '')}
+                                />
+                                )}
                             </FormItem>
                         </Col>
-                        <Col span="12">
+                        <Col span={12}>
                                 <FormItem label="Región">
                                     {getFieldDecorator('regionId', {
                                         rules: [
