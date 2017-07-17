@@ -6,7 +6,7 @@ const mapStateToProps = (state) => {
     return {
         entityId: state.account.entityId,
         ManPowers: state.historyManPower.listManPower,
-        ManPowersHistory: state.historyManPower.listManPowerCostHistory,
+        CharData: state.historyManPower.CharData,
         ManPowersHistoryData: state.historyManPower.listManPowerCostHistoryData,
 
         loadingManPower: state.historyManPower.loadingManPower,

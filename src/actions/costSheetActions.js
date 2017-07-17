@@ -117,3 +117,76 @@ export const SelectMaterialToBeAddToCostSheet = (id) =>
     (dispatch) => {
         dispatch({type: SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET, id:id});
     };
+
+export const AddMaterial = (costSheetId, params) =>
+    (dispatch) => {
+        axios
+        .post(`${API_URL}/CostSheets/${costSheetId}/materials`,params, {
+        headers: {'Authorization': cookie.load('token')}
+        })
+        .then(() => {
+            axios
+            .get(`${API_URL}/CostSheetHasMaterials?filter={"where":{"costSheetId":${costSheetId}},"include":{"material":["materialCostHistories","unitsOfMeasurement"]}}`, {
+            headers: {'Authorization': cookie.load('token')}
+            })
+            .then((response) => {
+                dispatch({type: COST_SHEET_MATERIALS_FETCHED, payload: response.data });
+            })
+            .catch((error) => {
+                dispatch({type: FETCHED_COST_SHEET_MATERIALS_ERROR, error: error.response.data.error.message});
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+        })
+        .catch((error) => {
+            dispatch({type: ADDING_COST_SHEET_ERROR, error: error.response.data.error.message});
+        });
+    };
+
+
+export const AddManPower = (costSheetId, params) =>
+    (dispatch) => {
+        axios
+        .post(`${API_URL}/CostSheets/${costSheetId}/manpowers`,params, {
+        headers: {'Authorization': cookie.load('token')}
+        })
+        .then(() => {
+            axios
+            .get(`${API_URL}/CostSheetHasManpowers?filter={"where":{"costSheetId":${costSheetId}},"include":{"manpower":["manpowerCostHistories","job"]}}`, {
+            headers: {'Authorization': cookie.load('token')}
+            })
+            .then((response) => {
+                dispatch({type: COST_SHEET_MANPOWER_FETCHED, payload: response.data });
+            })
+            .catch((error) => {
+                dispatch({type: FETCHED_COST_SHEET_MANPOWER_ERROR, error: error.response.data.error.message});
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+        })
+        .catch((error) => {
+            dispatch({type: ADDING_COST_SHEET_ERROR, error: error.response.data.error.message});
+        });
+    };
+
+export const AddToolsAndEquipment = (costSheetId, params) =>
+    (dispatch) => {
+        axios
+        .post(`${API_URL}/CostSheets/${costSheetId}/toolsAndEquipments`,params, {
+        headers: {'Authorization': cookie.load('token')}
+        })
+        .then(() => {
+            axios
+            .get(`${API_URL}/CostSheetHasToolsAndEquipments?filter={"where":{"costSheetId":${costSheetId}},"include":["toolsAndEquipmentCostHistories","toolsAndEquipment"]}`, {
+            headers: {'Authorization': cookie.load('token')}
+            })
+            .then((response) => {
+                dispatch({type: COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED, payload: response.data });
+            })
+            .catch((error) => {
+                dispatch({type: FETCHED_COST_SHEET_MANPOWER_ERROR, error: error.response.data.error.message});
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+        })
+        .catch((error) => {
+            dispatch({type: FETCHED_COST_SHEET_MANPOWER_ERROR, error: error.response.data.error.message});
+        });
+    };

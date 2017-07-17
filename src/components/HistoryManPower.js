@@ -23,16 +23,6 @@ Number.prototype.padZero= function(len, c){
     return s;
 };
 
-let config = {
-  rangeSelector: {
-    selected: 1
-  },
-  title: {
-    text: 'Historico de Costos por Region'
-  },
-  series: []
-};
-
 class HistoryManPower extends Component {
     constructor(props){
       super(props);
@@ -72,21 +62,15 @@ class HistoryManPower extends Component {
     componentWillMount() {
         let { FetchManPowers,entityId } = this.props;
         FetchManPowers(entityId);
-
-        config.series = [];
     }
     onChangeManPower= (id) => {
-        config.series = [];
-        let { ReportCostHistoryManPower,ReportCostHistoryManPowerData,ManPowersHistory } = this.props;
+        let { ReportCostHistoryManPower,ReportCostHistoryManPowerData } = this.props;
         ReportCostHistoryManPower(id);
         ReportCostHistoryManPowerData(id);
-
-        if(ManPowersHistory){
-            config.series = ManPowersHistory;
-        }
     }
     render(){
         let {ManPowers
+             ,CharData
              ,ManPowersHistoryData
             } = this.props;
 
@@ -115,7 +99,7 @@ class HistoryManPower extends Component {
                     <Row>
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="Gráfico Histórico de la Mano de Obra" key="1">
-                                <ReactHighstock config = {config}/>
+                                <ReactHighstock config = {CharData}/>
                             </TabPane>
                             <TabPane tab="Datos Históricos de la Mano de Obra" key="2">
                                 <Table rowKey={item => item.id} size="small" bordered={true} dataSource={ManPowersHistoryData} columns={this.columnsManPower} pagination={{pageSize:15}} />
@@ -134,7 +118,7 @@ HistoryManPower.propTypes = {
     ReportCostHistoryManPowerData: PropTypes.func.isRequired,
     
     ManPowers: PropTypes.array,
-    ManPowersHistory: PropTypes.array,
+    CharData: PropTypes.object,
     ManPowersHistoryData: PropTypes.array,
 
     loadingManPower: PropTypes.bool.isRequired,

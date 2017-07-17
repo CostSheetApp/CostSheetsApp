@@ -239,7 +239,6 @@ class addCostSheetForm extends Component {
                 )
             }
         ];
-        
     }
    
     componentWillMount() {
@@ -264,7 +263,8 @@ class addCostSheetForm extends Component {
                 return;
             }
             let {AddMaterial} = this.props;
-            AddMaterial(values.id, values);
+            let {id} = this.props.params;
+            AddMaterial(id, values);
             form.resetFields();
             this.setState({AddMaterialToCostSheetFormIsVisible: false});
         });
@@ -371,7 +371,19 @@ addCostSheetForm.propTypes = {
     materials: PropTypes.array.isRequired,
     manpowers: PropTypes.array.isRequired,
     toolsAndEquipments: PropTypes.array.isRequired,
+
+    csmaterials: PropTypes.array,
+    csmanpower: PropTypes.array,
+    cstoolsAndEquipment: PropTypes.array,
+
     SelectMaterialToBeAddToCostSheet: PropTypes.func.isRequired,
+    AddMaterial: PropTypes.func.isRequired,
+    AddManPower: PropTypes.func.isRequired,
+    AddToolsAndEquipment: PropTypes.func.isRequired,
+
+    FetchCostSheetMaterials: PropTypes.func.isRequired,
+    FetchCostSheetManpower: PropTypes.func.isRequired,
+    FetchCostSheetToolsAndEquipment: PropTypes.func.isRequired
 };
 
 const addCostSheet = Form.create()(addCostSheetForm);

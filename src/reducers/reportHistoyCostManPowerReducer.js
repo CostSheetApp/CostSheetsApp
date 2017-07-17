@@ -16,7 +16,18 @@ const initState = {
     listManPowerCostHistory: [],
     listManPowerCostHistoryData: [],
     loadingManPower:false,
-    loadingManPowerCostHistory:false
+    loadingManPowerCostHistory:false,
+
+    CharData: {
+        rangeSelector: {
+            selected: 1
+        },
+        title: {
+            text: 'Histórico de Costos por Región'
+        },
+        series: []
+    }
+
 };
 
 const reducer = (state = initState, action) => {
@@ -30,7 +41,7 @@ const reducer = (state = initState, action) => {
         return {
             ...state,
             listManPower: action.list,
-            listManPowerCostHistory: [],
+            CharData: { ...state.CharData, series: [] },
             listManPowerCostHistoryData: [],
             loadingManPower:false
         };
@@ -48,7 +59,7 @@ const reducer = (state = initState, action) => {
         case REPORT_MANPOWER_COST_HISTORY_FETCHED:
         return {
             ...state,
-            listManPowerCostHistory: action.list,
+            CharData: { ...state.CharData, series: action.list },
             loadingManPowerCostHistory:false
         };
         case REPORT_FETCHING_MANPOWER_COST_HISTORY_ERROR:

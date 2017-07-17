@@ -23,16 +23,6 @@ Number.prototype.padZero= function(len, c){
     return s;
 };
 
-let config = {
-  rangeSelector: {
-    selected: 1
-  },
-  title: {
-    text: 'Historico de Costos por Region'
-  },
-  series: []
-};
-
 class HistoryMaterial extends Component {
     constructor(props){
       super(props);
@@ -72,25 +62,16 @@ class HistoryMaterial extends Component {
     componentWillMount() {
         let { FetchMaterials,entityId } = this.props;
         FetchMaterials(entityId);
-
-        config.series = [];
     }
     onChangeMaterial= (id) => {
-        config.series = [];
-        let { ReportCostHistoryMaterial,ReportCostHistoryMaterialData,MaterialsHistory } = this.props;
+        let { ReportCostHistoryMaterial,ReportCostHistoryMaterialData } = this.props;
         ReportCostHistoryMaterial(id);
         ReportCostHistoryMaterialData(id);
-
-        
-        if(MaterialsHistory){
-            config.series = MaterialsHistory;
-        }
-        
     }
     render(){
         let {Materials
-             ,MaterialsHistory
              ,MaterialsHistoryData
+             ,CharData
             } = this.props;
 
         return (
@@ -120,7 +101,7 @@ class HistoryMaterial extends Component {
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="Gráfico Histórico del Material" key="1">
                                 
-                                <ReactHighstock config = {config}/>
+                                <ReactHighstock config = {CharData} ref = "chart" />
                             </TabPane>
                             <TabPane tab="Datos Históricos del Material" key="2">
                                 <Table rowKey={item => item.id} size="small" bordered={true} dataSource={MaterialsHistoryData} columns={this.columnsMaterial} pagination={{pageSize:15}} />
@@ -140,7 +121,7 @@ HistoryMaterial.propTypes = {
     ReportCostHistoryMaterialData: PropTypes.func.isRequired,
     
     Materials: PropTypes.array,
-    MaterialsHistory: PropTypes.array,
+    CharData: PropTypes.object,
     MaterialsHistoryData: PropTypes.array,
 
     loadingMaterial: PropTypes.bool.isRequired,

@@ -5,7 +5,10 @@ FetchCostSheet,
 FetchCostSheetMaterials,
 FetchCostSheetManpower,
 FetchCostSheetToolsAndEquipment,
-SelectMaterialToBeAddToCostSheet
+SelectMaterialToBeAddToCostSheet,
+AddMaterial,
+AddManPower,
+AddToolsAndEquipment
 } from '../actions/costSheetActions';
 
 const mapStateToProps = (state) => {
@@ -37,6 +40,15 @@ const mapDispatchToProps = (dispatch) => {
         },
         SelectMaterialToBeAddToCostSheet: (id) => {
             dispatch(SelectMaterialToBeAddToCostSheet(id));
+        },
+        AddMaterial: (costSheetId,params) => {
+            dispatch(AddMaterial(costSheetId,params));
+        },
+        AddManPower: (costSheetId,params) => {
+            dispatch(AddManPower(costSheetId,params));
+        },
+        AddToolsAndEquipment: (costSheetId,params) => {
+            dispatch(AddToolsAndEquipment(costSheetId,params));
         }
     };
 };
