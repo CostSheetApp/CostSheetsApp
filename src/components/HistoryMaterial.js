@@ -10,6 +10,8 @@ import {Table
 import NumberFormat from 'react-number-format';
 import '../styles/projects.css';
 
+const ReactHighstock = require('react-highcharts/ReactHighstock');
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
@@ -19,6 +21,16 @@ Number.prototype.padZero= function(len, c){
     c = c || '0';
     while(s.length< len) s= c+ s;
     return s;
+};
+
+let config = {
+  rangeSelector: {
+    selected: 1
+  },
+  title: {
+    text: 'Historico de Costos por Region'
+  },
+  series: []
 };
 
 class HistoryMaterial extends Component {
@@ -60,14 +72,25 @@ class HistoryMaterial extends Component {
     componentWillMount() {
         let { FetchMaterials,entityId } = this.props;
         FetchMaterials(entityId);
+
+        config.series = [];
     }
     onChangeMaterial= (id) => {
-        let { ReportCostHistoryMaterial } = this.props;
+        config.series = [];
+        let { ReportCostHistoryMaterial,ReportCostHistoryMaterialData,MaterialsHistory } = this.props;
         ReportCostHistoryMaterial(id);
+        ReportCostHistoryMaterialData(id);
+
+        
+        if(MaterialsHistory){
+            config.series = MaterialsHistory;
+        }
+        
     }
     render(){
         let {Materials
              ,MaterialsHistory
+             ,MaterialsHistoryData
             } = this.props;
 
         return (
@@ -95,12 +118,14 @@ class HistoryMaterial extends Component {
                     </Row>
                     <Row>
                         <Tabs defaultActiveKey="1">
-                            <TabPane tab="Datos Históricos del Material" key="1">
-                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={MaterialsHistory} columns={this.columnsMaterial} pagination={{pageSize:15}} />
+                            <TabPane tab="Gráfico Histórico del Material" key="1">
+                                
+                                <ReactHighstock config = {config}/>
                             </TabPane>
-                            <TabPane tab="Gráfico Histórico del Material" key="2">
-                                <Table rowKey={item => item.id} size="small" bordered={true}  dataSource={MaterialsHistory} columns={this.columnsMaterial} pagination={{pageSize:15}} />
+                            <TabPane tab="Datos Históricos del Material" key="2">
+                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={MaterialsHistoryData} columns={this.columnsMaterial} pagination={{pageSize:15}} />
                             </TabPane>
+                            
                         </Tabs>                    
                     </Row>
                 </Form>
@@ -112,9 +137,11 @@ class HistoryMaterial extends Component {
 HistoryMaterial.propTypes = {
     FetchMaterials: PropTypes.func.isRequired,
     ReportCostHistoryMaterial: PropTypes.func.isRequired,
+    ReportCostHistoryMaterialData: PropTypes.func.isRequired,
     
     Materials: PropTypes.array,
     MaterialsHistory: PropTypes.array,
+    MaterialsHistoryData: PropTypes.array,
 
     loadingMaterial: PropTypes.bool.isRequired,
     loadingMaterialCostHistory: PropTypes.bool.isRequired,

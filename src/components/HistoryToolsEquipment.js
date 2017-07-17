@@ -10,6 +10,8 @@ import {Table
 import NumberFormat from 'react-number-format';
 import '../styles/projects.css';
 
+const ReactHighstock = require('react-highcharts/ReactHighstock');
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
@@ -20,6 +22,17 @@ Number.prototype.padZero= function(len, c){
     while(s.length< len) s= c+ s;
     return s;
 };
+
+let config = {
+  rangeSelector: {
+    selected: 1
+  },
+  title: {
+    text: 'Historico de Costos por Region'
+  },
+  series: []
+};
+
 
 class HistoryTools extends Component {
     constructor(props){
@@ -60,14 +73,22 @@ class HistoryTools extends Component {
     componentWillMount() {
         let { FetchTools,entityId } = this.props;
         FetchTools(entityId);
+
+        config.series = [];
     }
     onChangeTool= (id) => {
-        let { ReportCostHistorToolsAndEquipment } = this.props;
+        config.series = [];
+        let { ReportCostHistorToolsAndEquipment,ReportCostHistorToolsAndEquipmentData,ToolsHistory } = this.props;
         ReportCostHistorToolsAndEquipment(id);
+        ReportCostHistorToolsAndEquipmentData(id);
+
+        if(ToolsHistory){
+            config.series = ToolsHistory;
+        }
     }
     render(){
         let {Tools
-             ,ToolsHistory
+             ,ToolsHistoryData
             } = this.props;
 
         return (
@@ -95,11 +116,11 @@ class HistoryTools extends Component {
                     </Row>
                     <Row>
                         <Tabs defaultActiveKey="1">
-                            <TabPane tab="Datos Históricos de la Herramienta y Equipo" key="1">
-                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={ToolsHistory} columns={this.columnsTool} pagination={{pageSize:15}} />
+                            <TabPane tab="Gráfico Histórico de la Herramienta y Equipo" key="1">
+                                <ReactHighstock config = {config}/>
                             </TabPane>
-                            <TabPane tab="Gráfico Histórico de la Herramienta y Equipo" key="2">
-                                <Table rowKey={item => item.id} size="small" bordered={true}  dataSource={ToolsHistory} columns={this.columnsTool} pagination={{pageSize:15}} />
+                            <TabPane tab="Datos Históricos de la Herramienta y Equipo" key="2">
+                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={ToolsHistoryData} columns={this.columnsTool} pagination={{pageSize:15}} />
                             </TabPane>
                         </Tabs>                    
                     </Row>
@@ -112,9 +133,11 @@ class HistoryTools extends Component {
 HistoryTools.propTypes = {
     FetchTools: PropTypes.func.isRequired,
     ReportCostHistorToolsAndEquipment: PropTypes.func.isRequired,
+    ReportCostHistorToolsAndEquipmentData: PropTypes.func.isRequired,
     
     Tools: PropTypes.array,
     ToolsHistory: PropTypes.array,
+    ToolsHistoryData: PropTypes.array,
 
     loadingToolEquipment: PropTypes.bool.isRequired,
     loadingToolEquipmentCostHistory: PropTypes.bool.isRequired,

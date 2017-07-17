@@ -5,11 +5,16 @@ import {TOOLS_FETCHED
         ,REPORT_FETCHING_TOOL_COST_HISTORY
         ,REPORT_TOOL_COST_HISTORY_FETCHED
         ,REPORT_FETCHING_TOOL_COST_HISTORY_ERROR
+
+        ,REPORT_FETCHING_TOOL_COST_HISTORY_DATA
+        ,REPORT_TOOL_COST_HISTORY_FETCHED_DATA
+        ,REPORT_FETCHING_TOOL_COST_HISTORY_ERROR_DATA
        } from '../constants/actionTypes';
 
 const initState = {
     listToolEquipment: [],
     listToolEquipmentCostHistory: [],
+    listToolEquipmentCostHistoryData: [],
     loadingToolEquipment:false,
     loadingToolEquipmentCostHistory:false
 };
@@ -26,6 +31,7 @@ const reducer = (state = initState, action) => {
             ...state,
             listToolEquipment: action.list,
             listToolEquipmentCostHistory: [],
+            listToolEquipmentCostHistoryData: [],
             loadingToolEquipment:false
         };
         case FETCHING_TOOLS_ERROR:
@@ -46,6 +52,24 @@ const reducer = (state = initState, action) => {
             loadingToolEquipmentCostHistory:false
         };
         case REPORT_FETCHING_TOOL_COST_HISTORY_ERROR:
+        return{
+            ...state,
+            loadingToolEquipmentCostHistory: false
+        };
+
+
+        case REPORT_FETCHING_TOOL_COST_HISTORY_DATA:
+        return {
+            ...state,
+            loadingToolEquipmentCostHistory:true
+        };
+        case REPORT_TOOL_COST_HISTORY_FETCHED_DATA:
+        return {
+            ...state,
+            listToolEquipmentCostHistoryData: action.list,
+            loadingToolEquipmentCostHistory:false
+        };
+        case REPORT_FETCHING_TOOL_COST_HISTORY_ERROR_DATA:
         return{
             ...state,
             loadingToolEquipmentCostHistory: false
