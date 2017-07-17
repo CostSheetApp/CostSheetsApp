@@ -132,6 +132,16 @@ class Consolidate extends Component {
           key: 'Total'
         }];
 
+        const summaryData = [{
+            "name": "Test 1",
+            "code": 1,
+            "description": "Cemento Bijao",
+            "unitsOfMeasurement": "Bolsa",
+            "totalUnit": 98.7,
+            "Total": 19042.191
+        }];
+
+
         this.handle = this.handleCreate;
         this.title = "Consolidado de Proyecto";
     }  
@@ -148,7 +158,6 @@ class Consolidate extends Component {
         FetchConsolidateMaterial(id);
         FetchConsolidateManPower(id);
         FetchConsolidateToolsAndEquipment(id);
-        
     }
     render(){
         let {Projects
@@ -183,13 +192,13 @@ class Consolidate extends Component {
                     <Row>
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="Consolidado Materiales" key="1">
-                                <Table rowKey={item => item.code} size="small" bordered={true} dataSource={Materials} columns={this.columnsMaterial} pagination={{pageSize:15}} />
+                                <Table rowKey={item => item.code} size="small" bordered={true} dataSource={Materials} columns={this.columnsMaterial} footer={() => 'Total'}   pagination={{pageSize:15}} />
                             </TabPane>
                             <TabPane tab="Consolidado Mano de Obra" key="2">
-                                <Table rowKey={item => item.code} size="small" bordered={true}  dataSource={ManPowers} columns={this.columnsManPower} pagination={{pageSize:15}} />
+                                <Table rowKey={item => item.code} size="small" bordered={true}  dataSource={ManPowers} columns={this.columnsManPower} footer={() => 'Total'}  pagination={{pageSize:15}} />
                             </TabPane>
                             <TabPane tab="Consolidado Herramientas y Equipo" key="3">
-                                <Table rowKey={item => item.code} size="small" bordered={true} dataSource={ToolEquipments} columns={this.columnsToolEquipment} pagination={{pageSize:15}} />
+                                <Table rowKey={item => item.code} size="small" bordered={true} dataSource={ToolEquipments} columns={this.columnsToolEquipment} footer={() => 'Total'} pagination={{pageSize:15}} />
                             </TabPane>
                         </Tabs>                    
                     </Row>

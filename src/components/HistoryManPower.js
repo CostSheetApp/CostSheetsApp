@@ -10,6 +10,8 @@ import {Table
 import NumberFormat from 'react-number-format';
 import '../styles/projects.css';
 
+const ReactHighstock = require('react-highcharts/ReactHighstock');
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
@@ -19,6 +21,16 @@ Number.prototype.padZero= function(len, c){
     c = c || '0';
     while(s.length< len) s= c+ s;
     return s;
+};
+
+let config = {
+  rangeSelector: {
+    selected: 1
+  },
+  title: {
+    text: 'Historico de Costos por Region'
+  },
+  series: []
 };
 
 class HistoryManPower extends Component {
@@ -60,14 +72,22 @@ class HistoryManPower extends Component {
     componentWillMount() {
         let { FetchManPowers,entityId } = this.props;
         FetchManPowers(entityId);
+
+        config.series = [];
     }
     onChangeManPower= (id) => {
-        let { ReportCostHistoryManPower } = this.props;
+        config.series = [];
+        let { ReportCostHistoryManPower,ReportCostHistoryManPowerData,ManPowersHistory } = this.props;
         ReportCostHistoryManPower(id);
+        ReportCostHistoryManPowerData(id);
+
+        if(ManPowersHistory){
+            config.series = ManPowersHistory;
+        }
     }
     render(){
         let {ManPowers
-             ,ManPowersHistory
+             ,ManPowersHistoryData
             } = this.props;
 
         return (
@@ -90,18 +110,17 @@ class HistoryManPower extends Component {
                                     </Select>
                                     )}
                             </FormItem>
-
                         </Col>
                     </Row>
                     <Row>
                         <Tabs defaultActiveKey="1">
-                            <TabPane tab="Datos Históricos de la Mano de Obra" key="1">
-                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={ManPowersHistory} columns={this.columnsManPower} pagination={{pageSize:15}} />
+                            <TabPane tab="Gráfico Histórico de la Mano de Obra" key="1">
+                                <ReactHighstock config = {config}/>
                             </TabPane>
-                            <TabPane tab="Gráfico Histórico de la Mano de Obra" key="2">
-                                <Table rowKey={item => item.id} size="small" bordered={true}  dataSource={ManPowersHistory} columns={this.columnsManPower} pagination={{pageSize:15}} />
+                            <TabPane tab="Datos Históricos de la Mano de Obra" key="2">
+                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={ManPowersHistoryData} columns={this.columnsManPower} pagination={{pageSize:15}} />
                             </TabPane>
-                        </Tabs>                    
+                        </Tabs>
                     </Row>
                 </Form>
             </Row>
@@ -112,9 +131,11 @@ class HistoryManPower extends Component {
 HistoryManPower.propTypes = {
     FetchManPowers: PropTypes.func.isRequired,
     ReportCostHistoryManPower: PropTypes.func.isRequired,
+    ReportCostHistoryManPowerData: PropTypes.func.isRequired,
     
     ManPowers: PropTypes.array,
     ManPowersHistory: PropTypes.array,
+    ManPowersHistoryData: PropTypes.array,
 
     loadingManPower: PropTypes.bool.isRequired,
     loadingManPowerCostHistory: PropTypes.bool.isRequired,

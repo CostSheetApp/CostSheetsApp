@@ -17,13 +17,25 @@ import {MATERIALS_FETCHED
         ,REPORT_FETCHING_MATERIAL_COST_HISTORY
         ,REPORT_FETCHING_MATERIAL_COST_HISTORY_ERROR
 
+        ,REPORT_MATERIAL_COST_HISTORY_FETCHED_DATA
+        ,REPORT_FETCHING_MATERIAL_COST_HISTORY_DATA
+        ,REPORT_FETCHING_MATERIAL_COST_HISTORY_ERROR_DATA
+
         ,REPORT_FETCHING_MANPOWER_COST_HISTORY
         ,REPORT_MANPOWER_COST_HISTORY_FETCHED
         ,REPORT_FETCHING_MANPOWER_COST_HISTORY_ERROR
 
+        ,REPORT_FETCHING_MANPOWER_COST_HISTORY_DATA
+        ,REPORT_MANPOWER_COST_HISTORY_FETCHED_DATA
+        ,REPORT_FETCHING_MANPOWER_COST_HISTORY_ERROR_DATA
+
         ,REPORT_FETCHING_TOOL_COST_HISTORY
         ,REPORT_TOOL_COST_HISTORY_FETCHED
         ,REPORT_FETCHING_TOOL_COST_HISTORY_ERROR
+
+        ,REPORT_FETCHING_TOOL_COST_HISTORY_DATA
+        ,REPORT_TOOL_COST_HISTORY_FETCHED_DATA
+        ,REPORT_FETCHING_TOOL_COST_HISTORY_ERROR_DATA
        } from '../constants/actionTypes';
 
 export const FetchMaterials = (entityId) => (dispatch) => {
@@ -91,12 +103,33 @@ export const ReportCostHistoryMaterial = (materialId) =>
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
-                dispatch({type: REPORT_MATERIAL_COST_HISTORY_FETCHED, list: response.data.data});
+                dispatch({type: REPORT_MATERIAL_COST_HISTORY_FETCHED, list: (response.data) ? response.data.data : [] });
             })
             .catch((error) => {
-                //console.log(error);
+                console.log(error);
                 dispatch({
                     type: REPORT_FETCHING_MATERIAL_COST_HISTORY_ERROR,
+                    error: error.response.data.error.message
+                });
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+    };
+
+export const ReportCostHistoryMaterialData = (materialId) =>
+    (dispatch) => {
+        dispatch({type: REPORT_FETCHING_MATERIAL_COST_HISTORY_DATA});
+
+        axios
+            .get(`${API_URL}/Materials/${materialId}/CostHistoryData`,{
+        headers: {'Authorization': cookie.load('token')}
+        })
+            .then((response) => {
+                dispatch({type: REPORT_MATERIAL_COST_HISTORY_FETCHED_DATA, list: (response.data) ? response.data.data : [] });
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch({
+                    type: REPORT_FETCHING_MATERIAL_COST_HISTORY_ERROR_DATA,
                     error: error.response.data.error.message
                 });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
@@ -113,12 +146,33 @@ export const ReportCostHistoryManPower = (manPowerId) =>
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
-                dispatch({type: REPORT_MANPOWER_COST_HISTORY_FETCHED, list: response.data.data});
+                dispatch({type: REPORT_MANPOWER_COST_HISTORY_FETCHED, list: (response.data) ? response.data.data : [] });
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch({
+                    type: REPORT_FETCHING_MANPOWER_COST_HISTORY_ERROR,
+                    error: error.response.data.error.message
+                });
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+    };
+
+export const ReportCostHistoryManPowerData = (manPowerId) =>
+    (dispatch) => {
+        dispatch({type: REPORT_FETCHING_MANPOWER_COST_HISTORY_DATA});
+
+        axios
+            .get(`${API_URL}/Manpowers/${manPowerId}/CostHistoryData`,{
+        headers: {'Authorization': cookie.load('token')}
+        })
+            .then((response) => {
+                dispatch({type: REPORT_MANPOWER_COST_HISTORY_FETCHED_DATA, list: (response.data) ? response.data.data : [] });
             })
             .catch((error) => {
                 //console.log(error);
                 dispatch({
-                    type: REPORT_FETCHING_MANPOWER_COST_HISTORY_ERROR,
+                    type: REPORT_FETCHING_MANPOWER_COST_HISTORY_ERROR_DATA,
                     error: error.response.data.error.message
                 });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
@@ -135,12 +189,33 @@ export const ReportCostHistorToolsAndEquipment = (toolsAndEquipmentId) =>
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
-                dispatch({type: REPORT_TOOL_COST_HISTORY_FETCHED, list: response.data.data});
+                dispatch({type: REPORT_TOOL_COST_HISTORY_FETCHED, list: (response.data) ? response.data.data : [] });
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch({
+                    type: REPORT_FETCHING_TOOL_COST_HISTORY_ERROR,
+                    error: error.response.data.error.message
+                });
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+    };
+
+export const ReportCostHistorToolsAndEquipmentData = (toolsAndEquipmentId) =>
+    (dispatch) => {
+        dispatch({type: REPORT_FETCHING_TOOL_COST_HISTORY_DATA});
+
+        axios
+            .get(`${API_URL}/ToolsAndEquipments/${toolsAndEquipmentId}/CostHistoryData`,{
+        headers: {'Authorization': cookie.load('token')}
+        })
+            .then((response) => {
+                dispatch({type: REPORT_TOOL_COST_HISTORY_FETCHED_DATA, list: (response.data) ? response.data.data : [] });
             })
             .catch((error) => {
                 //console.log(error);
                 dispatch({
-                    type: REPORT_FETCHING_TOOL_COST_HISTORY_ERROR,
+                    type: REPORT_FETCHING_TOOL_COST_HISTORY_ERROR_DATA,
                     error: error.response.data.error.message
                 });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)

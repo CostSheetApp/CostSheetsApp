@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import HistoryMaterial from '../components/HistoryMaterial';
-import {FetchMaterials,ReportCostHistoryMaterial} from '../actions/HistoryReports';
+import {FetchMaterials,ReportCostHistoryMaterial,ReportCostHistoryMaterialData} from '../actions/HistoryReportsActions';
 
 const mapStateToProps = (state) => {
     return {
         entityId: state.account.entityId,
         Materials: state.historyMaterial.listMaterial,
         MaterialsHistory: state.historyMaterial.listMaterialCostHistory,
+        MaterialsHistoryData: state.historyMaterial.listMaterialCostHistoryData,
 
         loadingMaterial: state.historyMaterial.loadingMaterial,
         loadingMaterialCostHistory: state.historyMaterial.loadingMaterialCostHistory,
@@ -21,6 +22,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         ReportCostHistoryMaterial: (materialId) => {
             dispatch(ReportCostHistoryMaterial(materialId));
+        },
+        ReportCostHistoryMaterialData: (materialId) => {
+            dispatch(ReportCostHistoryMaterialData(materialId));
         }
     };
 };
