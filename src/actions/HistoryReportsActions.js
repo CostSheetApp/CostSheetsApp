@@ -96,14 +96,14 @@ export const FetchManPowers = (entityId) => (dispatch) => {
 
 export const ReportCostHistoryMaterial = (materialId) =>
     (dispatch) => {
-        dispatch({type: REPORT_FETCHING_MATERIAL_COST_HISTORY});
+        //dispatch({type: REPORT_FETCHING_MATERIAL_COST_HISTORY});
 
         axios
             .get(`${API_URL}/Materials/${materialId}/CostHistory`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
-                dispatch({type: REPORT_MATERIAL_COST_HISTORY_FETCHED, list: (response.data) ? response.data.data : [] });
+                dispatch({type: REPORT_MATERIAL_COST_HISTORY_FETCHED, list: response.data.data });
             })
             .catch((error) => {
                 console.log(error);
@@ -117,14 +117,14 @@ export const ReportCostHistoryMaterial = (materialId) =>
 
 export const ReportCostHistoryMaterialData = (materialId) =>
     (dispatch) => {
-        dispatch({type: REPORT_FETCHING_MATERIAL_COST_HISTORY_DATA});
+        //dispatch({type: REPORT_FETCHING_MATERIAL_COST_HISTORY_DATA});
 
         axios
             .get(`${API_URL}/Materials/${materialId}/CostHistoryData`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
-                dispatch({type: REPORT_MATERIAL_COST_HISTORY_FETCHED_DATA, list: (response.data) ? response.data.data : [] });
+                dispatch({type: REPORT_MATERIAL_COST_HISTORY_FETCHED_DATA, list: response.data.data });
             })
             .catch((error) => {
                 console.log(error);

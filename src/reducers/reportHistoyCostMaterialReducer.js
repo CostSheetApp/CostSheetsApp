@@ -13,11 +13,31 @@ import {MATERIALS_FETCHED
 
 const initState = {
     listMaterial: [],
-    listMaterialCostHistory: [],
     listMaterialCostHistoryData: [],
     loadingMaterial:false,
-    loadingMaterialCostHistory:false
+    loadingMaterialCostHistory:false,
+
+    CharData: {
+        rangeSelector: {
+            selected: 1
+        },
+        title: {
+            text: 'Histórico de Costos por Región'
+        },
+        plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+            }
+        },
+        series: []
+        }
 };
+
+
+
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
@@ -30,7 +50,7 @@ const reducer = (state = initState, action) => {
         return {
             ...state,
             listMaterial: action.list,
-            listMaterialCostHistory: [],
+            CharData: { ...state.CharData, series: [] },
             listMaterialCostHistoryData: [],
             loadingMaterial:false
         };
@@ -48,7 +68,7 @@ const reducer = (state = initState, action) => {
         case REPORT_MATERIAL_COST_HISTORY_FETCHED:
         return {
             ...state,
-            listMaterialCostHistory: action.list,
+            CharData: { ...state.CharData, series: action.list },
             loadingMaterialCostHistory:false
         };
         case REPORT_FETCHING_MATERIAL_COST_HISTORY_ERROR:

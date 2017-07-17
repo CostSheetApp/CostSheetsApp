@@ -42,24 +42,24 @@ class MainMenu extends Component {
               <span className="nav-text">Puestos de Trabajo</span>
             </Menu.Item>
             
-            <SubMenu key="/reports" title={<span> <Icon type="idcard" /> <span className="nav-text">Reportes</span> </span>}>
+            <SubMenu key="/reports" title={<span> <Icon type="pie-chart" /> <span className="nav-text">Reportes</span> </span>}>
               <Menu.Item key="/reports/consolidate" >
-                <Icon type="idcard" />
+                <Icon type="file-text" />
                 <span className="nav-text">Consolidados de Proyecto</span>
               </Menu.Item>
 
               <Menu.Item key="/reports/materialcosthistory" >
-                <Icon type="idcard" />
+                <Icon type="line-chart" />
                 <span className="nav-text">Historico Costos de Materiales</span>
               </Menu.Item>
 
               <Menu.Item key="/reports/manpowercosthistory" >
-                <Icon type="idcard" />
+                <Icon type="line-chart" />
                 <span className="nav-text">Historico Costos de Mano de Obra</span>
               </Menu.Item>
 
               <Menu.Item key="/reports/toolsandequipmentcosthistory" >
-                <Icon type="idcard" />
+                <Icon type="line-chart" />
                 <span className="nav-text">Historico Costos de Herramientas y Equipo</span>
               </Menu.Item>
 

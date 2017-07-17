@@ -132,16 +132,6 @@ class Consolidate extends Component {
           key: 'Total'
         }];
 
-        const summaryData = [{
-            "name": "Test 1",
-            "code": 1,
-            "description": "Cemento Bijao",
-            "unitsOfMeasurement": "Bolsa",
-            "totalUnit": 98.7,
-            "Total": 19042.191
-        }];
-
-
         this.handle = this.handleCreate;
         this.title = "Consolidado de Proyecto";
     }  

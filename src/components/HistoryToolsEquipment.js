@@ -23,17 +23,6 @@ Number.prototype.padZero= function(len, c){
     return s;
 };
 
-let config = {
-  rangeSelector: {
-    selected: 1
-  },
-  title: {
-    text: 'Historico de Costos por Region'
-  },
-  series: []
-};
-
-
 class HistoryTools extends Component {
     constructor(props){
       super(props);
@@ -73,21 +62,15 @@ class HistoryTools extends Component {
     componentWillMount() {
         let { FetchTools,entityId } = this.props;
         FetchTools(entityId);
-
-        config.series = [];
     }
     onChangeTool= (id) => {
-        config.series = [];
-        let { ReportCostHistorToolsAndEquipment,ReportCostHistorToolsAndEquipmentData,ToolsHistory } = this.props;
+        let { ReportCostHistorToolsAndEquipment,ReportCostHistorToolsAndEquipmentData } = this.props;
         ReportCostHistorToolsAndEquipment(id);
         ReportCostHistorToolsAndEquipmentData(id);
-
-        if(ToolsHistory){
-            config.series = ToolsHistory;
-        }
     }
     render(){
         let {Tools
+             ,CharData
              ,ToolsHistoryData
             } = this.props;
 
@@ -117,7 +100,7 @@ class HistoryTools extends Component {
                     <Row>
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="Gráfico Histórico de la Herramienta y Equipo" key="1">
-                                <ReactHighstock config = {config}/>
+                                <ReactHighstock config = {CharData}/>
                             </TabPane>
                             <TabPane tab="Datos Históricos de la Herramienta y Equipo" key="2">
                                 <Table rowKey={item => item.id} size="small" bordered={true} dataSource={ToolsHistoryData} columns={this.columnsTool} pagination={{pageSize:15}} />
@@ -136,7 +119,7 @@ HistoryTools.propTypes = {
     ReportCostHistorToolsAndEquipmentData: PropTypes.func.isRequired,
     
     Tools: PropTypes.array,
-    ToolsHistory: PropTypes.array,
+    CharData: PropTypes.object,
     ToolsHistoryData: PropTypes.array,
 
     loadingToolEquipment: PropTypes.bool.isRequired,

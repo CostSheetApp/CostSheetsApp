@@ -16,7 +16,18 @@ const initState = {
     listToolEquipmentCostHistory: [],
     listToolEquipmentCostHistoryData: [],
     loadingToolEquipment:false,
-    loadingToolEquipmentCostHistory:false
+    loadingToolEquipmentCostHistory:false,
+
+    CharData: {
+        rangeSelector: {
+            selected: 1
+        },
+        title: {
+            text: 'Histórico de Costos por Región'
+        },
+        series: []
+    }
+
 };
 
 const reducer = (state = initState, action) => {
@@ -30,7 +41,7 @@ const reducer = (state = initState, action) => {
         return {
             ...state,
             listToolEquipment: action.list,
-            listToolEquipmentCostHistory: [],
+            CharData: { ...state.CharData, series: [] },
             listToolEquipmentCostHistoryData: [],
             loadingToolEquipment:false
         };
@@ -48,7 +59,7 @@ const reducer = (state = initState, action) => {
         case REPORT_TOOL_COST_HISTORY_FETCHED:
         return {
             ...state,
-            listToolEquipmentCostHistory: action.list,
+            CharData: { ...state.CharData, series: action.list },
             loadingToolEquipmentCostHistory:false
         };
         case REPORT_FETCHING_TOOL_COST_HISTORY_ERROR:
