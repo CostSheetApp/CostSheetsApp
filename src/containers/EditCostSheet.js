@@ -14,6 +14,7 @@ AddToolsAndEquipment
 const mapStateToProps = (state) => {
     return {
         costSheet: state.costSheets.toEdit,
+        materialToBeAddToCostSheet: state.costSheets.materialToBeAddToCostSheet,
         csmaterials: state.costSheets.materialsToEdit,
         csmanpower: state.costSheets.manpowersToEdit,
         cstoolsAndEquipment: state.costSheets.toolsAndEquipmentsToEdit,

@@ -5,7 +5,7 @@ import {
     Form,
     Button,
     Modal,
-    //Input,
+    Input,
     //Icon,
     //Table,
     //Col,
@@ -28,11 +28,12 @@ Number.prototype.padZero= function(len, c){
 };
 
 class AddCostSheetMaterialForm extends Component {
-    //selectMaterialToBeAdd(id) {
-    selectMaterialToBeAdd() {
-        // let {materials} = this.props;
-        // this.material = materials.filter(function(item){return item.id == id})[0];
-        // console.log("material",this.material);
+    selectMaterialToBeAdd= (id) =>  {
+        let {materials, SelectMaterialToBeAddToCostSheet} = this.props;
+        this.material = materials.filter((item) => item.id == id);
+
+        if(this.material)
+            SelectMaterialToBeAddToCostSheet(this.material[0]);
     }
     render() {
         let {
@@ -40,33 +41,40 @@ class AddCostSheetMaterialForm extends Component {
             onCancel,
             onCreate,
             isSaving,
-            materials
+            materials,
+            materialToBeAddToCostSheet,
+            costSheetId
         } = this.props;
         let {getFieldDecorator} = this.props.form;
         
         return (
             <Modal
                 visible={visible}
-                title={"Add Material"}
+                title={"Agregar Material"}
                 onCancel={onCancel}
                 onOk={onCreate}
                 footer={[
-                    <Button key = "back" size = "large" onClick = {onCancel} > Cancel </Button>, 
-                    <Button key = "submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Submit </Button >
+                    <Button key = "back" size = "large" onClick = {onCancel} > Cancelar </Button>, 
+                    <Button key = "submit" type="primary" size="large" onClick={onCreate} loading={isSaving}> Aceptar </Button >
                     ]}>
                 
                 
                 <Form>
+                    {getFieldDecorator('costSheetId', {
+                            initialValue: costSheetId?costSheetId:0
+                        })(
+                            <Input type="hidden" />
+                        )}
                   <FormItem label="Material">
                         {getFieldDecorator('materialId', {
                             rules: [
-                                { required: true, message: 'Please select a material' }, 
+                                { required: true, message: 'Por favor selecciona un material' }, 
                                 ]
                         })(
                             <Select
                                 showSearch
                                 style={{ width: '100%' }}
-                                placeholder="search material"
+                                placeholder="Busca un material"
                                 optionFilterProp="children"
                                 onChange={this.selectMaterialToBeAdd}
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 }
@@ -74,6 +82,26 @@ class AddCostSheetMaterialForm extends Component {
                                 {materials.map(o => <Option key={o.id.toString()}>{`${o.code.padZero(10)} - ${o.description}`}</Option>)}
                             </Select>
                         )}
+                </FormItem>
+                <FormItem label="Desperdicio">
+                    {getFieldDecorator('waste', {
+                        rules: [
+                            { required: true, message: '¡Por favor ingrese el desperdicio del material!' }, 
+                            ],
+                            initialValue: materialToBeAddToCostSheet?materialToBeAddToCostSheet.waste:0
+                    })(
+                        <Input type="number" placeholder="Desperdicio del material" />
+                    )}
+                </FormItem>
+                <FormItem label="Rendimiento">
+                    {getFieldDecorator('performance', {
+                        rules: [
+                            { required: true, message: '¡Por favor ingrese el rendimiento del material!' }, 
+                            ],
+                            initialValue: 0
+                    })(
+                        <Input type="number" placeholder="Rendimiento del material" />
+                    )}
                 </FormItem>
                 </Form>
             </Modal>
@@ -84,9 +112,12 @@ class AddCostSheetMaterialForm extends Component {
 AddCostSheetMaterialForm.propTypes = {
     visible: PropTypes.bool.isRequired,
     materials: PropTypes.array.isRequired,
+    materialToBeAddToCostSheet: PropTypes.object,
+    costSheetId: PropTypes.object.isRequired,
     isSaving: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired
+    onCreate: PropTypes.func.isRequired,
+    SelectMaterialToBeAddToCostSheet: PropTypes.func.isRequired
 };
 
 const AddCostSheetMaterial = Form.create()(AddCostSheetMaterialForm);

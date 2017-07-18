@@ -96,7 +96,7 @@ export const FetchManPowers = (entityId) => (dispatch) => {
 
 export const ReportCostHistoryMaterial = (materialId) =>
     (dispatch) => {
-        //dispatch({type: REPORT_FETCHING_MATERIAL_COST_HISTORY});
+        dispatch({type: REPORT_FETCHING_MATERIAL_COST_HISTORY});
 
         axios
             .get(`${API_URL}/Materials/${materialId}/CostHistory`,{
@@ -117,7 +117,7 @@ export const ReportCostHistoryMaterial = (materialId) =>
 
 export const ReportCostHistoryMaterialData = (materialId) =>
     (dispatch) => {
-        //dispatch({type: REPORT_FETCHING_MATERIAL_COST_HISTORY_DATA});
+        dispatch({type: REPORT_FETCHING_MATERIAL_COST_HISTORY_DATA});
 
         axios
             .get(`${API_URL}/Materials/${materialId}/CostHistoryData`,{
