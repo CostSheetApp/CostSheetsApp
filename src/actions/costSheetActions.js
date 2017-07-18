@@ -113,15 +113,17 @@ export const ViewCostSheet = (id) =>
     };
 
 
-export const SelectMaterialToBeAddToCostSheet = (id) =>
+export const SelectMaterialToBeAddToCostSheet = (material) =>
     (dispatch) => {
-        dispatch({type: SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET, id:id});
+        console.log(material);
+        console.log(material.waste);
+        dispatch({type: SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET, material:material});
     };
 
 export const AddMaterial = (costSheetId, params) =>
     (dispatch) => {
         axios
-        .post(`${API_URL}/CostSheets/${costSheetId}/materials`,params, {
+        .post(`${API_URL}/CostSheetHasMaterials`,params, {
         headers: {'Authorization': cookie.load('token')}
         })
         .then(() => {

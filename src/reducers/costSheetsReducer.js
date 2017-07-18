@@ -18,6 +18,7 @@ const initState = {
     manpowerToBeAddToCostSheet: {},
     toolsAndEquipmentsToEdit: [],
     toolsAndEquipmentToBeAddToCostSheet: {},
+    materialSelect: {}
 };
 
 const reducer = (state = initState, action) => {
@@ -50,7 +51,7 @@ const reducer = (state = initState, action) => {
         case SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET:
         return {
             ...state,
-            materialToBeAddToCostSheet: action.id
+            materialToBeAddToCostSheet: action.material
         };
         default:
             return state;

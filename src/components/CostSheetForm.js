@@ -244,7 +244,7 @@ class addCostSheetForm extends Component {
     componentWillMount() {
         let {FetchCostSheet,FetchCostSheetMaterials,FetchCostSheetManpower,FetchCostSheetToolsAndEquipment} = this.props;
         let {id} = this.props.params;
-        console.log("id",id);
+        //console.log("id",id);
         FetchCostSheet(id);
         FetchCostSheetMaterials(id);
         FetchCostSheetManpower(id);
@@ -274,7 +274,8 @@ class addCostSheetForm extends Component {
     }
     render() {
         let {getFieldDecorator} = this.props.form;
-        let {costSheet,csmaterials,csmanpower,cstoolsAndEquipment,Regions,materials,SelectMaterialToBeAddToCostSheet} = this.props;
+        let {id} = this.props.params;
+        let {costSheet,materialToBeAddToCostSheet,csmaterials,csmanpower,cstoolsAndEquipment,Regions,materials,SelectMaterialToBeAddToCostSheet} = this.props;
         return (
             <Row>
                 <AddCostSheetMaterial
@@ -283,7 +284,9 @@ class addCostSheetForm extends Component {
                     onCancel={this.CancelAdd}
                     onCreate={this.AddMaterialToCostSheet}
                     materials={materials}
+                    costSheetId = {id}
                     SelectMaterialToBeAddToCostSheet={SelectMaterialToBeAddToCostSheet}
+                    materialToBeAddToCostSheet={materialToBeAddToCostSheet}
                 />
                 {/*<EditCostSheetMaterial />*/}
                 <Form>
@@ -366,6 +369,7 @@ class addCostSheetForm extends Component {
 
 addCostSheetForm.propTypes = {
     costSheet: PropTypes.object.isRequired,
+    materialToBeAddToCostSheet: PropTypes.object,
     FetchCostSheet: PropTypes.func.isRequired,
     Regions: PropTypes.array.isRequired,
     materials: PropTypes.array.isRequired,
