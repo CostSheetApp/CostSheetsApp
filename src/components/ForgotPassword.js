@@ -34,8 +34,8 @@ class ForgotPasswordForm extends Component {
             <FormItem>
             {getFieldDecorator('email', {
                 rules: [
-                    { required: true, message: 'Please input your Email!' }, 
-                    { pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, message: 'you should enter a valid email!' }
+                    { required: true, message: '¡Por favor ingresa tu Email!' }, 
+                    { pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, message: '¡Ingresa un email valido!' }
                     ],
             })(
                 <Input prefix={<Icon type="mail" style={{ fontSize: 13 }} />} placeholder="Email" />
@@ -44,9 +44,9 @@ class ForgotPasswordForm extends Component {
             {errorMessage}
             <FormItem>
             <Button type="primary" htmlType="submit" className="forgot-password-form-button">
-                Reset my password
+                Recuperar mi contraseña
             </Button>
-            Or <a href="/login">Log in!</a>
+            O <a href="/login">Iniciar Sesión</a>
             </FormItem>
         </Form>
         </Col>

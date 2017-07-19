@@ -57,18 +57,18 @@ class RegisterUserForm extends Component {
             <Col xs={{ span: 11, offset: 1 }} lg={{ span: 6, offset: 0 }}>
             <center><h2>Registrar Usuario</h2></center>
             <Form onSubmit={this.handleSubmit} className="register-form">
-                <FormItem label="Name">
+                <FormItem label="Nombre">
                     {getFieldDecorator('name', {
                         rules: [{ required: true, message: '¡Por favor ingrese su nombre!' }],
                     })(
-                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Name" />
+                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Nombre" />
                     )}
                 </FormItem>
-                <FormItem label ="Username">
+                <FormItem label ="Nombre Usuario">
                     {getFieldDecorator('username', {
                         rules: [{ required: true, message: '¡Por favor ingrese el nombre de usuario!' }],
                     })(
-                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="username" />
+                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Nombre Usuario" />
                     )}
                 </FormItem>
                 <FormItem label="Email">
@@ -99,7 +99,7 @@ class RegisterUserForm extends Component {
 
                 {errorMessage}
                 <Button type="primary" htmlType="submit" className="register-form-button">
-                    Register
+                    Registrar
                 </Button>
                 <a href="/login">Cancelar</a>
             </Form>
