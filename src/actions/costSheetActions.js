@@ -80,7 +80,7 @@ export const FetchCostSheetManpower = (id) =>
 export const FetchCostSheetToolsAndEquipment = (id) =>
     (dispatch) => {
         axios
-        .get(`${API_URL}/CostSheetHasToolsAndEquipments?filter={"where":{"costSheetId":${id}},"include":["toolsAndEquipmentCostHistories","toolsAndEquipment"]}`, {
+        .get(`${API_URL}/CostSheetHasToolsAndEquipments?filter={"where":{"costSheetId":${id}},"include":{"toolsAndEquipment":["toolsAndEquipmentCostHistories"]}}`, {
         headers: {'Authorization': cookie.load('token')}
         })
         .then((response) => {
