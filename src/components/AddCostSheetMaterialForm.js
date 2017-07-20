@@ -113,7 +113,7 @@ AddCostSheetMaterialForm.propTypes = {
     visible: PropTypes.bool.isRequired,
     materials: PropTypes.array.isRequired,
     materialToBeAddToCostSheet: PropTypes.object,
-    costSheetId: PropTypes.object.isRequired,
+    costSheetId: PropTypes.string.isRequired,
     isSaving: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,

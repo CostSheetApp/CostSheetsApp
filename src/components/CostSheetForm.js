@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import NumberFormat from 'react-number-format';
 //import Moment from 'react-moment';
 
 import AddCostSheetMaterial from './AddCostSheetMaterialForm';
@@ -41,37 +42,56 @@ class addCostSheetForm extends Component {
         };
         this.materialColumns = [
             {
-                title: 'Code',
+                title: 'Código',
                 key: 'code',
                 render: (text, item) => {
                     return (<span>{item.material.code.padZero(10)}</span>);
                 }
             }, {
-                title: 'Description',
+                title: 'Descripción',
                 dataIndex: 'material.description',
                 key: 'description'
             }, 
             {
-                title: 'Performance %',
+                title: 'Rendimiento',
                 dataIndex: 'performance',
+                render: (text, record) => (
+                    <NumberFormat
+                        value={record.performance} 
+                        displayType={'text'}
+                        thousandSeparator={true} 
+                        decimalPrecision={4}
+                    />
+                ),
                 key: 'performance'
             },
             {
-                title: 'Waste %',
+                title: 'Desperdicio',
                 dataIndex: 'waste',
+                render: (text, record) => (
+                    <NumberFormat
+                        value={record.waste} 
+                        displayType={'text'}
+                        thousandSeparator={true} 
+                        decimalPrecision={4}
+                    />
+                ),
                 key: 'waste'
             }, {
-                title: 'Cost',
+                title: 'Costo',
                 key: 'cost',
                 render: (text, item) => {
                     if (!item.material || !item.material.materialCostHistories) {
                         return;
                     }
                     return (
-                        <span>
-                            {item.material.materialCostHistories.FirstOrDefault({cost:0}).cost}
-                        </span>
-                        
+                        <NumberFormat
+                            value={item.material.materialCostHistories.FirstOrDefault({cost:0}).cost}
+                            displayType={'text'}
+                            thousandSeparator={true} 
+                            prefix={'L.'} 
+                            decimalPrecision={2}
+                        />
                     );
                 }
             },
@@ -83,18 +103,24 @@ class addCostSheetForm extends Component {
 
                     total = item.performance * item.waste * item.material.materialCostHistories.FirstOrDefault({cost:0}).cost;
                     return (
-                        <span>{total}</span>
+                        <NumberFormat
+                            value={total}
+                            displayType={'text'}
+                            thousandSeparator={true} 
+                            prefix={'L.'} 
+                            decimalPrecision={2}
+                        />
                     );
                 }
             }, {
-                title: 'Action',
+                title: 'Acción',
                 key: 'action',
                 width: 120,
                 render: (text, material, index) => (
                     <span>
                         <a href="#" onClick={() => this.onEdit(index, material)}>
                             <Icon type="edit"/>
-                            Edit</a>
+                            Editar</a>
                         <span className="ant-divider"/>
                         <Popconfirm
                             title="Are you sure delete this material?"
@@ -103,7 +129,7 @@ class addCostSheetForm extends Component {
                             onConfirm={() => this.onDelete(index, material)}>
                             <a href="#">
                                 <Icon type="delete"/>
-                                Delete</a>
+                                Borrar</a>
                         </Popconfirm>
                     </span>
                 )
@@ -111,32 +137,43 @@ class addCostSheetForm extends Component {
         ];
         this.manpowerColumns = [
             {
-                title: 'Code',
+                title: 'Código',
                 key: 'code',
                 render: (text, item) => {
                     return (<span>{item.manpower.code.padZero(10)}</span>);
                 }
             }, {
-                title: 'Description',
+                title: 'Descripción',
                 dataIndex: 'manpower.description',
                 key: 'description'
             }, 
             {
-                title: 'Performance %',
+                title: 'Rendimiento',
                 dataIndex: 'performance',
+                render: (text, record) => (
+                    <NumberFormat
+                        value={record.performance} 
+                        displayType={'text'}
+                        thousandSeparator={true} 
+                        decimalPrecision={4}
+                    />
+                ),
                 key: 'performance'
             }, {
-                title: 'Cost',
+                title: 'Costo',
                 key: 'cost',
                 render: (text, item) => {
-                    if (!item.material || !item.material.materialCostHistories) {
+                    if (!item.manpower || !item.manpower.manpowerCostHistories) {
                         return;
                     }
                     return (
-                        <span>
-                            {item.material.materialCostHistories.FirstOrDefault({cost:0}).cost}
-                        </span>
-                        
+                        <NumberFormat
+                            value={item.manpower.manpowerCostHistories.FirstOrDefault({cost:0}).cost}
+                            displayType={'text'}
+                            thousandSeparator={true} 
+                            prefix={'L.'} 
+                            decimalPrecision={2}
+                        />
                     );
                 }
             },
@@ -148,18 +185,24 @@ class addCostSheetForm extends Component {
 
                     total = item.performance * item.manpower.manpowerCostHistories.FirstOrDefault({cost:0}).cost;
                     return (
-                        <span>{total}</span>
+                        <NumberFormat
+                            value={total}
+                            displayType={'text'}
+                            thousandSeparator={true} 
+                            prefix={'L.'} 
+                            decimalPrecision={2}
+                        />
                     );
                 }
             }, {
-                title: 'Action',
+                title: 'Acción',
                 key: 'action',
                 width: 120,
                 render: (text, material, index) => (
                     <span>
                         <a href="#" onClick={() => this.onEdit(index, material)}>
                             <Icon type="edit"/>
-                            Edit</a>
+                            Editar</a>
                         <span className="ant-divider"/>
                         <Popconfirm
                             title="Are you sure delete this material?"
@@ -168,7 +211,7 @@ class addCostSheetForm extends Component {
                             onConfirm={() => this.onDelete(index, material)}>
                             <a href="#">
                                 <Icon type="delete"/>
-                                Delete</a>
+                                Borrar</a>
                         </Popconfirm>
                     </span>
                 )
@@ -176,31 +219,43 @@ class addCostSheetForm extends Component {
         ];
         this.toolAndEquipmentColumns = [
             {
-                title: 'Code',
+                title: 'Código',
                 key: 'code',
                 render: (text, item) => {
                     return (<span>{item.toolsAndEquipment.code.padZero(10)}</span>);
                 }
             }, {
-                title: 'Description',
+                title: 'Descripción',
                 dataIndex: 'toolsAndEquipment.description',
                 key: 'description'
             }, 
             {
-                title: 'Performance %',
+                title: 'Rendimiento',
                 dataIndex: 'performance',
+                render: (text, record) => (
+                    <NumberFormat
+                        value={record.performance} 
+                        displayType={'text'}
+                        thousandSeparator={true} 
+                        decimalPrecision={4}
+                    />
+                ),
                 key: 'performance'
             }, {
-                title: 'Cost',
+                title: 'Costo',
                 key: 'cost',
-                render: (text, material) => {
-                    if (!material.unitsOfMeasurement) {
+                render: (text, item) => {
+                    if (!item.toolsAndEquipment || !item.toolsAndEquipment.toolsAndEquipmentCostHistories) {
                         return;
                     }
                     return (
-                        <span>
-                            {/*{material.materialCostHistories[0].cost} <Tooltip title={material.unitsOfMeasurement.description}><span>{material.unitsOfMeasurement.abbreviation}</span></Tooltip>*/}
-                        </span>
+                        <NumberFormat
+                            value={item.toolsAndEquipment.toolsAndEquipmentCostHistories.FirstOrDefault({cost:0}).cost}
+                            displayType={'text'}
+                            thousandSeparator={true} 
+                            prefix={'L.'} 
+                            decimalPrecision={2}
+                        />
                         
                     );
                 }
@@ -210,21 +265,27 @@ class addCostSheetForm extends Component {
                 key: 'total',
                 render: (text, item) => {
                     let total = 0;
-
-                    total = item.performance  * item.material.materialCostHistories.FirstOrDefault({cost:0}).cost;
+                    //total = item.performance * item.manpower.manpowerCostHistories.FirstOrDefault({cost:0}).cost;
+                    total = item.performance  * item.toolsAndEquipment.toolsAndEquipmentCostHistories.FirstOrDefault({cost:0}).cost;
                     return (
-                        <span>{total}</span>
+                        <NumberFormat
+                            value={total}
+                            displayType={'text'}
+                            thousandSeparator={true} 
+                            prefix={'L.'} 
+                            decimalPrecision={2}
+                        />
                     );
                 }
             }, {
-                title: 'Action',
+                title: 'Acción',
                 key: 'action',
                 width: 120,
                 render: (text, material, index) => (
                     <span>
                         <a href="#" onClick={() => this.onEdit(index, material)}>
                             <Icon type="edit"/>
-                            Edit</a>
+                            Editar</a>
                         <span className="ant-divider"/>
                         <Popconfirm
                             title="Are you sure delete this material?"
@@ -233,7 +294,7 @@ class addCostSheetForm extends Component {
                             onConfirm={() => this.onDelete(index, material)}>
                             <a href="#">
                                 <Icon type="delete"/>
-                                Delete</a>
+                                Borrar</a>
                         </Popconfirm>
                     </span>
                 )
@@ -292,7 +353,7 @@ class addCostSheetForm extends Component {
                 <Form>
                     <Row gutter={8}>
                         <Col span={12} >
-                            <FormItem  label="Description">
+                            <FormItem  label="Descripción">
                             {getFieldDecorator('description', {
                                 rules: [
                                     { required: true, message: 'Please input material description!' }, 
@@ -303,8 +364,8 @@ class addCostSheetForm extends Component {
                             )}
                             </FormItem>
                         </Col>
-                        <Col span={2}> 
-                            <FormItem  label="Minimun Cost" >
+                        <Col span={4}> 
+                            <FormItem  label="Costo Minimo" >
                             {getFieldDecorator('minimunCost', {
                                 rules: [
                                     { required: true, message: 'Please input minimun cost!' }, 
@@ -315,8 +376,8 @@ class addCostSheetForm extends Component {
                             )}
                             </FormItem>
                         </Col>
-                        <Col span={3} >
-                            <FormItem label="Default Region">
+                        <Col span={4} >
+                            <FormItem label="Región">
                                     {getFieldDecorator('regionId', {
                                         rules: [
                                             { required: true, message: 'Please select a region' }, 
@@ -341,22 +402,22 @@ class addCostSheetForm extends Component {
                         </Col>
                         <Col span={3} >
                         <FormItem style={{paddingTop:"30px"}}>
-                                <Button type="primary" icon="save">Save</Button>
+                                <Button type="primary" icon="save">Guardar</Button>
                         </FormItem>
                         </Col>
                     </Row>
                     <Row>
                         <Tabs defaultActiveKey="1">
-                            <TabPane tab="Materials" key="1">
-                                <Row  type="flex" justify="end"><Button type="primary" icon="plus" className="add-material-button" onClick={() => this.onAddMaterial()}>Add</Button></Row>
+                            <TabPane tab="Materiales" key="1">
+                                <Row  type="flex" justify="end"><Button type="primary" icon="plus" className="add-material-button" onClick={() => this.onAddMaterial()}>Agregar</Button></Row>
                                 <Table rowKey={item => item.id} size="small" bordered={true} dataSource={csmaterials} columns={this.materialColumns} pagination={{pageSize:5}} />
                             </TabPane>
-                            <TabPane tab="Manpowers" key="2">
-                                <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-manpower-button" onClick={() => this.onAddManpower()}>Add</Button></Row>
+                            <TabPane tab="Mano de Obra" key="2">
+                                <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-manpower-button" onClick={() => this.onAddManpower()}>Agregar</Button></Row>
                                 <Table rowKey={item => item.id} size="small" bordered={true}  dataSource={csmanpower} columns={this.manpowerColumns} pagination={{pageSize:5}} />
                             </TabPane>
-                            <TabPane tab="Tools And Equipments" key="3">
-                                <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-toolAndEquipment-button" onClick={() => this.onAddToolAndEquipment()}>Add</Button></Row>
+                            <TabPane tab="Herramientas y Equipo" key="3">
+                                <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-toolAndEquipment-button" onClick={() => this.onAddToolAndEquipment()}>Agregar</Button></Row>
                                 <Table rowKey={item => item.id} size="small" bordered={true} dataSource={cstoolsAndEquipment} columns={this.toolAndEquipmentColumns} pagination={{pageSize:5}} />
                             </TabPane>
                         </Tabs>                    
