@@ -4,6 +4,9 @@ import NumberFormat from 'react-number-format';
 //import Moment from 'react-moment';
 
 import AddCostSheetMaterial from './AddCostSheetMaterialForm';
+import AddCostSheetManPower from './AddCostSheetManPowerForm';
+import AddCostSheetToolEquipment from './AddCostSheetToolsEquipmentForm';
+
 import {
     Form,
     Button,
@@ -38,7 +41,9 @@ class addCostSheetForm extends Component {
     constructor(props){
         super(props);
         this.state = {
-            AddMaterialToCostSheetFormIsVisible:false
+            AddMaterialToCostSheetFormIsVisible:false,
+            AddManPowerToCostSheetFormIsVisible:false,
+            AddToolsToCostSheetFormIsVisible:false
         };
         this.materialColumns = [
             {
@@ -123,7 +128,7 @@ class addCostSheetForm extends Component {
                             Editar</a>
                         <span className="ant-divider"/>
                         <Popconfirm
-                            title="Are you sure delete this material?"
+                            title="¿Esta seguro de borrar este material de la ficha?"
                             okText="Yes"
                             cancelText="No"
                             onConfirm={() => this.onDelete(index, material)}>
@@ -205,7 +210,7 @@ class addCostSheetForm extends Component {
                             Editar</a>
                         <span className="ant-divider"/>
                         <Popconfirm
-                            title="Are you sure delete this material?"
+                            title="¿Esta seguro de borrar esta mano de obra de la ficha?"
                             okText="Yes"
                             cancelText="No"
                             onConfirm={() => this.onDelete(index, material)}>
@@ -288,7 +293,7 @@ class addCostSheetForm extends Component {
                             Editar</a>
                         <span className="ant-divider"/>
                         <Popconfirm
-                            title="Are you sure delete this material?"
+                            title="¿Esta seguro de borrar esta herramienta y equipo de la ficha?"
                             okText="Yes"
                             cancelText="No"
                             onConfirm={() => this.onDelete(index, material)}>
@@ -314,8 +319,20 @@ class addCostSheetForm extends Component {
     saveAddMaterialToCostSheetFormRef = (form) => {
         this.AddMaterialToCostSheetForm = form;
     }
-    CancelAdd = () => {
+    saveAdManPowerToCostSheetFormRef = (form) => {
+        this.AddManPowerToCostSheetForm = form;
+    }
+    saveAddToolToCostSheetFormRef = (form) => {
+        this.AddToolToCostSheetForm = form;
+    }
+    CancelAddMaterial = () => {
         this.setState({AddMaterialToCostSheetFormIsVisible: false});
+    }
+    CancelAddManPower = () => {
+        this.setState({AddManPowerToCostSheetFormIsVisible: false});
+    }
+    CancelAddTool = () => {
+        this.setState({AddToolsToCostSheetFormIsVisible: false});
     }
     AddMaterialToCostSheet = () => {
         const form = this.AddMaterialToCostSheetForm;
@@ -330,24 +347,82 @@ class addCostSheetForm extends Component {
             this.setState({AddMaterialToCostSheetFormIsVisible: false});
         });
     }
+    AddManPowerToCostSheet = () => {
+        const form = this.AddManPowerToCostSheetForm;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+            let {AddManPower} = this.props;
+            let {id} = this.props.params;
+            AddManPower(id, values);
+            form.resetFields();
+            this.setState({AddManPowerToCostSheetFormIsVisible: false});
+        });
+    }
+    AddToolsToCostSheet = () => {
+        const form = this.AddToolToCostSheetForm;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+            let {AddToolsAndEquipment} = this.props;
+            let {id} = this.props.params;
+            AddToolsAndEquipment(id, values);
+            form.resetFields();
+            this.setState({AddToolsToCostSheetFormIsVisible: false});
+        });
+    }
     onAddMaterial(){
         this.setState({AddMaterialToCostSheetFormIsVisible: true});
+    }
+    onAddManpower(){
+        this.setState({AddManPowerToCostSheetFormIsVisible: true});
+    }
+    onAddToolAndEquipment(){
+        this.setState({AddToolsToCostSheetFormIsVisible: true});
     }
     render() {
         let {getFieldDecorator} = this.props.form;
         let {id} = this.props.params;
-        let {costSheet,materialToBeAddToCostSheet,csmaterials,csmanpower,cstoolsAndEquipment,Regions,materials,SelectMaterialToBeAddToCostSheet} = this.props;
+        let {costSheet
+             ,materialToBeAddToCostSheet
+             ,csmaterials
+             ,csmanpower
+             ,cstoolsAndEquipment
+             ,Regions
+             ,materials
+             ,SelectMaterialToBeAddToCostSheet
+             ,manpowers
+             ,toolsAndEquipments
+        } = this.props;
         return (
             <Row>
                 <AddCostSheetMaterial
                     ref={this.saveAddMaterialToCostSheetFormRef}
                     visible={this.state.AddMaterialToCostSheetFormIsVisible}
-                    onCancel={this.CancelAdd}
+                    onCancel={this.CancelAddMaterial}
                     onCreate={this.AddMaterialToCostSheet}
                     materials={materials}
                     costSheetId = {id}
                     SelectMaterialToBeAddToCostSheet={SelectMaterialToBeAddToCostSheet}
                     materialToBeAddToCostSheet={materialToBeAddToCostSheet}
+                />
+                <AddCostSheetManPower
+                    ref={this.saveAdManPowerToCostSheetFormRef}
+                    visible={this.state.AddManPowerToCostSheetFormIsVisible}
+                    onCancel={this.CancelAddManPower}
+                    onCreate={this.AddManPowerToCostSheet}
+                    manpowers={manpowers}
+                    costSheetId = {id}
+                />
+                <AddCostSheetToolEquipment
+                    ref={this.saveAddToolToCostSheetFormRef}
+                    visible={this.state.AddToolsToCostSheetFormIsVisible}
+                    onCancel={this.CancelAddTool}
+                    onCreate={this.AddToolsToCostSheet}
+                    toolsAndEquipments={toolsAndEquipments}
+                    costSheetId = {id}
                 />
                 {/*<EditCostSheetMaterial />*/}
                 <Form>
@@ -356,19 +431,19 @@ class addCostSheetForm extends Component {
                             <FormItem  label="Descripción">
                             {getFieldDecorator('description', {
                                 rules: [
-                                    { required: true, message: 'Please input material description!' }, 
+                                    { required: true, message: '¡Por favor ingrese la descripción de la ficha de costo!' }, 
                                     ],
                                     initialValue: costSheet.description?costSheet.description:""
                             })(
-                                <Input placeholder="Material description" />
+                                <Input placeholder="Descripción de ficha de costo" />
                             )}
                             </FormItem>
                         </Col>
                         <Col span={4}> 
-                            <FormItem  label="Costo Minimo" >
+                            <FormItem  label="Costo Mínimo" >
                             {getFieldDecorator('minimunCost', {
                                 rules: [
-                                    { required: true, message: 'Please input minimun cost!' }, 
+                                    { required: true, message: '¡Por favor ingrese el costo mínimo!' }, 
                                     ],
                                     initialValue: costSheet.minimunCost?costSheet.minimunCost:""
                             })(
@@ -380,13 +455,13 @@ class addCostSheetForm extends Component {
                             <FormItem label="Región">
                                     {getFieldDecorator('regionId', {
                                         rules: [
-                                            { required: true, message: 'Please select a region' }, 
+                                            { required: true, message: '¡Por favor selecciona una región' }, 
                                             ],
                                             initialValue: costSheet.regionId?costSheet.regionId.toString():undefined
                                     })(
                                         <Select
                                         showSearch
-                                        placeholder="Select a region"
+                                        placeholder="Selecciona una región"
                                         optionFilterProp="children"
                                         //onChange={handleChange}
                                         filterOption={(input, option) => {
