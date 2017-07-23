@@ -148,7 +148,7 @@ export const AddMaterial = (costSheetId, params) =>
 export const AddManPower = (costSheetId, params) =>
     (dispatch) => {
         axios
-        .post(`${API_URL}/CostSheets/${costSheetId}/manpowers`,params, {
+        .post(`${API_URL}/CostSheetHasManpowers`,params, {
         headers: {'Authorization': cookie.load('token')}
         })
         .then(() => {
@@ -172,12 +172,12 @@ export const AddManPower = (costSheetId, params) =>
 export const AddToolsAndEquipment = (costSheetId, params) =>
     (dispatch) => {
         axios
-        .post(`${API_URL}/CostSheets/${costSheetId}/toolsAndEquipments`,params, {
+        .post(`${API_URL}/CostSheetHasToolsAndEquipments`,params, {
         headers: {'Authorization': cookie.load('token')}
         })
         .then(() => {
             axios
-            .get(`${API_URL}/CostSheetHasToolsAndEquipments?filter={"where":{"costSheetId":${costSheetId}},"include":["toolsAndEquipmentCostHistories","toolsAndEquipment"]}`, {
+            .get(`${API_URL}/CostSheetHasToolsAndEquipments?filter={"where":{"costSheetId":${costSheetId}},"include":{"toolsAndEquipment":["toolsAndEquipmentCostHistories"]}}`, {
             headers: {'Authorization': cookie.load('token')}
             })
             .then((response) => {
