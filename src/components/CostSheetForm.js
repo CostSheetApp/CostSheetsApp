@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 //import Moment from 'react-moment';
+import '../styles/costSheets.css';
 
 import AddCostSheetMaterial from './AddCostSheetMaterialForm';
 import AddCostSheetManPower from './AddCostSheetManPowerForm';
@@ -11,7 +12,9 @@ import {
     Form,
     Button,
     //Modal,
+    Tooltip,
     Input,
+    //InputNumber,
     Icon,
     Table,
     Col,
@@ -50,12 +53,26 @@ class addCostSheetForm extends Component {
                 title: 'Código',
                 key: 'code',
                 render: (text, item) => {
-                    return (<span>{item.material.code.padZero(10)}</span>);
+                    return (<span>{item.code.padZero(10)}</span>);
                 }
             }, {
                 title: 'Descripción',
-                dataIndex: 'material.description',
+                dataIndex: 'description',
                 key: 'description'
+            }, {
+                title: 'Unidad Medida',
+                dataIndex: 'unitsofmeasurement',
+                key: 'unitsofmeasurement',
+                render: (text, item) => {
+                    if (!item.unitsofmeasurement) {
+                        return;
+                    }
+                    return (
+                        <Tooltip title={item.unitsofmeasurement}>
+                            <span>{item.abbreviation}</span>
+                        </Tooltip>
+                    );
+                }
             }, 
             {
                 title: 'Rendimiento',
@@ -86,12 +103,12 @@ class addCostSheetForm extends Component {
                 title: 'Costo',
                 key: 'cost',
                 render: (text, item) => {
-                    if (!item.material || !item.material.materialCostHistories) {
+                    if (!item || !item.cost) {
                         return;
                     }
                     return (
                         <NumberFormat
-                            value={item.material.materialCostHistories.FirstOrDefault({cost:0}).cost}
+                            value={item.cost}
                             displayType={'text'}
                             thousandSeparator={true} 
                             prefix={'L.'} 
@@ -104,12 +121,12 @@ class addCostSheetForm extends Component {
                 title: 'Total',
                 key: 'total',
                 render: (text, item) => {
-                    let total = 0;
+                    //let total = 0;
 
-                    total = item.performance * item.waste * item.material.materialCostHistories.FirstOrDefault({cost:0}).cost;
+                    //total = item.performance * item.waste * item.material.materialCostHistories.FirstOrDefault({cost:0}).cost;
                     return (
                         <NumberFormat
-                            value={total}
+                            value={item.Total}
                             displayType={'text'}
                             thousandSeparator={true} 
                             prefix={'L.'} 
@@ -145,14 +162,17 @@ class addCostSheetForm extends Component {
                 title: 'Código',
                 key: 'code',
                 render: (text, item) => {
-                    return (<span>{item.manpower.code.padZero(10)}</span>);
+                    return (<span>{item.code.padZero(10)}</span>);
                 }
             }, {
                 title: 'Descripción',
-                dataIndex: 'manpower.description',
+                dataIndex: 'description',
                 key: 'description'
-            }, 
-            {
+            }, {
+                title: 'Puesto de Trabajo',
+                dataIndex: 'job',
+                key: 'job'
+            }, {
                 title: 'Rendimiento',
                 dataIndex: 'performance',
                 render: (text, record) => (
@@ -168,12 +188,9 @@ class addCostSheetForm extends Component {
                 title: 'Costo',
                 key: 'cost',
                 render: (text, item) => {
-                    if (!item.manpower || !item.manpower.manpowerCostHistories) {
-                        return;
-                    }
                     return (
                         <NumberFormat
-                            value={item.manpower.manpowerCostHistories.FirstOrDefault({cost:0}).cost}
+                            value={item.cost}
                             displayType={'text'}
                             thousandSeparator={true} 
                             prefix={'L.'} 
@@ -186,12 +203,9 @@ class addCostSheetForm extends Component {
                 title: 'Total',
                 key: 'total',
                 render: (text, item) => {
-                    let total = 0;
-
-                    total = item.performance * item.manpower.manpowerCostHistories.FirstOrDefault({cost:0}).cost;
                     return (
                         <NumberFormat
-                            value={total}
+                            value={item.Total}
                             displayType={'text'}
                             thousandSeparator={true} 
                             prefix={'L.'} 
@@ -227,11 +241,11 @@ class addCostSheetForm extends Component {
                 title: 'Código',
                 key: 'code',
                 render: (text, item) => {
-                    return (<span>{item.toolsAndEquipment.code.padZero(10)}</span>);
+                    return (<span>{item.code.padZero(10)}</span>);
                 }
             }, {
                 title: 'Descripción',
-                dataIndex: 'toolsAndEquipment.description',
+                dataIndex: 'description',
                 key: 'description'
             }, 
             {
@@ -250,12 +264,9 @@ class addCostSheetForm extends Component {
                 title: 'Costo',
                 key: 'cost',
                 render: (text, item) => {
-                    if (!item.toolsAndEquipment || !item.toolsAndEquipment.toolsAndEquipmentCostHistories) {
-                        return;
-                    }
                     return (
                         <NumberFormat
-                            value={item.toolsAndEquipment.toolsAndEquipmentCostHistories.FirstOrDefault({cost:0}).cost}
+                            value={item.cost}
                             displayType={'text'}
                             thousandSeparator={true} 
                             prefix={'L.'} 
@@ -269,12 +280,12 @@ class addCostSheetForm extends Component {
                 title: 'Total',
                 key: 'total',
                 render: (text, item) => {
-                    let total = 0;
+                    //let total = 0;
                     //total = item.performance * item.manpower.manpowerCostHistories.FirstOrDefault({cost:0}).cost;
-                    total = item.performance  * item.toolsAndEquipment.toolsAndEquipmentCostHistories.FirstOrDefault({cost:0}).cost;
+                    //total = item.performance  * item.toolsAndEquipment.toolsAndEquipmentCostHistories.FirstOrDefault({cost:0}).cost;
                     return (
                         <NumberFormat
-                            value={total}
+                            value={item.Total}
                             displayType={'text'}
                             thousandSeparator={true} 
                             prefix={'L.'} 
@@ -305,16 +316,65 @@ class addCostSheetForm extends Component {
                 )
             }
         ];
+
+        this.SumMateriales = [
+            {
+                title: 'Total Materiales',
+                key: 'TotalMaterial',
+                render: (text, item) => {
+                    return (
+                        <NumberFormat
+                            value={item.TotalMaterial}
+                            displayType={'text'}
+                            thousandSeparator={true} 
+                            prefix={'L.'} 
+                            decimalPrecision={2}
+                        />
+                        
+                    );
+                }
+            }
+        ];
+
+        this.SumManoObra = [
+            {
+                title: 'Total',
+                key: 'Total',
+                render: (text, item) => {
+                    return (
+                        <NumberFormat
+                            value={item.Total}
+                            displayType={'text'}
+                            thousandSeparator={true} 
+                            prefix={'L.'} 
+                            decimalPrecision={2}
+                        />
+                        
+                    );
+                }
+            }
+        ];
     }
    
     componentWillMount() {
-        let {FetchCostSheet,FetchCostSheetMaterials,FetchCostSheetManpower,FetchCostSheetToolsAndEquipment} = this.props;
+        let {FetchCostSheet
+             ,FetchCostSheetMaterials
+             ,FetchCostSheetManpower
+             ,FetchCostSheetToolsAndEquipment
+             ,FetchSumSheetMaterials
+             ,FetchSumSheetManpower
+             ,FetchSumSheetToolsAndEquipment
+        } = this.props;
         let {id} = this.props.params;
         //console.log("id",id);
         FetchCostSheet(id);
         FetchCostSheetMaterials(id);
         FetchCostSheetManpower(id);
         FetchCostSheetToolsAndEquipment(id);
+
+        FetchSumSheetMaterials(id);
+        FetchSumSheetManpower(id);
+        FetchSumSheetToolsAndEquipment(id);
     }
     saveAddMaterialToCostSheetFormRef = (form) => {
         this.AddMaterialToCostSheetForm = form;
@@ -340,10 +400,11 @@ class addCostSheetForm extends Component {
             if (err) {
                 return;
             }
-            let {AddMaterial} = this.props;
+            let {AddMaterial,FetchSumSheetMaterials} = this.props;
             let {id} = this.props.params;
             AddMaterial(id, values);
             form.resetFields();
+            FetchSumSheetMaterials(id);
             this.setState({AddMaterialToCostSheetFormIsVisible: false});
         });
     }
@@ -353,10 +414,11 @@ class addCostSheetForm extends Component {
             if (err) {
                 return;
             }
-            let {AddManPower} = this.props;
+            let {AddManPower,FetchSumSheetManpower} = this.props;
             let {id} = this.props.params;
             AddManPower(id, values);
             form.resetFields();
+            FetchSumSheetManpower(id);
             this.setState({AddManPowerToCostSheetFormIsVisible: false});
         });
     }
@@ -366,10 +428,11 @@ class addCostSheetForm extends Component {
             if (err) {
                 return;
             }
-            let {AddToolsAndEquipment} = this.props;
+            let {AddToolsAndEquipment, FetchSumSheetToolsAndEquipment} = this.props;
             let {id} = this.props.params;
             AddToolsAndEquipment(id, values);
             form.resetFields();
+            FetchSumSheetToolsAndEquipment(id);
             this.setState({AddToolsToCostSheetFormIsVisible: false});
         });
     }
@@ -395,6 +458,9 @@ class addCostSheetForm extends Component {
              ,SelectMaterialToBeAddToCostSheet
              ,manpowers
              ,toolsAndEquipments
+             ,totalMaterials
+             ,totalManPowers
+             ,totalTools
         } = this.props;
         return (
             <Row>
@@ -442,12 +508,12 @@ class addCostSheetForm extends Component {
                         <Col span={4}> 
                             <FormItem  label="Costo Mínimo" >
                             {getFieldDecorator('minimunCost', {
-                                rules: [
-                                    { required: true, message: '¡Por favor ingrese el costo mínimo!' }, 
-                                    ],
-                                    initialValue: costSheet.minimunCost?costSheet.minimunCost:""
+                                    initialValue: 0
                             })(
-                                <Input placeholder="0.00" />
+                                <span className="totales" > { 'L. ' + ((totalMaterials ? totalMaterials.FirstOrDefault({TotalMaterial:0}).TotalMaterial : 0) +
+                                                    (totalManPowers ? totalManPowers.FirstOrDefault({Total:0}).Total : 0) +
+                                                    (totalTools ? totalTools.FirstOrDefault({Total:0}).Total : 0)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } 
+                                </span>
                             )}
                             </FormItem>
                         </Col>
@@ -465,7 +531,7 @@ class addCostSheetForm extends Component {
                                         optionFilterProp="children"
                                         //onChange={handleChange}
                                         filterOption={(input, option) => {
-                                            console.log(input,option);
+                                            //console.log(input,option);
                                             return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                                         }}
                                     >
@@ -484,16 +550,52 @@ class addCostSheetForm extends Component {
                     <Row>
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="Materiales" key="1">
-                                <Row  type="flex" justify="end"><Button type="primary" icon="plus" className="add-material-button" onClick={() => this.onAddMaterial()}>Agregar</Button></Row>
-                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={csmaterials} columns={this.materialColumns} pagination={{pageSize:5}} />
+                                <Row>
+                                    <Col span={8}> 
+                                       <Row>
+                                           <span className="totales" >
+                                               Costo Materiales: { 'L. ' + ((totalMaterials ? totalMaterials.FirstOrDefault({TotalMaterial:0}).TotalMaterial : 0)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } 
+                                           </span>
+                                       </Row>
+                                    </Col>
+                                    <Col>
+                                        <Row  type="flex" justify="end">
+                                            <Button type="primary" icon="plus" className="add-material-button" onClick={() => this.onAddMaterial()}>Agregar</Button>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                                
+                                <Table rowKey={item => item.code} size="small" bordered={true} dataSource={csmaterials} columns={this.materialColumns} pagination={{pageSize:10}} />
                             </TabPane>
                             <TabPane tab="Mano de Obra" key="2">
-                                <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-manpower-button" onClick={() => this.onAddManpower()}>Agregar</Button></Row>
-                                <Table rowKey={item => item.id} size="small" bordered={true}  dataSource={csmanpower} columns={this.manpowerColumns} pagination={{pageSize:5}} />
+                                <Row>
+                                    <Col span={8}> 
+                                       <Row>
+                                           <span className="totales" >
+                                               Costo Mano de Obra: { 'L. ' + ((totalManPowers ? totalManPowers.FirstOrDefault({Total:0}).Total : 0)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } 
+                                           </span>
+                                       </Row>
+                                    </Col>
+                                    <Col>
+                                        <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-manpower-button" onClick={() => this.onAddManpower()}>Agregar</Button></Row>
+                                    </Col>
+                                </Row>
+                                <Table rowKey={item => item.code} size="small" bordered={true}  dataSource={csmanpower} columns={this.manpowerColumns} pagination={{pageSize:10}} />
                             </TabPane>
                             <TabPane tab="Herramientas y Equipo" key="3">
-                                <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-toolAndEquipment-button" onClick={() => this.onAddToolAndEquipment()}>Agregar</Button></Row>
-                                <Table rowKey={item => item.id} size="small" bordered={true} dataSource={cstoolsAndEquipment} columns={this.toolAndEquipmentColumns} pagination={{pageSize:5}} />
+                                <Row>
+                                    <Col span={8}> 
+                                       <Row>
+                                           <span className="totales" >
+                                               Costo Herramientas y Equipo: { 'L. ' + ((totalTools ? totalTools.FirstOrDefault({Total:0}).Total : 0)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } 
+                                           </span>
+                                       </Row>
+                                    </Col>
+                                    <Col>
+                                        <Row type="flex" justify="end"><Button type="primary" icon="plus" className="add-toolAndEquipment-button" onClick={() => this.onAddToolAndEquipment()}>Agregar</Button></Row>
+                                    </Col>
+                                </Row>
+                                <Table rowKey={item => item.code} size="small" bordered={true} dataSource={cstoolsAndEquipment} columns={this.toolAndEquipmentColumns} pagination={{pageSize:10}} />
                             </TabPane>
                         </Tabs>                    
                     </Row>
@@ -506,6 +608,11 @@ class addCostSheetForm extends Component {
 addCostSheetForm.propTypes = {
     costSheet: PropTypes.object.isRequired,
     materialToBeAddToCostSheet: PropTypes.object,
+
+    totalMaterials: PropTypes.array,
+    totalManPowers: PropTypes.array,
+    totalTools: PropTypes.array,
+
     FetchCostSheet: PropTypes.func.isRequired,
     Regions: PropTypes.array.isRequired,
     materials: PropTypes.array.isRequired,
@@ -523,7 +630,11 @@ addCostSheetForm.propTypes = {
 
     FetchCostSheetMaterials: PropTypes.func.isRequired,
     FetchCostSheetManpower: PropTypes.func.isRequired,
-    FetchCostSheetToolsAndEquipment: PropTypes.func.isRequired
+    FetchCostSheetToolsAndEquipment: PropTypes.func.isRequired,
+
+    FetchSumSheetMaterials: PropTypes.func.isRequired,
+    FetchSumSheetManpower: PropTypes.func.isRequired,
+    FetchSumSheetToolsAndEquipment: PropTypes.func.isRequired
 };
 
 const addCostSheet = Form.create()(addCostSheetForm);
