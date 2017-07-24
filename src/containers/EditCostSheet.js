@@ -8,7 +8,10 @@ FetchCostSheetToolsAndEquipment,
 SelectMaterialToBeAddToCostSheet,
 AddMaterial,
 AddManPower,
-AddToolsAndEquipment
+AddToolsAndEquipment,
+FetchSumSheetMaterials,
+FetchSumSheetManpower,
+FetchSumSheetToolsAndEquipment
 } from '../actions/costSheetActions';
 
 const mapStateToProps = (state) => {
@@ -21,7 +24,11 @@ const mapStateToProps = (state) => {
         Regions: state.regions.list,
         materials: state.materials.list,
         manpowers: state.manPowers.list,
-        toolsAndEquipments: state.tools.list
+        toolsAndEquipments: state.tools.list,
+
+        totalMaterials: state.costSheets.SumMaterial,
+        totalManPowers: state.costSheets.SumManPower,
+        totalTools: state.costSheets.SumToolAndEquipment
     };
 };
 
@@ -50,6 +57,15 @@ const mapDispatchToProps = (dispatch) => {
         },
         AddToolsAndEquipment: (costSheetId,params) => {
             dispatch(AddToolsAndEquipment(costSheetId,params));
+        },
+        FetchSumSheetMaterials: (id) => {
+            dispatch(FetchSumSheetMaterials(id));
+        },
+        FetchSumSheetManpower: (id) => {
+            dispatch(FetchSumSheetManpower(id));
+        },
+        FetchSumSheetToolsAndEquipment: (id) => {
+            dispatch(FetchSumSheetToolsAndEquipment(id));
         }
     };
 };
