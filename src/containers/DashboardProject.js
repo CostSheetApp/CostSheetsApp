@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import ProjectCostSheet from '../components/DashboardProject';
 import {FetchProjectsCostSheet,ViewCostSheet} from '../actions/projectCostSheetActions';
-
+import {FetchIndirectCosts} from '../actions/projectActions';
 const mapStateToProps = (state) => {
     return {
         entityId: state.account.entityId,
@@ -17,6 +17,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         ViewCostSheet: (id) => {
             dispatch(ViewCostSheet(id));
+        },
+        FetchIndirectCosts: (projectId) => {
+            dispatch(FetchIndirectCosts(projectId))
         }
     };
 };
