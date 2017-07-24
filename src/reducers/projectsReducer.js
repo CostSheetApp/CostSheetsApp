@@ -1,13 +1,35 @@
-import {PROJECTS_FETCHED,FETCHING_PROJECTS,FETCHING_PROJECTS_ERROR,PROJECT_ADDED,ADDING_PROJECT,ADDING_PROJECT_ERROR,PROJECT_EDITED,PROJECT_DELETED} from '../constants/actionTypes';
+import {
+    PROJECTS_FETCHED,
+    FETCHING_PROJECTS,
+    FETCHING_PROJECTS_ERROR,
+    PROJECT_ADDED,
+    ADDING_PROJECT,
+    ADDING_PROJECT_ERROR,
+    PROJECT_EDITED,
+    PROJECT_DELETED,
+    PROJECT_INDIRECT_COSTS_FETCHED,
+    FETCHING_PROJECT_INDIRECT_COSTS_ERROR
+} from '../constants/actionTypes';
 
 const initState = {
     list: [],
     loading:false,
-    isSaving: false
+    isSaving: false,
+    IndirectCosts: []    
 };
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
+        case PROJECT_INDIRECT_COSTS_FETCHED:
+        return {
+            ...state,
+            IndirectCosts: action.list
+        }
+        case FETCHING_PROJECT_INDIRECT_COSTS_ERROR:
+        return {
+            ...state,
+            IndirectCosts: []
+        }
         case FETCHING_PROJECTS:
         return {
             ...state,

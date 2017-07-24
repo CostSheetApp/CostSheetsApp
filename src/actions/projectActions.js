@@ -2,7 +2,19 @@ import axios from 'axios';
 import cookie from 'react-cookie';
 import {API_URL} from '../constants/global';
 import {push} from 'react-router-redux';
-import {PROJECTS_FETCHED,FETCHING_PROJECTS,FETCHING_PROJECTS_ERROR,ADDING_PROJECT,ADDING_PROJECT_ERROR,PROJECT_EDITED,EDITING_PROJECT_ERROR,PROJECT_DELETED,DELETING_PROJECT_ERROR} from '../constants/actionTypes';
+import {
+    PROJECTS_FETCHED,
+    FETCHING_PROJECTS,
+    FETCHING_PROJECTS_ERROR,
+    ADDING_PROJECT,
+    ADDING_PROJECT_ERROR,
+    PROJECT_EDITED,
+    EDITING_PROJECT_ERROR,
+    PROJECT_DELETED,
+    DELETING_PROJECT_ERROR,
+    PROJECT_INDIRECT_COSTS_FETCHED,
+    FETCHING_PROJECT_INDIRECT_COSTS_ERROR
+} from '../constants/actionTypes';
 
 export const FetchProjects = (entityId) =>
     (dispatch) => {
@@ -127,3 +139,20 @@ export const ViewProject = (id) =>
     (dispatch) => {
         dispatch(push(`/projects/${id}`));
     };
+
+export const FetchIndirectCosts = (projectId) =>
+    (dispatch, getState) => {
+        axios
+            .get(`${API_URL}/Projects/${projectId}/indirectCosts`,{
+        headers: {'Authorization': cookie.load('token')}
+        })
+            .then((response) => {
+                dispatch({type: PROJECT_INDIRECT_COSTS_FETCHED, list: response.data});
+            })
+            .catch((error) => {
+                dispatch({
+                    type: FETCHING_PROJECT_INDIRECT_COSTS_ERROR,
+                    error: error.response.data.error.message
+                });
+            });
+    }
