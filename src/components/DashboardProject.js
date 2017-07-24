@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import {
     //Table,
     Row,
-    //Col,
+    Col,
     Button,
+    Tabs,
     //Icon,
     //Tooltip,
     //Popconfirm,
@@ -13,6 +14,7 @@ import {
 } from 'antd';
 //import Moment from 'react-moment';
 import '../styles/costSheets.css';
+import IndirectCosts from './IndirectCosts';
 //import CostSheetForm from './CostSheetForm';
 
 class CostSheets extends Component {
@@ -21,8 +23,9 @@ class CostSheets extends Component {
     };
     componentWillMount() {
         let {id} = this.props.params;
-        let {FetchProjectsCostSheet} = this.props;
+        let {FetchProjectsCostSheet,FetchIndirectCosts} = this.props;
         FetchProjectsCostSheet(id);
+        FetchIndirectCosts(id);
     }
     onCreate() {
        alert('Nueva ficha de costo');
@@ -38,7 +41,15 @@ class CostSheets extends Component {
         //let {costSheets,ViewCostSheet} = this.props;
         return (
             <Row>
-                <Row>
+                <Tabs defaultActiveKey="1">
+                    <Tabs.TabPane tab="Costos Indirectos" key="1">
+                        <Row>
+                            <IndirectCosts ProjectId={1} />
+                        </Row>
+                        
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab="Tab 2" key="2">
+                        <Row>
                     <Button
                         type="primary"
                         icon="plus"
@@ -53,7 +64,10 @@ class CostSheets extends Component {
                         className="add-cost-sheet-button"
                         onClick={() => this.onConsolidate()}>Generar Consolidados</Button>
                 </Row>
-                
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab="Tab 3" key="3">Content of Tab Pane 3</Tabs.TabPane>
+                </Tabs>
+                               
             </Row>
         );
     }
@@ -64,7 +78,8 @@ CostSheets.propTypes = {
     costSheets: PropTypes.array,
     entityId: PropTypes.number.isRequired,
     ViewCostSheet: PropTypes.func.isRequired,
-    loading: PropTypes.bool.isRequired
+    loading: PropTypes.bool.isRequired,
+    FetchIndirectCosts: PropTypes.func.isRequired,
 };
 
 export default CostSheets;
