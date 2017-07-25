@@ -56,8 +56,8 @@ class addProjectForm extends Component {
                             min={0}
                             max={2147483645.99}
                             style={{ width: '40%' }}
-                            formatter={value => `L. ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
-                            parser={value => value.replace(/\L.\s?|(,*)/g, '')}
+                            formatter={value => `L. ${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                            parser={value => value.toString().replace(/\L.\s?|(,*)/g, '')}
                         />
                     )}
                     </FormItem>
@@ -73,7 +73,7 @@ class addProjectForm extends Component {
                             max={100}
                             style={{ width: '20%' }}
                             formatter={value => `${value}%`}
-                            parser={value => value.replace('%', '')}
+                            parser={value => value.toString().replace('%', '')}
                             placeholder="Porcentaje Ganancia"
                         />
                     )}

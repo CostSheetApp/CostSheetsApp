@@ -76,7 +76,6 @@ class Projects extends Component {
     onDelete(index,project){
         let { DeleteProject } = this.props;
         DeleteProject(project.id);
-
     }
     onEdit(index,project){
         this.handle = this.handleEdit;

@@ -10,7 +10,7 @@ import {
 
     SUM_COST_SHEET_MATERIALS_FETCHED,
     SUM_COST_SHEET_MANPOWER_FETCHED,
-    SUM_COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED,
+    SUM_COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED
 } from '../constants/actionTypes';
 
 const initState = {
@@ -33,7 +33,17 @@ const reducer = (state = initState, action) => {
         case COST_SHEETS_FETCHED:
             return {
                 ...state,
-                list: action.payload
+                list: action.payload,
+                materialsToEdit: [],
+                materialToBeAddToCostSheet: {},
+                manpowersToEdit: [],
+                manpowerToBeAddToCostSheet: {},
+                toolsAndEquipmentsToEdit: [],
+                toolsAndEquipmentToBeAddToCostSheet: {},
+                materialSelect: {},
+                SumMaterial: [],
+                SumManPower: [],
+                SumToolAndEquipment: []
             };
         case COST_SHEET_FETCHED:
             return {

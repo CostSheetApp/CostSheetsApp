@@ -23,7 +23,14 @@ import {
     SUM_COST_SHEET_MANPOWER_FETCHED,
     SUM_FETCHED_COST_SHEET_MANPOWER_ERROR,
     SUM_COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED,
-    SUM_FETCHED_COST_SHEET_TOOLS_AND_EQUIPMENT_ERROR
+    SUM_FETCHED_COST_SHEET_TOOLS_AND_EQUIPMENT_ERROR,
+    
+    COST_SHEET_MATERIALS_DELETED,
+    DELETING_COST_SHEET_MATERIALS_ERROR,
+    COST_SHEET_MANPOWER_DELETED,
+    DELETING_COST_SHEET_MANPOWER_ERROR,
+    COST_SHEET_TOOLS_AND_EQUIPMENT_DELETED,
+    DELETING_COST_SHEET_TOOLS_AND_EQUIPMENT_ERROR
 } from '../constants/actionTypes';
 
 export const FetchCostSheets = (entityId) =>
@@ -45,7 +52,7 @@ export const FetchCostSheets = (entityId) =>
 export const FetchCostSheet = (id) =>
     (dispatch) => {
         axios
-        .get(`${API_URL}/CostSheets/${id}?filter={"include":["unitsOfMeasurement","region","materials","manpowers","toolsAndEquipments"]}`, {
+        .get(`${API_URL}/CostSheets/${id}`, {
         headers: {'Authorization': cookie.load('token')}
         })
         .then((response) => {
@@ -140,6 +147,7 @@ export const AddMaterial = (costSheetId, params) =>
             })
             .then((response) => {
                 dispatch({type: COST_SHEET_MATERIALS_FETCHED, payload: response.data.data });
+                dispatch(FetchSumSheetMaterials(costSheetId));
             })
             .catch((error) => {
                 dispatch({type: FETCHED_COST_SHEET_MATERIALS_ERROR, error: error.response.data.error.message});
@@ -165,6 +173,7 @@ export const AddManPower = (costSheetId, params) =>
             })
             .then((response) => {
                 dispatch({type: COST_SHEET_MANPOWER_FETCHED, payload: response.data.data });
+                dispatch(FetchSumSheetManpower(costSheetId));
             })
             .catch((error) => {
                 dispatch({type: FETCHED_COST_SHEET_MANPOWER_ERROR, error: error.response.data.error.message});
@@ -189,6 +198,7 @@ export const AddToolsAndEquipment = (costSheetId, params) =>
             })
             .then((response) => {
                 dispatch({type: COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED, payload: response.data.data });
+                dispatch(FetchSumSheetToolsAndEquipment(costSheetId));
             })
             .catch((error) => {
                 dispatch({type: FETCHED_COST_SHEET_MANPOWER_ERROR, error: error.response.data.error.message});
@@ -242,5 +252,64 @@ export const FetchSumSheetToolsAndEquipment = (id) =>
         })
         .catch((error) => {
             dispatch({type: SUM_FETCHED_COST_SHEET_TOOLS_AND_EQUIPMENT_ERROR, error: error.response.data.error.message});
+        });
+    };
+
+
+export const DeleteDetailMaterial = (costSheetId, id) =>
+    (dispatch) => {
+        axios
+        .patch(`${API_URL}/CostSheetHasMaterials/${id}`,{isDeleted:true}, {
+        headers: { 'Authorization': cookie.load('token') }
+        })
+        .then((response) => {
+            dispatch({type: COST_SHEET_MATERIALS_DELETED, id: response.data.id});
+            dispatch(FetchCostSheetMaterials(costSheetId));
+            dispatch(FetchSumSheetMaterials(costSheetId));
+        })
+        .catch((error) => {
+            dispatch({
+                type: DELETING_COST_SHEET_MATERIALS_ERROR,
+                error: error.response.data.error.message
+            });
+        });
+    };
+
+
+export const DeleteDetailManPower = (costSheetId, id) =>
+    (dispatch) => {
+        axios
+        .patch(`${API_URL}/CostSheetHasManpowers/${id}`,{isDeleted:true}, {
+        headers: { 'Authorization': cookie.load('token') }
+        })
+        .then((response) => {
+            dispatch({type: COST_SHEET_MANPOWER_DELETED, id: response.data.id});
+            dispatch(FetchCostSheetManpower(costSheetId));
+            dispatch(FetchSumSheetManpower(costSheetId));
+        })
+        .catch((error) => {
+            dispatch({
+                type: DELETING_COST_SHEET_MANPOWER_ERROR,
+                error: error.response.data.error.message
+            });
+        });
+    };
+
+export const DeleteDetailToolEquipment = (costSheetId, id) =>
+    (dispatch) => {
+        axios
+        .patch(`${API_URL}/CostSheetHasToolsAndEquipments/${id}`,{isDeleted:true}, {
+        headers: { 'Authorization': cookie.load('token') }
+        })
+        .then((response) => {
+            dispatch({type: COST_SHEET_TOOLS_AND_EQUIPMENT_DELETED, id: response.data.id});
+            dispatch(FetchCostSheetToolsAndEquipment(costSheetId));
+            dispatch(FetchSumSheetToolsAndEquipment(costSheetId));
+        })
+        .catch((error) => {
+            dispatch({
+                type: DELETING_COST_SHEET_TOOLS_AND_EQUIPMENT_ERROR,
+                error: error.response.data.error.message
+            });
         });
     };

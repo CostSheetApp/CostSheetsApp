@@ -95,8 +95,8 @@ class AddCostSheetMaterialForm extends Component {
                             min={0}
                             max={2147483645.99}
                             style={{ width: '100%' }}
-                            formatter={value => (value) ? `${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}
-                            parser={value => (value) ? value.replace(/\L.\s?|(,*)/g, ''):0}
+                            formatter={value => (value) ? `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}
+                            parser={value => (value) ? value.toString().replace(/\L.\s?|(,*)/g, ''):0}
                         />
                     )}
                 </FormItem>
@@ -112,8 +112,8 @@ class AddCostSheetMaterialForm extends Component {
                             min={0}
                             max={2147483645.99}
                             style={{ width: '100%' }}
-                            formatter={value => (value) ? `${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}
-                            parser={value => (value) ? value.replace(/\L.\s?|(,*)/g, ''):0}
+                            formatter={value => (value) ? `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}
+                            parser={value => (value) ? value.toString().replace(/\L.\s?|(,*)/g, ''):0}
                         />
                     )}
                 </FormItem>
