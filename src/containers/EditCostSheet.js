@@ -11,7 +11,10 @@ AddManPower,
 AddToolsAndEquipment,
 FetchSumSheetMaterials,
 FetchSumSheetManpower,
-FetchSumSheetToolsAndEquipment
+FetchSumSheetToolsAndEquipment,
+DeleteDetailMaterial,
+DeleteDetailManPower,
+DeleteDetailToolEquipment
 } from '../actions/costSheetActions';
 
 const mapStateToProps = (state) => {
@@ -66,6 +69,15 @@ const mapDispatchToProps = (dispatch) => {
         },
         FetchSumSheetToolsAndEquipment: (id) => {
             dispatch(FetchSumSheetToolsAndEquipment(id));
+        },
+        DeleteDetailMaterial: (costSheetId, id) => {
+            dispatch(DeleteDetailMaterial(costSheetId, id));
+        },
+        DeleteDetailManPower: (costSheetId, id) => {
+            dispatch(DeleteDetailManPower(costSheetId, id));
+        },
+        DeleteDetailToolEquipment: (costSheetId, id) => {
+            dispatch(DeleteDetailToolEquipment(costSheetId, id));
         }
     };
 };

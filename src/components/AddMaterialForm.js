@@ -71,8 +71,8 @@ class addMaterialForm extends Component {
                                 min={0}
                                 max={2147483645.99}
                                 style={{ width: '100%' }}
-                                formatter={value => `${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
-                                parser={value => value.replace(/\L.\s?|(,*)/g, '')}
+                                formatter={value => `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                                parser={value => value.toString().replace(/\L.\s?|(,*)/g, '')}
                             />
                         )}
                          </FormItem>
@@ -114,8 +114,8 @@ class addMaterialForm extends Component {
                                     min={0}
                                     max={2147483645.99}
                                     style={{ width: '100%' }}
-                                    formatter={value => `L. ${value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
-                                    parser={value => value.replace(/\L.\s?|(,*)/g, '')}
+                                    formatter={value => `L. ${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                                    parser={value => value.toString().replace(/\L.\s?|(,*)/g, '')}
                                 />
                             )}
                                 </FormItem>

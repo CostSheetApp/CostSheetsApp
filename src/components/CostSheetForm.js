@@ -21,7 +21,8 @@ import {
     Select,
     Row,
     Tabs,
-    Popconfirm
+    Popconfirm,
+    message
 } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -138,9 +139,9 @@ class addCostSheetForm extends Component {
                 title: 'Acción',
                 key: 'action',
                 width: 120,
-                render: (text, material, index) => (
+                render: (text, material) => (
                     <span>
-                        <a href="#" onClick={() => this.onEdit(index, material)}>
+                        <a href="#" onClick={() => this.onEditMaterial(material)}>
                             <Icon type="edit"/>
                             Editar</a>
                         <span className="ant-divider"/>
@@ -148,7 +149,7 @@ class addCostSheetForm extends Component {
                             title="¿Esta seguro de borrar este material de la ficha?"
                             okText="Yes"
                             cancelText="No"
-                            onConfirm={() => this.onDelete(index, material)}>
+                            onConfirm={() => this.onDeleteMaterial(material)}>
                             <a href="#">
                                 <Icon type="delete"/>
                                 Borrar</a>
@@ -217,9 +218,9 @@ class addCostSheetForm extends Component {
                 title: 'Acción',
                 key: 'action',
                 width: 120,
-                render: (text, material, index) => (
+                render: (text, material) => (
                     <span>
-                        <a href="#" onClick={() => this.onEdit(index, material)}>
+                        <a href="#" onClick={() => this.onEdit(material)}>
                             <Icon type="edit"/>
                             Editar</a>
                         <span className="ant-divider"/>
@@ -227,7 +228,7 @@ class addCostSheetForm extends Component {
                             title="¿Esta seguro de borrar esta mano de obra de la ficha?"
                             okText="Yes"
                             cancelText="No"
-                            onConfirm={() => this.onDelete(index, material)}>
+                            onConfirm={() => this.onDeleteManPower(material)}>
                             <a href="#">
                                 <Icon type="delete"/>
                                 Borrar</a>
@@ -297,9 +298,9 @@ class addCostSheetForm extends Component {
                 title: 'Acción',
                 key: 'action',
                 width: 120,
-                render: (text, material, index) => (
+                render: (text, material) => (
                     <span>
-                        <a href="#" onClick={() => this.onEdit(index, material)}>
+                        <a href="#" onClick={() => this.onEdit(material)}>
                             <Icon type="edit"/>
                             Editar</a>
                         <span className="ant-divider"/>
@@ -307,51 +308,13 @@ class addCostSheetForm extends Component {
                             title="¿Esta seguro de borrar esta herramienta y equipo de la ficha?"
                             okText="Yes"
                             cancelText="No"
-                            onConfirm={() => this.onDelete(index, material)}>
+                            onConfirm={() => this.onDeleteToolEquipment(material)}>
                             <a href="#">
                                 <Icon type="delete"/>
                                 Borrar</a>
                         </Popconfirm>
                     </span>
                 )
-            }
-        ];
-
-        this.SumMateriales = [
-            {
-                title: 'Total Materiales',
-                key: 'TotalMaterial',
-                render: (text, item) => {
-                    return (
-                        <NumberFormat
-                            value={item.TotalMaterial}
-                            displayType={'text'}
-                            thousandSeparator={true} 
-                            prefix={'L.'} 
-                            decimalPrecision={2}
-                        />
-                        
-                    );
-                }
-            }
-        ];
-
-        this.SumManoObra = [
-            {
-                title: 'Total',
-                key: 'Total',
-                render: (text, item) => {
-                    return (
-                        <NumberFormat
-                            value={item.Total}
-                            displayType={'text'}
-                            thousandSeparator={true} 
-                            prefix={'L.'} 
-                            decimalPrecision={2}
-                        />
-                        
-                    );
-                }
             }
         ];
     }
@@ -375,6 +338,36 @@ class addCostSheetForm extends Component {
         FetchSumSheetMaterials(id);
         FetchSumSheetManpower(id);
         FetchSumSheetToolsAndEquipment(id);
+    }
+    onDeleteMaterial(detail){
+        let { DeleteDetailMaterial } = this.props;
+        let {id} = this.props.params;
+        if(detail){
+            DeleteDetailMaterial(id, detail.Id);
+            message.success('Detalle de material borrado');
+        }
+        else
+            message.warning('Error al momento de borrar el detalle');
+    }
+    onDeleteManPower(detail){
+        let { DeleteDetailManPower } = this.props;
+        let {id} = this.props.params;
+        if(detail){
+            DeleteDetailManPower(id, detail.Id);
+            message.success('Detalle de mano de obra borrado');
+        }
+        else
+            message.warning('Error al momento de borrar el detalle');
+    }
+    onDeleteToolEquipment(detail){
+        let { DeleteDetailToolEquipment } = this.props;
+        let {id} = this.props.params;
+        if(detail){
+            DeleteDetailToolEquipment(id, detail.Id);
+            message.success('Detalle de herramienta y equipo de obra borrado');
+        }
+        else
+            message.warning('Error al momento de borrar el detalle');
     }
     saveAddMaterialToCostSheetFormRef = (form) => {
         this.AddMaterialToCostSheetForm = form;
@@ -400,12 +393,21 @@ class addCostSheetForm extends Component {
             if (err) {
                 return;
             }
-            let {AddMaterial,FetchSumSheetMaterials} = this.props;
+            let {AddMaterial,csmaterials} = this.props;
+
+            if( (csmaterials) && (csmaterials.length > 0) ) {
+                let material = csmaterials.filter((item) => item.materialId == values.materialId);
+                if((material) && (material.length > 0)){
+                    message.warning('Este material ya habia sido agregado anteriormente');
+                    return;
+                }
+            }
+
             let {id} = this.props.params;
             AddMaterial(id, values);
             form.resetFields();
-            FetchSumSheetMaterials(id);
             this.setState({AddMaterialToCostSheetFormIsVisible: false});
+            message.success('Material agregado exitosamente');
         });
     }
     AddManPowerToCostSheet = () => {
@@ -414,12 +416,22 @@ class addCostSheetForm extends Component {
             if (err) {
                 return;
             }
-            let {AddManPower,FetchSumSheetManpower} = this.props;
+            let {AddManPower,csmanpower} = this.props;
+
+            if( (csmanpower) && (csmanpower.length > 0) ) {
+                let manPower = csmanpower.filter((item) => item.manpowerId == values.manpowerId);
+                if((manPower) && (manPower.length > 0)){
+                    message.warning('Esta mano de obra ya habia sido agregada anteriormente');
+                    return;
+                }
+            }
+
             let {id} = this.props.params;
             AddManPower(id, values);
             form.resetFields();
-            FetchSumSheetManpower(id);
             this.setState({AddManPowerToCostSheetFormIsVisible: false});
+            message.success('Mano de obra agregada exitosamente');
+            
         });
     }
     AddToolsToCostSheet = () => {
@@ -428,12 +440,21 @@ class addCostSheetForm extends Component {
             if (err) {
                 return;
             }
-            let {AddToolsAndEquipment, FetchSumSheetToolsAndEquipment} = this.props;
+            let {AddToolsAndEquipment, cstoolsAndEquipment} = this.props;
+
+            if( (cstoolsAndEquipment) && (cstoolsAndEquipment.length > 0) ) {
+                let manPower = cstoolsAndEquipment.filter((item) => item.toolsAndEquipmentId == values.toolsAndEquipmentId);
+                if((manPower) && (manPower.length > 0)){
+                    message.warning('Esta herramienta y equipo ya habia sido agregada anteriormente');
+                    return;
+                }
+            }
+
             let {id} = this.props.params;
             AddToolsAndEquipment(id, values);
             form.resetFields();
-            FetchSumSheetToolsAndEquipment(id);
             this.setState({AddToolsToCostSheetFormIsVisible: false});
+            message.success('Herramienta y equipo agregada exitosamente');
         });
     }
     onAddMaterial(){
@@ -510,9 +531,10 @@ class addCostSheetForm extends Component {
                             {getFieldDecorator('minimunCost', {
                                     initialValue: 0
                             })(
-                                <span className="totales" > { 'L. ' + ((totalMaterials ? totalMaterials.FirstOrDefault({TotalMaterial:0}).TotalMaterial : 0) +
+                                <span className="totales" >
+                                    { 'L. ' + ((totalMaterials ? totalMaterials.FirstOrDefault({TotalMaterial:0}).TotalMaterial : 0) +
                                                     (totalManPowers ? totalManPowers.FirstOrDefault({Total:0}).Total : 0) +
-                                                    (totalTools ? totalTools.FirstOrDefault({Total:0}).Total : 0)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } 
+                                                    (totalTools ? totalTools.FirstOrDefault({Total:0}).Total : 0)).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") }
                                 </span>
                             )}
                             </FormItem>
@@ -554,7 +576,7 @@ class addCostSheetForm extends Component {
                                     <Col span={8}> 
                                        <Row>
                                            <span className="totales" >
-                                               Costo Materiales: { 'L. ' + ((totalMaterials ? totalMaterials.FirstOrDefault({TotalMaterial:0}).TotalMaterial : 0)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } 
+                                               Costo Materiales: { 'L. ' + ((totalMaterials ? totalMaterials.FirstOrDefault({TotalMaterial:0}).TotalMaterial : 0)).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") }
                                            </span>
                                        </Row>
                                     </Col>
@@ -572,7 +594,7 @@ class addCostSheetForm extends Component {
                                     <Col span={8}> 
                                        <Row>
                                            <span className="totales" >
-                                               Costo Mano de Obra: { 'L. ' + ((totalManPowers ? totalManPowers.FirstOrDefault({Total:0}).Total : 0)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } 
+                                               Costo Mano de Obra: { 'L. ' + ((totalManPowers ? totalManPowers.FirstOrDefault({Total:0}).Total : 0)).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") }
                                            </span>
                                        </Row>
                                     </Col>
@@ -587,7 +609,7 @@ class addCostSheetForm extends Component {
                                     <Col span={8}> 
                                        <Row>
                                            <span className="totales" >
-                                               Costo Herramientas y Equipo: { 'L. ' + ((totalTools ? totalTools.FirstOrDefault({Total:0}).Total : 0)).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") } 
+                                               Costo Herramientas y Equipo: { 'L. ' + ((totalTools ? totalTools.FirstOrDefault({Total:0}).Total : 0)).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") }
                                            </span>
                                        </Row>
                                     </Col>
@@ -634,7 +656,11 @@ addCostSheetForm.propTypes = {
 
     FetchSumSheetMaterials: PropTypes.func.isRequired,
     FetchSumSheetManpower: PropTypes.func.isRequired,
-    FetchSumSheetToolsAndEquipment: PropTypes.func.isRequired
+    FetchSumSheetToolsAndEquipment: PropTypes.func.isRequired,
+
+    DeleteDetailMaterial: PropTypes.func.isRequired,
+    DeleteDetailManPower: PropTypes.func.isRequired,
+    DeleteDetailToolEquipment: PropTypes.func.isRequired
 };
 
 const addCostSheet = Form.create()(addCostSheetForm);
