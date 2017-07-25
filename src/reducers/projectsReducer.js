@@ -8,7 +8,9 @@ import {
     PROJECT_EDITED,
     PROJECT_DELETED,
     PROJECT_INDIRECT_COSTS_FETCHED,
-    FETCHING_PROJECT_INDIRECT_COSTS_ERROR
+    FETCHING_PROJECT_INDIRECT_COSTS_ERROR,
+    PROJECT_NEW_INDIRECT_COST_ADDED,
+    ADDING_PROJECT_NEW_INDIRECT_COST_ERROR
 } from '../constants/actionTypes';
 
 const initState = {
@@ -20,6 +22,11 @@ const initState = {
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
+        case PROJECT_NEW_INDIRECT_COST_ADDED:
+        return {
+            ...state,
+            IndirectCosts: [...state.IndirectCosts,action.payload]
+        }
         case PROJECT_INDIRECT_COSTS_FETCHED:
         return {
             ...state,

@@ -13,7 +13,11 @@ import {
     PROJECT_DELETED,
     DELETING_PROJECT_ERROR,
     PROJECT_INDIRECT_COSTS_FETCHED,
-    FETCHING_PROJECT_INDIRECT_COSTS_ERROR
+    FETCHING_PROJECT_INDIRECT_COSTS_ERROR,
+    PROJECT_NEW_INDIRECT_COST_ADDED,
+    ADDING_PROJECT_NEW_INDIRECT_COST_ERROR,
+    DELETING_PROJECT_INDIRECT_COST_ERROR,
+    DELETING_PROJECT_INDIRECT_COST_CHILDREN_ERROR
 } from '../constants/actionTypes';
 
 export const FetchProjects = (entityId) =>
@@ -155,4 +159,63 @@ export const FetchIndirectCosts = (projectId) =>
                     error: error.response.data.error.message
                 });
             });
+    }
+
+export const AddIndirectCost = (projectId,indirectCostId,description,amount,type) =>
+    (dispatch, getState) => {
+        axios.post(`${API_URL}/Projects/${projectId}/indirectCosts`, {indirectCostId,description,amount,type} , {
+        headers: {
+            'Authorization': cookie.load('token')
+        }
+        })
+            .then((response) => {
+                dispatch({type: PROJECT_NEW_INDIRECT_COST_ADDED, payload: response.data});
+                //dispatch(push(`/projects/${response.data.id}`));
+            })
+            .catch((error) => {
+                //console.log(error);
+                dispatch({
+                    type: ADDING_PROJECT_NEW_INDIRECT_COST_ERROR,
+                    error: error.response.data.error.message
+                });
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+    }
+
+export const DeleteIndirectCost = (projectId,id) =>
+    (dispatch, getState) => {
+        axios.delete(`${API_URL}/IndirectCosts/${id}/indirectCosts`, {
+        headers: {
+            'Authorization': cookie.load('token')
+        }
+        })
+        .then((response) => {
+           
+            axios.delete(`${API_URL}/Projects/${projectId}/indirectCosts/${id}`, {
+            headers: {
+                'Authorization': cookie.load('token')
+            }
+            })
+            .then((response) => {
+                dispatch(FetchIndirectCosts(projectId));
+                //dispatch({type: PROJECT_INDIRECT_COST_DELETED, id: id});
+                //dispatch(push(`/projects/${response.data.id}`));
+            })
+            .catch((error) => {
+                //console.log(error);
+                dispatch({
+                    type: DELETING_PROJECT_INDIRECT_COST_ERROR,
+                    error: error.response.data.error.message
+                });
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+        })
+        .catch((error) => {
+            //console.log(error);
+            dispatch({
+                type: DELETING_PROJECT_INDIRECT_COST_CHILDREN_ERROR,
+                error: error.response.data.error.message
+            });
+            //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+        });
     }
