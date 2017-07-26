@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import NumberFormat from 'react-number-format';
 import {
     Row,
     Col,
@@ -71,7 +72,7 @@ class IndirectCostList extends Component {
                         <Row gutter={150}>
                         <Col offset={5-level}>
                             <Col span={4}><strong>{parentIndex!=null?parentIndex+(index+1):(index+1)}.</strong> {indirectCost.description}</Col>
-                            <Col>{indirectCost.amount} 
+                            <Col><NumberFormat value={indirectCost.amount} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} />
                             <Mayre
                                 of={
                                     <span > 
@@ -145,7 +146,7 @@ class IndirectCostList extends Component {
                     {<Row gutter={150}>
                         <Col offset={5-level} className="total">
                             <Col span={4}><strong>Total</strong></Col>
-                            <Col span={2}><strong>{total}</strong></Col>
+                            <Col span={2}><strong><NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} /></strong></Col>
                         </Col>
                         </Row>
                     }
