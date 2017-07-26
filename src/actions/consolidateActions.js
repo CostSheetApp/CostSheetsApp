@@ -16,6 +16,12 @@ import {PROJECTS_FETCHED
         ,PROJECTS_CONSOLIDATE_TOOLSANDEQUIPMENT_FETCHED
         ,FETCHING_PROJECTS_CONSOLIDATE_TOOLSANDEQUIPMENT
         ,FETCHING_PROJECTS_CONSOLIDATE_TOOLSANDEQUIPMENT_ERROR
+
+        ,SELECT_PROJECT_TO_CONSOLIDATE
+
+        ,FETCHING_PROJECTS_CONSOLIDATE_INDIRECTCOST
+        ,PROJECTS_CONSOLIDATE_INDIRECTCOST_FETCHED
+        ,FETCHING_PROJECTS_CONSOLIDATE_INDIRECTCOST_ERROR
        } from '../constants/actionTypes';
 
 export const FetchProjects = (entityId, idProject) =>
@@ -31,6 +37,7 @@ export const FetchProjects = (entityId, idProject) =>
                     dispatch(FetchConsolidateMaterial(idProject));
                     dispatch(FetchConsolidateManPower(idProject));
                     dispatch(FetchConsolidateToolsAndEquipment(idProject));
+                    dispatch(FetchConsolidateIndirectCost(idProject));
                 }
             })
             .catch((error) => {
@@ -99,6 +106,33 @@ export const FetchConsolidateToolsAndEquipment = (projectId) =>
                 //console.log(error);
                 dispatch({
                     type: FETCHING_PROJECTS_CONSOLIDATE_TOOLSANDEQUIPMENT_ERROR,
+                    error: error.response.data.error.message
+                });
+                //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
+            });
+    };
+
+export const SelectProject = (project) =>
+    (dispatch) => {
+        dispatch({type: SELECT_PROJECT_TO_CONSOLIDATE, project:project});
+    };
+
+
+export const FetchConsolidateIndirectCost = (projectId) =>
+    (dispatch) => {
+        dispatch({type: FETCHING_PROJECTS_CONSOLIDATE_INDIRECTCOST});
+
+        axios
+            .get(`${API_URL}/Projects/${projectId}/indirectCosts`,{
+        headers: {'Authorization': cookie.load('token')}
+        })
+            .then((response) => {
+                dispatch({type: PROJECTS_CONSOLIDATE_INDIRECTCOST_FETCHED, list: response.data});
+            })
+            .catch((error) => {
+                //console.log(error);
+                dispatch({
+                    type: FETCHING_PROJECTS_CONSOLIDATE_INDIRECTCOST_ERROR,
                     error: error.response.data.error.message
                 });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)

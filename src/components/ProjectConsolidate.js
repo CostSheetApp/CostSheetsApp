@@ -8,6 +8,7 @@ import {Table
     } from 'antd';
 import NumberFormat from 'react-number-format';
 import '../styles/projects.css';
+import IndirectCosts from './IndirectCosts';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -145,21 +146,32 @@ class Consolidate extends Component {
         FetchProjects(entityId,id);
     }
     onChangeProject= (id) => {
-        let { FetchConsolidateMaterial,FetchConsolidateManPower,FetchConsolidateToolsAndEquipment } = this.props;
+        let { Projects, FetchConsolidateMaterial,FetchConsolidateManPower,FetchConsolidateToolsAndEquipment,SelectProject,FetchConsolidateIndirectCost } = this.props;
         FetchConsolidateMaterial(id);
         FetchConsolidateManPower(id);
         FetchConsolidateToolsAndEquipment(id);
+        FetchConsolidateIndirectCost(id);
+        
+        if( (Projects) && (Projects.length > 0) && (id) ) {
+                let project = Projects.filter((item) => item.id == id);
+                if((project) && (project.length > 0)){
+                    SelectProject(project[0]);
+                }
+            }
     }
     render(){
         let {Projects
              ,Materials
              ,ManPowers
              ,ToolEquipments
+             ,IndrectCost
+             ,project
             } = this.props;
         let {id} = this.props.params;
         let materialTotal = Materials.map(o => o.Total).reduce((b,a) => b+a,0.0);
         let manPowersTotal = ManPowers.map(o => o.Total).reduce((b,a) => b+a,0.0);
         let toolEquipmentsTotal = ToolEquipments.map(o => o.Total).reduce((b,a) => b+a,0.0);
+        let indrectCostTotal = IndrectCost.map(o => o.amount).reduce((b,a) => b+a,0.0);
         return (
             <Row>
                 <Form>
@@ -185,6 +197,45 @@ class Consolidate extends Component {
                         </Col>
                     </Row>
                     <Row>
+
+                        <Col span={3}>
+                            <FormItem label="Presupuesto">
+                                <strong><NumberFormat value={(project)?project.budget:0} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} /></strong>
+                            </FormItem>
+                        </Col>
+
+                        <Col span={3}>
+                            <FormItem label="Total Material">
+                                <NumberFormat value={materialTotal} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} />
+                            </FormItem>
+                        </Col>
+
+                        <Col span={3}>
+                            <FormItem label="Total Mano de Obra">
+                                <NumberFormat value={manPowersTotal} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} />
+                            </FormItem>
+                        </Col>
+
+                        <Col span={4}>
+                            <FormItem label="Total Herramientas y Equipo">
+                                <NumberFormat value={toolEquipmentsTotal} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} />
+                            </FormItem>
+                        </Col>
+
+                        <Col span={4}>
+                            <FormItem label="Total Costos Indirectos">
+                                <NumberFormat value={indrectCostTotal} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} />
+                            </FormItem>
+                        </Col>
+
+                        <Col span={3}>
+                            <FormItem label="Costo Total">
+                                <strong><NumberFormat value={materialTotal+manPowersTotal+toolEquipmentsTotal+indrectCostTotal} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} /></strong>
+                            </FormItem>
+                        </Col>
+
+                    </Row>
+                    <Row>
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="Consolidado Materiales" key="1">
                                 <Table rowKey={item => item.code} size="small" bordered={true} dataSource={Materials} columns={this.columnsMaterial} footer={() => <Row>Total: <NumberFormat value={materialTotal} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} /></Row>}   pagination={{pageSize:15}} />
@@ -194,6 +245,14 @@ class Consolidate extends Component {
                             </TabPane>
                             <TabPane tab="Consolidado Herramientas y Equipo" key="3">
                                 <Table rowKey={item => item.code} size="small" bordered={true} dataSource={ToolEquipments} columns={this.columnsToolEquipment} footer={() => <Row>Total: <NumberFormat value={toolEquipmentsTotal} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} /></Row>} pagination={{pageSize:15}} />
+                            </TabPane>
+                            <TabPane tab="Consolidado Costos Indrectos" key="4">
+                                <Row>
+                                    <IndirectCosts
+                                        projectId={(project)?project.id:0}
+                                        isEditing = {false}
+                                    />
+                                </Row>
                             </TabPane>
                         </Tabs>                    
                     </Row>
@@ -208,16 +267,22 @@ Consolidate.propTypes = {
     FetchConsolidateMaterial: PropTypes.func.isRequired,
     FetchConsolidateManPower: PropTypes.func.isRequired,
     FetchConsolidateToolsAndEquipment: PropTypes.func.isRequired,
+    SelectProject: PropTypes.func.isRequired,
+    FetchConsolidateIndirectCost: PropTypes.func.isRequired,
     
     Projects: PropTypes.array,
     Materials: PropTypes.array,
     ManPowers: PropTypes.array,
     ToolEquipments: PropTypes.array,
+    IndrectCost: PropTypes.array,
 
     loadingProject: PropTypes.bool.isRequired,
     loadingMaterial: PropTypes.bool.isRequired,
     loadingManPower: PropTypes.bool.isRequired,
     loadingToolEquipment: PropTypes.bool.isRequired,
+    loadingIndirectCost: PropTypes.bool.isRequired,
+
+    project: PropTypes.object,
 
     entityId: PropTypes.number.isRequired
 };

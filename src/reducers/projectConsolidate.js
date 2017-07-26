@@ -13,6 +13,11 @@ import {PROJECTS_FETCHED
         ,PROJECTS_CONSOLIDATE_TOOLSANDEQUIPMENT_FETCHED
         ,FETCHING_PROJECTS_CONSOLIDATE_TOOLSANDEQUIPMENT
         ,FETCHING_PROJECTS_CONSOLIDATE_TOOLSANDEQUIPMENT_ERROR
+        ,SELECT_PROJECT_TO_CONSOLIDATE
+
+        ,FETCHING_PROJECTS_CONSOLIDATE_INDIRECTCOST
+        ,PROJECTS_CONSOLIDATE_INDIRECTCOST_FETCHED
+        ,FETCHING_PROJECTS_CONSOLIDATE_INDIRECTCOST_ERROR
        } from '../constants/actionTypes';
 
 const initState = {
@@ -20,10 +25,14 @@ const initState = {
     listMaterial: [],
     listManPower: [],
     listToolEquipment: [],
+    listIndrectCost: [],
     loadingProject:false,
     loadingMaterial:false,
     loadingManPower:false,
-    loadingToolEquipment:false
+    loadingToolEquipment:false,
+    loadingIndirectCost:false,
+    
+    project: {}
 };
 
 const reducer = (state = initState, action) => {
@@ -40,6 +49,8 @@ const reducer = (state = initState, action) => {
             listMaterial: [],
             listManPower: [],
             listToolEquipment: [],
+            listIndrectCost: [],
+            project: {},
             loadingProject:false
         };
         case FETCHING_PROJECTS_ERROR:
@@ -98,6 +109,28 @@ const reducer = (state = initState, action) => {
         return{
             ...state,
             loadingToolEquipment: false
+        };
+        case SELECT_PROJECT_TO_CONSOLIDATE:
+        return{
+            ...state,
+            project: action.project
+        };
+
+        case FETCHING_PROJECTS_CONSOLIDATE_INDIRECTCOST:
+        return {
+            ...state,
+            loadingIndirectCost:true
+        };
+        case PROJECTS_CONSOLIDATE_INDIRECTCOST_FETCHED:
+        return {
+            ...state,
+            listIndrectCost: action.list,
+            loadingIndirectCost:false
+        };
+        case FETCHING_PROJECTS_CONSOLIDATE_INDIRECTCOST_ERROR:
+        return{
+            ...state,
+            loadingIndirectCost: false
         };
 
         default:
