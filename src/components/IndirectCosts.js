@@ -84,7 +84,7 @@ class IndirectCostList extends Component {
                                             title="¿Esta seguro de borrar esta región?"
                                             okText="Si"
                                             cancelText="No"
-                                            onConfirm={() => this.onDelete(index, region)}>
+                                            onConfirm={() => this.onDeleteIndirectCost(indirectCost.id)}>
                                             <a href="#">
                                         <Icon type="delete"/></a>
                                         </Popconfirm> 
