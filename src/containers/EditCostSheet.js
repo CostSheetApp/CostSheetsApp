@@ -14,8 +14,11 @@ FetchSumSheetManpower,
 FetchSumSheetToolsAndEquipment,
 DeleteDetailMaterial,
 DeleteDetailManPower,
-DeleteDetailToolEquipment
+DeleteDetailToolEquipment,
+UpdateCostSheets
 } from '../actions/costSheetActions';
+
+import {FetchUnitsOfMeasurement} from '../actions/materialsActions';
 
 const mapStateToProps = (state) => {
     return {
@@ -28,6 +31,7 @@ const mapStateToProps = (state) => {
         materials: state.materials.list,
         manpowers: state.manPowers.list,
         toolsAndEquipments: state.tools.list,
+        UnitsOfMeasurement: state.materials.UnitsOfMeasurement,
 
         totalMaterials: state.costSheets.SumMaterial,
         totalManPowers: state.costSheets.SumManPower,
@@ -78,6 +82,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         DeleteDetailToolEquipment: (costSheetId, id) => {
             dispatch(DeleteDetailToolEquipment(costSheetId, id));
+        },
+        FetchUnitsOfMeasurement: () => {
+            dispatch(FetchUnitsOfMeasurement());
+        },
+        UpdateCostSheets: (costSheetId, values) => {
+            dispatch(UpdateCostSheets(costSheetId, values));
         }
     };
 };

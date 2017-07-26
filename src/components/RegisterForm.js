@@ -7,6 +7,10 @@ const FormItem = Form.Item;
 
 
 class RegisterUserForm extends Component {
+    state = {
+        confirmDirty: false,
+        autoCompleteResult: [],
+    };
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -17,10 +21,6 @@ class RegisterUserForm extends Component {
         }
         });
     }
-    state = {
-        confirmDirty: false,
-        autoCompleteResult: [],
-    };
     handleConfirmBlur = (e) => {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
