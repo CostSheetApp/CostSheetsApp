@@ -43,10 +43,7 @@ class CostSheets extends Component {
                     <Col key={i} span="8" className="separate">
                     <Card title={sheet.description} bordered={true}>
                         <Row>
-                            Unidad Mínima: {sheet.minimumUnit.toString()} {sheet.unitsOfMeasurement.abbreviation}
-                        </Row>
-                        <Row>
-                            Costo Mínimo: {sheet.minimumCost.toString()}
+                            Costo Mínimo: {'L. ' + sheet.minimumCost.toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")  }
                         </Row>
                         <Row>
                             Región: <Tag color='green'>{sheet.region.name}</Tag>

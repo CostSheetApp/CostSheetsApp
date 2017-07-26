@@ -15,7 +15,10 @@ FetchSumSheetToolsAndEquipment,
 DeleteDetailMaterial,
 DeleteDetailManPower,
 DeleteDetailToolEquipment,
-UpdateCostSheets
+UpdateCostSheets,
+EditMaterial,
+EditManPower,
+EditToolEquipment
 } from '../actions/costSheetActions';
 
 import {FetchUnitsOfMeasurement} from '../actions/materialsActions';
@@ -88,6 +91,15 @@ const mapDispatchToProps = (dispatch) => {
         },
         UpdateCostSheets: (costSheetId, values) => {
             dispatch(UpdateCostSheets(costSheetId, values));
+        },
+        EditMaterial: (id, costSheetId, values) => {
+            dispatch(EditMaterial(id, costSheetId, values));
+        },
+        EditManPower: (id, costSheetId, values) => {
+            dispatch(EditManPower(id, costSheetId, values));
+        },
+        EditToolEquipment: (id, costSheetId, values) => {
+            dispatch(EditToolEquipment(id, costSheetId, values));
         }
     };
 };

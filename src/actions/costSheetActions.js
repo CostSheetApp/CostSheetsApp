@@ -339,3 +339,59 @@ export const UpdateCostSheets = (costSheetId, values) =>
     };
 
 
+export const EditMaterial = (id,costSheetId, values) =>
+    (dispatch) => {
+        axios
+        .patch(`${API_URL}/CostSheetHasMaterials/${id}`,values, {
+        headers: { 'Authorization': cookie.load('token') }
+        })
+        .then((response) => {
+            dispatch({type: COST_SHEET_TOOLS_AND_EQUIPMENT_DELETED, id: response.data.id});
+            dispatch(FetchSumSheetMaterials(costSheetId));
+            dispatch(FetchCostSheetMaterials(costSheetId));
+        })
+        .catch((error) => {
+            dispatch({
+                type: DELETING_COST_SHEET_TOOLS_AND_EQUIPMENT_ERROR,
+                error: error.response.data.error.message
+            });
+        });
+    };
+
+export const EditManPower = (id, costSheetId, values) =>
+    (dispatch) => {
+        axios
+        .patch(`${API_URL}/CostSheetHasManpowers/${id}`,values, {
+        headers: { 'Authorization': cookie.load('token') }
+        })
+        .then((response) => {
+            dispatch({type: COST_SHEET_TOOLS_AND_EQUIPMENT_DELETED, id: response.data.id});
+            dispatch(FetchSumSheetManpower(costSheetId));
+            dispatch(FetchCostSheetManpower(costSheetId));
+        })
+        .catch((error) => {
+            dispatch({
+                type: DELETING_COST_SHEET_TOOLS_AND_EQUIPMENT_ERROR,
+                error: error.response.data.error.message
+            });
+        });
+    };
+
+export const EditToolEquipment = (id, costSheetId, values) =>
+    (dispatch) => {
+        axios
+        .patch(`${API_URL}/CostSheetHasToolsAndEquipments/${id}`,values, {
+        headers: { 'Authorization': cookie.load('token') }
+        })
+        .then((response) => {
+            dispatch({type: COST_SHEET_TOOLS_AND_EQUIPMENT_DELETED, id: response.data.id});
+            dispatch(FetchSumSheetToolsAndEquipment(costSheetId));
+            dispatch(FetchCostSheetToolsAndEquipment(costSheetId));
+        })
+        .catch((error) => {
+            dispatch({
+                type: DELETING_COST_SHEET_TOOLS_AND_EQUIPMENT_ERROR,
+                error: error.response.data.error.message
+            });
+        });
+    };
