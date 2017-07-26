@@ -20,8 +20,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        FetchProjects: (entityId) => {
-            dispatch(FetchProjects(entityId));
+        FetchProjects: (entityId,idProject) => {
+            dispatch(FetchProjects(entityId,idProject));
         },
         FetchConsolidateMaterial: (projectId) => {
             dispatch(FetchConsolidateMaterial(projectId));

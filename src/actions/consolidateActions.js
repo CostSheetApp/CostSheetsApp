@@ -18,19 +18,22 @@ import {PROJECTS_FETCHED
         ,FETCHING_PROJECTS_CONSOLIDATE_TOOLSANDEQUIPMENT_ERROR
        } from '../constants/actionTypes';
 
-export const FetchProjects = (entityId) =>
+export const FetchProjects = (entityId, idProject) =>
     (dispatch) => {
         dispatch({type: FETCHING_PROJECTS});
-
         axios
             .get(`${API_URL}/Entities/${entityId}/Projects?filter={"where": {"isDeleted": false }}`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
                 dispatch({type: PROJECTS_FETCHED, list: response.data});
+                if(idProject){
+                    dispatch(FetchConsolidateMaterial(idProject));
+                    dispatch(FetchConsolidateManPower(idProject));
+                    dispatch(FetchConsolidateToolsAndEquipment(idProject));
+                }
             })
             .catch((error) => {
-                //console.log(error);
                 dispatch({
                     type: FETCHING_PROJECTS_ERROR,
                     error: error.response.data.error.message
