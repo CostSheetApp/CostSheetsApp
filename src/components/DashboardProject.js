@@ -15,11 +15,12 @@ import {
 import Moment from 'react-moment';
 import '../styles/costSheets.css';
 import IndirectCosts from './IndirectCosts';
+import AddCostSheetForm from './AddCostSheetForm';
 //import CostSheetForm from './CostSheetForm';
 
 class DashboardProject extends Component {
-    state = {
-        visible:false
+     state = {
+        AddMaterialFormIsVisible:false
     };
     componentWillMount() {
         let {id} = this.props.params;
@@ -37,10 +38,48 @@ class DashboardProject extends Component {
        //let {AddCostSheet,entityId} = this.props;
        //AddCostSheet(entityId);
     }
+    saveAddFormRef = (form) => {
+        this.addForm = form;
+    }
+    onCreateMaterial() {
+        this.material = {};
+        this.setState({AddMaterialFormIsVisible: true});
+    }
+    CancelAdd = () => {
+        this.setState({AddMaterialFormIsVisible: false});
+    }
+    Create = () => {
+        const form = this.addForm;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+            let {AddCostSheet} = this.props;
+            delete values.id;
+            let {id} = this.props.params;
+            values.projectId = id;
+            values.totalCost = 0.0;
+            AddCostSheet(values);
+            form.resetFields();
+            this.setState({AddMaterialFormIsVisible: false});
+        });
+    }
     render() {
-        let {costSheets,ViewCostSheet} = this.props;
+        let {FetchCostSheets,costSheets,ViewCostSheet,entityId,costSheetList,regions,FetchRegions} = this.props;
         return (
             <Row>
+                <AddCostSheetForm
+                    ref={this.saveAddFormRef}
+                    visible={this.state.AddMaterialFormIsVisible}
+                    onCancel={this.CancelAdd}
+                    onCreate={this.Create}
+                    FetchCostSheets={FetchCostSheets}
+                    FetchRegions={FetchRegions}
+                    entityId={entityId}
+                    costSheetList={costSheetList}
+                    isSaving={false}
+                    Regions={regions}
+                    />
                 <Row type="flex" justify="end">
                                                 <Col>
                                                 <Button
@@ -56,7 +95,7 @@ class DashboardProject extends Component {
                                 type="primary"
                                 icon="plus"
                                 className="add-cost-sheet-button"
-                                onClick={() => this.onCreate()}>Agregar Ficha de Costo
+                                onClick={() => this.onCreateMaterial()}>Agregar Ficha de Costo
                             </Button>
                         </Row>
                         <Row>
@@ -76,7 +115,7 @@ class DashboardProject extends Component {
                                     Región: <Tag color='green'>{sheet.region.name}</Tag>
                                 </Row>
                                 <Row className="action-panel">
-                                <Button type="primary" className="actions" onClick={() => ViewCostSheet(sheet.id)}>Ver</Button>
+                                <Button type="primary" className="actions" onClick={() => ViewCostSheet(sheet.costSheetId)}>Ver</Button>
                                 </Row>
                                 </Card>
                             </Col>
@@ -97,10 +136,15 @@ class DashboardProject extends Component {
 DashboardProject.propTypes = {
     FetchProjectsCostSheet: PropTypes.func.isRequired,
     costSheets: PropTypes.array,
+    costSheetList:PropTypes.array,
     entityId: PropTypes.number.isRequired,
     ViewCostSheet: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     FetchIndirectCosts: PropTypes.func.isRequired,
+    FetchCostSheets: PropTypes.func.isRequired,
+    regions:PropTypes.array.isRequired,
+    FetchRegions:PropTypes.func.isRequired,
+    AddCostSheet:PropTypes.func.isRequired,
 };
 
 export default DashboardProject;
