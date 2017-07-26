@@ -141,7 +141,8 @@ class Consolidate extends Component {
     };
     componentWillMount() {
         let { FetchProjects,entityId } = this.props;
-        FetchProjects(entityId);
+        let {id} = this.props.params;
+        FetchProjects(entityId,id);
     }
     onChangeProject= (id) => {
         let { FetchConsolidateMaterial,FetchConsolidateManPower,FetchConsolidateToolsAndEquipment } = this.props;
