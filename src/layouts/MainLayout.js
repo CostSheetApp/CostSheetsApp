@@ -21,15 +21,11 @@ class MainLayout extends Component {
   render() {
     let {changeLocationTo,username,logout}=this.props;
     const menu = (
-  <Menu onClick={()=>logout()}>
-    <Menu.Item key="0">
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">My account</a>
-    </Menu.Item>
-    
-    <Menu.Divider />
-    <Menu.Item key="3" ><Icon type="logout" /> Log Out</Menu.Item>
-  </Menu>
-);
+      <Menu onClick={()=>logout()}>
+        <Menu.Divider />
+        <Menu.Item key="3" ><Icon type="logout" /> Cerrar Sesion</Menu.Item>
+      </Menu>
+    );
     return (
       <Layout style={{ height: '100%'}}>
         <Sider
