@@ -9,7 +9,7 @@ export const FetchProjectsCostSheet = (idProject) =>
         dispatch({type: FETCHING_PROJECTS_COSTSHEET});
 
         axios
-            .get(`${API_URL}/Projects/${idProject}/costSheets?filter={"where": {"isDeleted": false },"include":["unitsOfMeasurement","region","materials","manpowers","toolsAndEquipments"]}`,{
+            .get(`${API_URL}/ProjectHasCostSheets?filter={"where": {"projectId": ${idProject}},"include":[{"costSheet":["unitsOfMeasurement","region","materials","manpowers","toolsAndEquipments"]},"region"]}`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {

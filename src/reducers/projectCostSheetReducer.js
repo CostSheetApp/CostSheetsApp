@@ -20,7 +20,7 @@ const reducer = (state = initState, action) => {
         case PROJECTS_COSTSHEET_FETCHED:
             return {
                 ...state,
-                list: action.payload
+                list: action.list
             };
         case FETCHING_PROJECTS_COSTSHEET_ERROR:
             return {
