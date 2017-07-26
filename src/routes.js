@@ -79,6 +79,7 @@ export default (
       <Route path="man-powers" component={ManPowers}/>
       <Route path="jobs" component={Jobs}/>
       <Route path="reports/consolidate" component={Consolidate}/>
+      <Route path="reports/consolidate/:id" component={Consolidate}/>
       <Route path="reports/materialcosthistory" component={HistoryMaterial}/>
       <Route path="reports/manpowercosthistory" component={HistoryManPower}/>
       <Route path="reports/toolsandequipmentcosthistory" component={HistoryTool}/>
