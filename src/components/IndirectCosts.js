@@ -69,7 +69,7 @@ class IndirectCostList extends Component {
                         
                         </Row> }
                     or={
-                        <Row gutter={150}>
+                        <Row>
                         <Col offset={5-level}>
                             <Col span={4}><strong>{parentIndex!=null?parentIndex+(index+1):(index+1)}.</strong> {indirectCost.description}</Col>
                             <Col><NumberFormat value={indirectCost.amount} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} />
@@ -108,7 +108,7 @@ class IndirectCostList extends Component {
                     {
                         <Mayre
                         of={
-                            <Row gutter={150}>
+                            <Row>
                                 <Col offset={5-level}>
                                <Form layout="inline" ref="addTitleOrCost" >
                                     <FormItem>
@@ -143,7 +143,7 @@ class IndirectCostList extends Component {
                         when={isEditing && level>0}
                         />
                     }
-                    {<Row gutter={150}>
+                    {<Row>
                         <Col offset={5-level} className="total">
                             <Col span={4}><strong>Total</strong></Col>
                             <Col span={2}><strong><NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} /></strong></Col>
