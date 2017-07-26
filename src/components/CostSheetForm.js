@@ -8,6 +8,10 @@ import AddCostSheetMaterial from './AddCostSheetMaterialForm';
 import AddCostSheetManPower from './AddCostSheetManPowerForm';
 import AddCostSheetToolEquipment from './AddCostSheetToolsEquipmentForm';
 
+import EditCostSheetMaterial from './EditCostSheetMaterialForm';
+import EditCostSheetManPower from './EditCostSheetManPowerForm';
+import EditCostSheetToolEquipment from './EditCostSheetToolsEquipmentForm';
+
 import {
     Form,
     Button,
@@ -47,7 +51,11 @@ class addCostSheetForm extends Component {
         this.state = {
             AddMaterialToCostSheetFormIsVisible:false,
             AddManPowerToCostSheetFormIsVisible:false,
-            AddToolsToCostSheetFormIsVisible:false
+            AddToolsToCostSheetFormIsVisible:false,
+
+            EditMaterialToCostSheetFormIsVisible:false,
+            EditManPowerToCostSheetFormIsVisible:false,
+            EditToolsToCostSheetFormIsVisible:false
         };
         this.materialColumns = [
             {
@@ -220,7 +228,7 @@ class addCostSheetForm extends Component {
                 width: 120,
                 render: (text, material) => (
                     <span>
-                        <a href="#" onClick={() => this.onEdit(material)}>
+                        <a href="#" onClick={() => this.onEditManPower(material)}>
                             <Icon type="edit"/>
                             Editar</a>
                         <span className="ant-divider"/>
@@ -300,7 +308,7 @@ class addCostSheetForm extends Component {
                 width: 120,
                 render: (text, material) => (
                     <span>
-                        <a href="#" onClick={() => this.onEdit(material)}>
+                        <a href="#" onClick={() => this.onEditToolEquipment(material)}>
                             <Icon type="edit"/>
                             Editar</a>
                         <span className="ant-divider"/>
@@ -388,11 +396,20 @@ class addCostSheetForm extends Component {
     saveAddMaterialToCostSheetFormRef = (form) => {
         this.AddMaterialToCostSheetForm = form;
     }
-    saveAdManPowerToCostSheetFormRef = (form) => {
+    saveAddManPowerToCostSheetFormRef = (form) => {
         this.AddManPowerToCostSheetForm = form;
     }
     saveAddToolToCostSheetFormRef = (form) => {
         this.AddToolToCostSheetForm = form;
+    }
+    saveEditMaterialToCostSheetFormRef = (form) => {
+        this.EditMaterialToCostSheetForm = form;
+    }
+    saveEditManPowerToCostSheetFormRef = (form) => {
+        this.EditManPowerToCostSheetForm = form;
+    }
+    saveEditToolToCostSheetFormRef = (form) => {
+        this.EditToolToCostSheetForm = form;
     }
     CancelAddMaterial = () => {
         this.setState({AddMaterialToCostSheetFormIsVisible: false});
@@ -402,6 +419,15 @@ class addCostSheetForm extends Component {
     }
     CancelAddTool = () => {
         this.setState({AddToolsToCostSheetFormIsVisible: false});
+    }
+    CancelEditMaterial = () => {
+        this.setState({EditMaterialToCostSheetFormIsVisible: false});
+    }
+    CancelEditManPower = () => {
+        this.setState({EditManPowerToCostSheetFormIsVisible: false});
+    }
+    CancelEditTool = () => {
+        this.setState({EditToolsToCostSheetFormIsVisible: false});
     }
     AddMaterialToCostSheet = () => {
         const form = this.AddMaterialToCostSheetForm;
@@ -473,6 +499,52 @@ class addCostSheetForm extends Component {
             message.success('Herramienta y equipo agregada exitosamente');
         });
     }
+    EditMaterialToCostSheet = () => {
+        const form = this.EditMaterialToCostSheetForm;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+            let {EditMaterial} = this.props;
+
+            let {id} = this.props.params;
+            EditMaterial(values.id, id, values);
+            form.resetFields();
+            this.setState({EditMaterialToCostSheetFormIsVisible: false});
+            message.success('Material editado exitosamente');
+        });
+    }
+    EditManPowerToCostSheet = () => {
+        const form = this.EditManPowerToCostSheetForm;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+            let {EditManPower} = this.props;
+
+            let {id} = this.props.params;
+            EditManPower(values.id, id, values);
+            form.resetFields();
+            this.setState({EditManPowerToCostSheetFormIsVisible: false});
+            message.success('Mano de obra editada exitosamente');
+            
+        });
+    }
+    EditToolsToCostSheet = () => {
+        const form = this.EditToolToCostSheetForm;
+        form.validateFields((err, values) => {
+            if (err) {
+                return;
+            }
+            let {EditToolEquipment} = this.props;
+
+            let {id} = this.props.params;
+            EditToolEquipment(values.id, id, values);
+            form.resetFields();
+            this.setState({EditToolsToCostSheetFormIsVisible: false});
+            message.success('Herramienta y equipo editada exitosamente');
+        });
+    }
     onAddMaterial(){
         this.setState({AddMaterialToCostSheetFormIsVisible: true});
     }
@@ -481,6 +553,24 @@ class addCostSheetForm extends Component {
     }
     onAddToolAndEquipment(){
         this.setState({AddToolsToCostSheetFormIsVisible: true});
+    }
+    onEditMaterial(material){
+        if(material){
+            this.costSheetMaterial = material;
+        this.setState({ EditMaterialToCostSheetFormIsVisible: true });
+        }
+    }
+    onEditManPower(manPower){
+        if(manPower){
+            this.costSheetManPower = manPower;
+        this.setState({ EditManPowerToCostSheetFormIsVisible: true });
+        }
+    }
+    onEditToolEquipment(toolEquipment){
+        if(toolEquipment){
+            this.costSheetToolEquipment = toolEquipment;
+        this.setState({ EditToolsToCostSheetFormIsVisible: true });
+        }
     }
     render() {
         let {getFieldDecorator} = this.props.form;
@@ -513,7 +603,7 @@ class addCostSheetForm extends Component {
                     materialToBeAddToCostSheet={materialToBeAddToCostSheet}
                 />
                 <AddCostSheetManPower
-                    ref={this.saveAdManPowerToCostSheetFormRef}
+                    ref={this.saveAddManPowerToCostSheetFormRef}
                     visible={this.state.AddManPowerToCostSheetFormIsVisible}
                     onCancel={this.CancelAddManPower}
                     onCreate={this.AddManPowerToCostSheet}
@@ -526,6 +616,34 @@ class addCostSheetForm extends Component {
                     onCancel={this.CancelAddTool}
                     onCreate={this.AddToolsToCostSheet}
                     toolsAndEquipments={toolsAndEquipments}
+                    costSheetId = {id}
+                />
+
+                <EditCostSheetMaterial
+                    ref={this.saveEditMaterialToCostSheetFormRef}
+                    visible={this.state.EditMaterialToCostSheetFormIsVisible}
+                    onCancel={this.CancelEditMaterial}
+                    onCreate={this.EditMaterialToCostSheet}
+                    materials={materials}
+                    costSheetMaterial={this.costSheetMaterial}
+                    costSheetId = {id}
+                />
+                <EditCostSheetManPower
+                    ref={this.saveEditManPowerToCostSheetFormRef}
+                    visible={this.state.EditManPowerToCostSheetFormIsVisible}
+                    onCancel={this.CancelEditManPower}
+                    onCreate={this.EditManPowerToCostSheet}
+                    manpowers={manpowers}
+                    costSheetManPower={this.costSheetManPower}
+                    costSheetId = {id}
+                />
+                <EditCostSheetToolEquipment
+                    ref={this.saveEditToolToCostSheetFormRef}
+                    visible={this.state.EditToolsToCostSheetFormIsVisible}
+                    onCancel={this.CancelEditTool}
+                    onCreate={this.EditToolsToCostSheet}
+                    toolsAndEquipments={toolsAndEquipments}
+                    costSheetToolEquipment={this.costSheetToolEquipment}
                     costSheetId = {id}
                 />
                 {/*<EditCostSheetMaterial />*/}
@@ -719,7 +837,10 @@ addCostSheetForm.propTypes = {
     DeleteDetailToolEquipment: PropTypes.func.isRequired,
 
     FetchUnitsOfMeasurement: PropTypes.func.isRequired,
-    UpdateCostSheets: PropTypes.func.isRequired
+    UpdateCostSheets: PropTypes.func.isRequired,
+    EditMaterial: PropTypes.func.isRequired,
+    EditManPower: PropTypes.func.isRequired,
+    EditToolEquipment: PropTypes.func.isRequired
 };
 
 const addCostSheet = Form.create()(addCostSheetForm);
