@@ -157,6 +157,9 @@ class Consolidate extends Component {
              ,ToolEquipments
             } = this.props;
         let {id} = this.props.params;
+        let materialTotal = Materials.map(o => o.Total).reduce((b,a) => b+a,0.0);
+        let manPowersTotal = ManPowers.map(o => o.Total).reduce((b,a) => b+a,0.0);
+        let toolEquipmentsTotal = ToolEquipments.map(o => o.Total).reduce((b,a) => b+a,0.0);
         return (
             <Row>
                 <Form>
@@ -184,13 +187,13 @@ class Consolidate extends Component {
                     <Row>
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="Consolidado Materiales" key="1">
-                                <Table rowKey={item => item.code} size="small" bordered={true} dataSource={Materials} columns={this.columnsMaterial} footer={() => 'Total'}   pagination={{pageSize:15}} />
+                                <Table rowKey={item => item.code} size="small" bordered={true} dataSource={Materials} columns={this.columnsMaterial} footer={() => <Row>Total: <NumberFormat value={materialTotal} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} /></Row>}   pagination={{pageSize:15}} />
                             </TabPane>
                             <TabPane tab="Consolidado Mano de Obra" key="2">
-                                <Table rowKey={item => item.code} size="small" bordered={true}  dataSource={ManPowers} columns={this.columnsManPower} footer={() => 'Total'}  pagination={{pageSize:15}} />
+                                <Table rowKey={item => item.code} size="small" bordered={true}  dataSource={ManPowers} columns={this.columnsManPower} footer={() => <Row>Total: <NumberFormat value={manPowersTotal} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} /></Row>}  pagination={{pageSize:15}} />
                             </TabPane>
                             <TabPane tab="Consolidado Herramientas y Equipo" key="3">
-                                <Table rowKey={item => item.code} size="small" bordered={true} dataSource={ToolEquipments} columns={this.columnsToolEquipment} footer={() => 'Total'} pagination={{pageSize:15}} />
+                                <Table rowKey={item => item.code} size="small" bordered={true} dataSource={ToolEquipments} columns={this.columnsToolEquipment} footer={() => <Row>Total: <NumberFormat value={toolEquipmentsTotal} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} /></Row>} pagination={{pageSize:15}} />
                             </TabPane>
                         </Tabs>                    
                     </Row>
