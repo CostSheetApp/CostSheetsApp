@@ -56,7 +56,7 @@ class LoginForm extends Component {
             <Button type="primary" htmlType="submit" className="login-form-button">
                 Iniciar Sesión
             </Button>
-            Or <a href="/register-user">Registrar</a>
+            O <a href="/register-user">Registrar</a>
             </FormItem>
         </Form>
         </Col>
