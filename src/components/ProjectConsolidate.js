@@ -155,7 +155,7 @@ class Consolidate extends Component {
              ,ManPowers
              ,ToolEquipments
             } = this.props;
-
+        let {id} = this.props.params;
         return (
             <Row>
                 <Form>
@@ -167,6 +167,7 @@ class Consolidate extends Component {
                                         showSearch
                                         placeholder="Seleccione un proyecto"
                                         optionFilterProp="children"
+                                        defaultValue={id}
                                         onChange={this.onChangeProject}
                                         filterOption={(input, option) => {
                                             return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
