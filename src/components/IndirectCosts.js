@@ -69,7 +69,7 @@ class IndirectCostList extends Component {
                         
                         </Row> }
                     or={
-                        <Row gutter={150}>
+                        <Row>
                         <Col offset={5-level}>
                             <Col span={4}><strong>{parentIndex!=null?parentIndex+(index+1):(index+1)}.</strong> {indirectCost.description}</Col>
                             <Col><NumberFormat value={indirectCost.amount} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} />
