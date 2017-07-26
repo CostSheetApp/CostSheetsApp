@@ -327,9 +327,11 @@ class addCostSheetForm extends Component {
              ,FetchSumSheetMaterials
              ,FetchSumSheetManpower
              ,FetchSumSheetToolsAndEquipment
+             ,FetchUnitsOfMeasurement
         } = this.props;
         let {id} = this.props.params;
         //console.log("id",id);
+        FetchUnitsOfMeasurement();
         FetchCostSheet(id);
         FetchCostSheetMaterials(id);
         FetchCostSheetManpower(id);
@@ -338,7 +340,21 @@ class addCostSheetForm extends Component {
         FetchSumSheetMaterials(id);
         FetchSumSheetManpower(id);
         FetchSumSheetToolsAndEquipment(id);
+
+        
     }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+        if (!err) {
+            //console.log('Received values of form: ', values);
+            let {UpdateCostSheets} = this.props;
+            let {id} = this.props.params;
+            UpdateCostSheets(id, values);
+        }
+        });
+    }
+
     onDeleteMaterial(detail){
         let { DeleteDetailMaterial } = this.props;
         let {id} = this.props.params;
@@ -482,6 +498,7 @@ class addCostSheetForm extends Component {
              ,totalMaterials
              ,totalManPowers
              ,totalTools
+             ,UnitsOfMeasurement
         } = this.props;
         return (
             <Row>
@@ -512,7 +529,24 @@ class addCostSheetForm extends Component {
                     costSheetId = {id}
                 />
                 {/*<EditCostSheetMaterial />*/}
-                <Form>
+                <Form onSubmit={this.handleSubmit}>
+                    {getFieldDecorator('id', {
+                        initialValue: costSheet.id?costSheet.id:0
+                    })(
+                        <Input type="hidden" />
+                    )}
+                    {getFieldDecorator('id', {
+                        initialValue: costSheet.id?costSheet.id:0
+                    })(
+                        <Input type="hidden" />
+                    )}
+                    {getFieldDecorator('minimumCost', {
+                        initialValue: ((totalMaterials ? totalMaterials.FirstOrDefault({TotalMaterial:0}).TotalMaterial : 0) +
+                                                    (totalManPowers ? totalManPowers.FirstOrDefault({Total:0}).Total : 0) +
+                                                    (totalTools ? totalTools.FirstOrDefault({Total:0}).Total : 0))
+                    })(
+                        <Input type="hidden" />
+                    )}
                     <Row gutter={8}>
                         <Col span={12} >
                             <FormItem  label="Descripción">
@@ -528,15 +562,34 @@ class addCostSheetForm extends Component {
                         </Col>
                         <Col span={4}> 
                             <FormItem  label="Costo Mínimo" >
-                            {getFieldDecorator('minimunCost', {
-                                    initialValue: 0
-                            })(
                                 <span className="totales" >
                                     { 'L. ' + ((totalMaterials ? totalMaterials.FirstOrDefault({TotalMaterial:0}).TotalMaterial : 0) +
                                                     (totalManPowers ? totalManPowers.FirstOrDefault({Total:0}).Total : 0) +
                                                     (totalTools ? totalTools.FirstOrDefault({Total:0}).Total : 0)).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") }
                                 </span>
-                            )}
+                            </FormItem>
+                        </Col>
+                        <Col span={4} >
+                            <FormItem label="Unidad Minima">
+                                    {getFieldDecorator('unitsOfMeasurementId', {
+                                        rules: [
+                                            { required: true, message: '¡Por favor selecciona una unidad minima' }, 
+                                            ],
+                                            initialValue: costSheet.unitsOfMeasurementId?costSheet.unitsOfMeasurementId.toString():undefined
+                                    })(
+                                        <Select
+                                        showSearch
+                                        placeholder="Selecciona la unidad minima"
+                                        optionFilterProp="children"
+                                        //onChange={handleChange}
+                                        filterOption={(input, option) => {
+                                            //console.log(input,option);
+                                            return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                                        }}
+                                    >
+                                        {UnitsOfMeasurement.map(o => <Option key={o.id} >{`${o.description} (${o.abbreviation})`}</Option>)}
+                                    </Select>
+                                    )}
                             </FormItem>
                         </Col>
                         <Col span={4} >
@@ -561,12 +614,14 @@ class addCostSheetForm extends Component {
                                     </Select>
                                     )}
                             </FormItem>
-
                         </Col>
+                    </Row>
+                    <Row>
                         <Col span={3} >
-                        <FormItem style={{paddingTop:"30px"}}>
-                                <Button type="primary" icon="save">Guardar</Button>
-                        </FormItem>
+                        <Button icon="save" type="primary" htmlType="submit">
+                            Guardar
+                        </Button>
+                        
                         </Col>
                     </Row>
                     <Row>
@@ -640,6 +695,7 @@ addCostSheetForm.propTypes = {
     materials: PropTypes.array.isRequired,
     manpowers: PropTypes.array.isRequired,
     toolsAndEquipments: PropTypes.array.isRequired,
+    UnitsOfMeasurement: PropTypes.array,
 
     csmaterials: PropTypes.array,
     csmanpower: PropTypes.array,
@@ -660,7 +716,10 @@ addCostSheetForm.propTypes = {
 
     DeleteDetailMaterial: PropTypes.func.isRequired,
     DeleteDetailManPower: PropTypes.func.isRequired,
-    DeleteDetailToolEquipment: PropTypes.func.isRequired
+    DeleteDetailToolEquipment: PropTypes.func.isRequired,
+
+    FetchUnitsOfMeasurement: PropTypes.func.isRequired,
+    UpdateCostSheets: PropTypes.func.isRequired
 };
 
 const addCostSheet = Form.create()(addCostSheetForm);

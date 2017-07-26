@@ -313,3 +313,29 @@ export const DeleteDetailToolEquipment = (costSheetId, id) =>
             });
         });
     };
+
+export const UpdateCostSheets = (costSheetId, values) =>
+    (dispatch) => {
+        axios
+        .patch(`${API_URL}/CostSheets/${costSheetId}`,values, {
+        headers: { 'Authorization': cookie.load('token') }
+        })
+        .then((response) => {
+            dispatch({type: COST_SHEET_TOOLS_AND_EQUIPMENT_DELETED, id: response.data.id});
+            dispatch(FetchSumSheetMaterials(costSheetId));
+            dispatch(FetchSumSheetManpower(costSheetId));
+            dispatch(FetchSumSheetToolsAndEquipment(costSheetId));
+            
+            dispatch(FetchCostSheetMaterials(costSheetId));
+            dispatch(FetchCostSheetManpower(costSheetId));
+            dispatch(FetchCostSheetToolsAndEquipment(costSheetId));
+        })
+        .catch((error) => {
+            dispatch({
+                type: DELETING_COST_SHEET_TOOLS_AND_EQUIPMENT_ERROR,
+                error: error.response.data.error.message
+            });
+        });
+    };
+
+

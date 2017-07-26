@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
     //Table,
     Row,
-    Col,
+    //Col,
     Button,
     Tabs,
     //Icon,
@@ -42,32 +42,30 @@ class CostSheets extends Component {
         return (
             <Row>
                 <Tabs defaultActiveKey="1">
-                    <Tabs.TabPane tab="Costos Indirectos" key="1">
+                    <Tabs.TabPane tab="Fichas de Costos" key="1">
                         <Row>
-                            <IndirectCosts projectId={1} />
+                            <Button
+                                type="primary"
+                                icon="plus"
+                                className="add-cost-sheet-button"
+                                onClick={() => this.onCreate()}>Agregar Ficha de Costo
+                            </Button>
+                        </Row>
+                        <Row>
+                            <Button
+                                type="primary"
+                                icon="plus"
+                                className="add-cost-sheet-button"
+                                onClick={() => this.onConsolidate()}>Generar Consolidados</Button>
+                        </Row>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab="Costos Indirectos" key="2">
+                        <Row>
+                            <IndirectCosts projectId={1}/>
                         </Row>
                         
                     </Tabs.TabPane>
-                    <Tabs.TabPane tab="Tab 2" key="2">
-                        <Row>
-                    <Button
-                        type="primary"
-                        icon="plus"
-                        className="add-cost-sheet-button"
-                        onClick={() => this.onCreate()}>Agregar Ficha de Costo</Button>
-                </Row>
-
-                <Row>
-                    <Button
-                        type="primary"
-                        icon="plus"
-                        className="add-cost-sheet-button"
-                        onClick={() => this.onConsolidate()}>Generar Consolidados</Button>
-                </Row>
-                    </Tabs.TabPane>
-                    <Tabs.TabPane tab="Tab 3" key="3">Content of Tab Pane 3</Tabs.TabPane>
                 </Tabs>
-                               
             </Row>
         );
     }
