@@ -47,7 +47,7 @@ class IndirectCostList extends Component {
         return (
             <div>
                 {filteredData.map( (indirectCost,index) =>  <Mayre
-                    of={ <Row gutter={150}>
+                    of={ <Row >
                         <Col offset={5-level}><strong>{parentIndex!=null?parentIndex+(index+1):(index+1)}.</strong> {indirectCost.description} 
                         <Mayre
                             of={
