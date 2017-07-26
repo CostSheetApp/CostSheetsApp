@@ -38,25 +38,22 @@ class IndirectCostList extends Component {
         let {projectId,DeleteIndirectCostFromList } = this.props;
         DeleteIndirectCostFromList(projectId,id);
     }
-    numberWithCommas = (x) => {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
     render() {
         let {isEditing,projectId,indirectCosts,parentId,level,parentIndex} = this.props;
         let filteredData = indirectCosts.filter(indirectCost => indirectCost.indirectCostId==parentId);
         let total = filteredData.map(o => o.amount).reduce((b,a) => b+a,0.0);
-         let {getFieldDecorator} = this.props.form;
-         let $this = this;
+        let {getFieldDecorator} = this.props.form;
         return (
             <div>
                 {filteredData.map( (indirectCost,index) =>  <Mayre
                     of={ <Row gutter={150}>
-                        <Col offset={5-level}>{parentIndex!=null?parentIndex+(index+1):(index+1)}. {indirectCost.description} 
+                        <Col offset={5-level}><strong>{parentIndex!=null?parentIndex+(index+1):(index+1)}.</strong> {indirectCost.description} 
                         <Mayre
                             of={
                                 <span>
-                                    <a href="#" onClick={() => this.onEdit(index,region)} > <Icon type="edit" /></a>
-                                    <span className="ant-divider" />
+                                    {/* <a href="#" onClick={() => this.onEdit(index,region)} > <Icon type="edit" /></a>
+                                     */}
+                                     <span className="ant-divider" />
                                     <Popconfirm title="¿Esta seguro de borrar el costo indirecto?" okText="Si" cancelText="No" onConfirm={() => this.onDeleteIndirectCost(indirectCost.id)}>
                                         <a href="#"> <Icon type="delete" /></a>
                                     </Popconfirm>
@@ -73,18 +70,22 @@ class IndirectCostList extends Component {
                     or={
                         <Row gutter={150}>
                         <Col offset={5-level}>
-                            <Col span={4}>{parentIndex!=null?parentIndex+(index+1):(index+1)}. {indirectCost.description}</Col>
+                            <Col span={4}><strong>{parentIndex!=null?parentIndex+(index+1):(index+1)}.</strong> {indirectCost.description}</Col>
                             <Col>{indirectCost.amount} 
                             <Mayre
                                 of={
-                                    <span > <a href="#" onClick={() => this.onEdit(index, region)}>
-                                            <Icon type="edit"/></a> < span className = "ant-divider" /> <Popconfirm
+                                    <span > 
+                                        {/* <a href="#" onClick={() => this.onEdit(index, region)}>
+                                        <Icon type="edit"/></a> 
+                                          */}
+                                          < span className = "ant-divider" />
+                                        <Popconfirm
                                             title="¿Esta seguro de borrar esta región?"
                                             okText="Si"
                                             cancelText="No"
                                             onConfirm={() => this.onDelete(index, region)}>
                                             <a href="#">
-                                                <Icon type="delete"/></a>
+                                        <Icon type="delete"/></a>
                                         </Popconfirm> 
                                     </span>
                                 }
@@ -143,8 +144,8 @@ class IndirectCostList extends Component {
                     }
                     {<Row gutter={150}>
                         <Col offset={5-level} className="total">
-                            <Col span={4}>Total</Col>
-                            <Col span={2}>{total}</Col>
+                            <Col span={4}><strong>Total</strong></Col>
+                            <Col span={2}><strong>{total}</strong></Col>
                         </Col>
                         </Row>
                     }
