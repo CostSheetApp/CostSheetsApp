@@ -61,6 +61,7 @@ class CostSheets extends Component {
                     </Tabs.TabPane>
                     <Tabs.TabPane tab="Costos Indirectos" key="2">
                         <Row>
+                            <IndirectCosts projectId={1}/>
                         </Row>
                         
                     </Tabs.TabPane>
