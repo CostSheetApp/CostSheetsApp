@@ -20,6 +20,24 @@ import {connect} from 'react-redux';
 import {AddIndirectCost,DeleteIndirectCost} from '../actions/projectActions';
 import '../styles/indirect-costs.css';
 const FormItem = Form.Item;
+
+Array.prototype.GetTotal = function (id) {
+    var arr = this;
+    var children = this.filter(o => o.indirectCostId==id);
+
+    var childrenValues = children.map(o => {
+        var total=0;
+        if(o.type==0){
+            total =arr.GetTotal(o.id);
+        }else{
+            total = o.amount;
+        }
+        return total;
+    });
+
+    return childrenValues.reduce((a,b)=>a+b,0.0);
+};
+
 class IndirectCostList extends Component {
     onAddItem(){
         const form = this.props.form;
@@ -42,7 +60,7 @@ class IndirectCostList extends Component {
     render() {
         let {isEditing,projectId,indirectCosts,parentId,level,parentIndex} = this.props;
         let filteredData = indirectCosts.filter(indirectCost => indirectCost.indirectCostId==parentId);
-        let total = filteredData.map(o => o.amount).reduce((b,a) => b+a,0.0);
+        let total = indirectCosts.GetTotal(parentId);
         let {getFieldDecorator} = this.props.form;
         return (
             <div>
