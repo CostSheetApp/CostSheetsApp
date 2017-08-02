@@ -1,13 +1,4 @@
-<p align="center"><img src="https://cloud.githubusercontent.com/assets/3129129/22811426/bb69dc06-ef0c-11e6-8092-a0bea9060b35.png"/></p>
-
-[![Build status: Linux](https://img.shields.io/travis/coryhouse/react-slingshot.svg?style=flat-square)](https://travis-ci.org/coryhouse/react-slingshot)
-[![Build status: Windows](https://img.shields.io/appveyor/ci/coryhouse/react-slingshot/master.svg?style=flat-square)](https://ci.appveyor.com/project/coryhouse/react-slingshot/branch/master)
-[![Dependency Status](https://david-dm.org/coryhouse/react-slingshot.svg?style=flat-square)](https://david-dm.org/coryhouse/react-slingshot)
-[![Coverage Status](https://img.shields.io/coveralls/coryhouse/react-slingshot/master.svg?style=flat-square)](https://coveralls.io/github/coryhouse/react-slingshot?branch=master)
-
-React Slingshot is a comprehensive starter kit for rapid application development using React. 
-
-Why Slingshot?
+[![Build Status](https://travis-ci.org/lexfernandez/CostSheetsApp.svg?branch=master)](https://travis-ci.org/lexfernandez/CostSheetsApp)
 
 1. **One command to get started** - Type `npm start` to start development in your default browser.
 2. **Rapid feedback** - Each time you hit save, changes hot reload and linting and automated tests run.
