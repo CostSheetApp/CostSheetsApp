@@ -2,8 +2,7 @@ import {
     PROJECTS_COSTSHEET_FETCHED,
     FETCHING_PROJECTS_COSTSHEET,
     FETCHING_PROJECTS_COSTSHEET_ERROR,
-    PROJECTS_COSTSHEET_ADDED, 
-    ADDING_PROJECTS_COSTSHEET_ERROR
+    PROJECTS_COSTSHEET_ADDED
 } from '../constants/actionTypes';
 
 const initState = {
@@ -18,8 +17,7 @@ const reducer = (state = initState, action) => {
         return {
             ...state,
             list: [...state.list,action.payload]
-        }
-
+        };
         case FETCHING_PROJECTS_COSTSHEET:
             return {
                 ...state,

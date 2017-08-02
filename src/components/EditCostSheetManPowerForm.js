@@ -22,7 +22,7 @@ Array.prototype.first = function () {
 };
 
 Number.prototype.padZero= function(len, c){
-    var s= this.toString();
+    let s= this.toString();
      c= c || '0';
     while(s.length< len) s= c+ s;
     return s;
@@ -77,7 +77,7 @@ class EditCostSheetManPowerForm extends Component {
                                 placeholder="Busca una mano de obra"
                                 optionFilterProp="children"
                                 disabled = {true}
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 }
+                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
                                 {manpowers.map(o => <Option key={o.id.toString()}>{`${o.code.padZero(10)} - ${o.description}`}</Option>)}
                             </Select>
@@ -113,7 +113,11 @@ EditCostSheetManPowerForm.propTypes = {
     costSheetId: PropTypes.string.isRequired,
     isSaving: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired
+    onCreate: PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+        validateFields: PropTypes.object,
+    }).isRequired,
 };
 
 const EditCostSheetManPower = Form.create()(EditCostSheetManPowerForm);

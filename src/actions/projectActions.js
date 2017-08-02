@@ -145,7 +145,7 @@ export const ViewProject = (id) =>
     };
 
 export const FetchIndirectCosts = (projectId) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         axios
             .get(`${API_URL}/Projects/${projectId}/indirectCosts`,{
         headers: {'Authorization': cookie.load('token')}
@@ -159,10 +159,10 @@ export const FetchIndirectCosts = (projectId) =>
                     error: error.response.data.error.message
                 });
             });
-    }
+    };
 
 export const AddIndirectCost = (projectId,indirectCostId,description,amount,type) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         axios.post(`${API_URL}/Projects/${projectId}/indirectCosts`, {indirectCostId,description,amount,type} , {
         headers: {
             'Authorization': cookie.load('token')
@@ -180,23 +180,23 @@ export const AddIndirectCost = (projectId,indirectCostId,description,amount,type
                 });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
-    }
+    };
 
 export const DeleteIndirectCost = (projectId,id) =>
-    (dispatch, getState) => {
+    (dispatch) => {
         axios.delete(`${API_URL}/IndirectCosts/${id}/indirectCosts`, {
         headers: {
             'Authorization': cookie.load('token')
         }
         })
-        .then((response) => {
+        .then(() => {
            
             axios.delete(`${API_URL}/Projects/${projectId}/indirectCosts/${id}`, {
             headers: {
                 'Authorization': cookie.load('token')
             }
             })
-            .then((response) => {
+            .then(() => {
                 dispatch(FetchIndirectCosts(projectId));
                 //dispatch({type: PROJECT_INDIRECT_COST_DELETED, id: id});
                 //dispatch(push(`/projects/${response.data.id}`));
@@ -218,4 +218,4 @@ export const DeleteIndirectCost = (projectId,id) =>
             });
             //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
         });
-    }
+    };

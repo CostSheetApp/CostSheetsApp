@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(ViewCostSheet(id));
         },
         FetchIndirectCosts: (projectId) => {
-            dispatch(FetchIndirectCosts(projectId))
+            dispatch(FetchIndirectCosts(projectId));
         },
         FetchCostSheets: (id) => {
             dispatch(FetchCostSheets(id));

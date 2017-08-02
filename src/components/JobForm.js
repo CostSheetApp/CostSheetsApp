@@ -53,7 +53,11 @@ addJobForm.propTypes = {
     title: PropTypes.string.isRequired,
     visible: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired
+    onCreate: PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+        validateFields: PropTypes.object.isRequired,
+    }).isRequired,
 };
 
 const addJob = Form.create()(addJobForm);

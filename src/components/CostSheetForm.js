@@ -33,17 +33,17 @@ const Option = Select.Option;
 const TabPane = Tabs.TabPane;
 
 Number.prototype.padZero= function(len, c){
-    let s= this.toString()
+    let s= this.toString();
     c= c || '0';
     while(s.length< len) s= c+ s;
     return s;
-}
+};
 
 Array.prototype.FirstOrDefault = function(def){
     if(this.length==0) return def;
 
     return this[0];
-}
+};
 
 class addCostSheetForm extends Component {
     constructor(props){
@@ -840,7 +840,14 @@ addCostSheetForm.propTypes = {
     UpdateCostSheets: PropTypes.func.isRequired,
     EditMaterial: PropTypes.func.isRequired,
     EditManPower: PropTypes.func.isRequired,
-    EditToolEquipment: PropTypes.func.isRequired
+    EditToolEquipment: PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+        validateFields: PropTypes.object,
+    }).isRequired,
+    params: PropTypes.objectOf({
+        id:PropTypes.number,
+    }),
 };
 
 const addCostSheet = Form.create()(addCostSheetForm);

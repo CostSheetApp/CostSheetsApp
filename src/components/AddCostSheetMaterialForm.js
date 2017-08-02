@@ -22,7 +22,7 @@ Array.prototype.first = function () {
 };
 
 Number.prototype.padZero= function(len, c){
-    var s= this.toString();
+    let s= this.toString();
      c= c || '0';
     while(s.length< len) s= c+ s;
     return s;
@@ -69,7 +69,7 @@ class AddCostSheetMaterialForm extends Component {
                   <FormItem label="Material">
                         {getFieldDecorator('materialId', {
                             rules: [
-                                { required: true, message: 'Por favor selecciona un material' }, 
+                                { required: true, message: 'Por favor selecciona un material'}, 
                                 ]
                         })(
                             <Select
@@ -78,7 +78,7 @@ class AddCostSheetMaterialForm extends Component {
                                 placeholder="Busca un material"
                                 optionFilterProp="children"
                                 onChange={this.selectMaterialToBeAdd}
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 }
+                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
                                 {materials.map(o => <Option key={o.id.toString()}>{`${o.code.padZero(10)} - ${o.description}`}</Option>)}
                             </Select>
@@ -87,7 +87,7 @@ class AddCostSheetMaterialForm extends Component {
                 <FormItem label="Desperdicio">
                     {getFieldDecorator('waste', {
                         rules: [
-                            { required: true, message: '¡Por favor ingrese el desperdicio del material!' }, 
+                            { required: true, message: '¡Por favor ingrese el desperdicio del material!'}, 
                             ],
                             initialValue: materialToBeAddToCostSheet?materialToBeAddToCostSheet.waste:0
                     })(
@@ -131,7 +131,11 @@ AddCostSheetMaterialForm.propTypes = {
     isSaving: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
-    SelectMaterialToBeAddToCostSheet: PropTypes.func.isRequired
+    SelectMaterialToBeAddToCostSheet: PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+        validateFields: PropTypes.object.isRequired,
+    }).isRequired,
 };
 
 const AddCostSheetMaterial = Form.create()(AddCostSheetMaterialForm);

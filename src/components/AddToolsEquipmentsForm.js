@@ -118,7 +118,11 @@ addToolsEquipmentForm.propTypes = {
     isSaving: PropTypes.bool.isRequired,
     visible: PropTypes.bool.isRequired,
     onCancel: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired
+    onCreate: PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+        validateFields: PropTypes.object.isRequired,
+    }).isRequired,
 };
 
 const addToolsEquipment = Form.create()(addToolsEquipmentForm);

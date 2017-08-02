@@ -284,7 +284,10 @@ Consolidate.propTypes = {
 
     project: PropTypes.object,
 
-    entityId: PropTypes.number.isRequired
+    entityId: PropTypes.number.isRequired,
+    params: PropTypes.objectOf({
+        id:PropTypes.number,
+    }),
 };
 
 

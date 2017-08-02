@@ -33,7 +33,7 @@ export const ViewCostSheet = (id) =>
 
 
 export const AddCostSheet = (params) =>
-    (dispatch, getState) => {
+    (dispatch) => {
          axios
             .post(`${API_URL}/ProjectHasCostSheets`,params,{
         headers: {'Authorization': cookie.load('token')}
@@ -46,7 +46,7 @@ export const AddCostSheet = (params) =>
                     .then((response) => {
                         dispatch({type: PROJECTS_COSTSHEET_ADDED, payload: response.data});
                     })
-                    .catch((error) => {
+                    .catch(() => {
                         //console.log(error);
                         // dispatch({
                         //     type: FETCHING_PROJECTS_COSTSHEET_ERROR,
@@ -64,4 +64,4 @@ export const AddCostSheet = (params) =>
                 });
                 //errorHandler(dispatch, error.response, FETCHING_APPOITMENTS_ERROR)
             });
-    }
+    };
