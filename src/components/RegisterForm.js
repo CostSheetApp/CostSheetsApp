@@ -114,6 +114,10 @@ RegisterUserForm.propTypes = {
     hasError: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     registerUser: PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+        validateFields: PropTypes.object.isRequired,
+    }).isRequired,
 };
 
 const mapStateToProps = (state) => {

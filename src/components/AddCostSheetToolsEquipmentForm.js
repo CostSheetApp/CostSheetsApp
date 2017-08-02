@@ -22,7 +22,7 @@ Array.prototype.first = function () {
 };
 
 Number.prototype.padZero= function(len, c){
-    var s= this.toString();
+    let s= this.toString();
      c= c || '0';
     while(s.length< len) s= c+ s;
     return s;
@@ -61,7 +61,7 @@ class AddCostSheetToolsEquipmentForm extends Component {
                   <FormItem label="Herramienta y Equipo">
                         {getFieldDecorator('toolsAndEquipmentId', {
                             rules: [
-                                { required: true, message: 'Por favor selecciona una Herramienta y Equipo' }, 
+                                { required: true, message: 'Por favor selecciona una Herramienta y Equipo'}, 
                                 ]
                         })(
                             <Select
@@ -69,7 +69,7 @@ class AddCostSheetToolsEquipmentForm extends Component {
                                 style={{ width: '100%' }}
                                 placeholder="Busca una Herramienta y Equipo"
                                 optionFilterProp="children"
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 }
+                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
                                 {toolsAndEquipments.map(o => <Option key={o.id.toString()}>{`${o.code.padZero(10)} - ${o.description}`}</Option>)}
                             </Select>
@@ -78,7 +78,7 @@ class AddCostSheetToolsEquipmentForm extends Component {
                 <FormItem label="Rendimiento">
                     {getFieldDecorator('performance', {
                         rules: [
-                            { required: true, message: '¡Por favor ingrese el rendimiento de la mano de obra!' }, 
+                            { required: true, message: '¡Por favor ingrese el rendimiento de la mano de obra!'}, 
                             ],
                             initialValue: 0
                     })(
@@ -104,7 +104,10 @@ AddCostSheetToolsEquipmentForm.propTypes = {
     costSheetId: PropTypes.string.isRequired,
     isSaving: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired
+    onCreate: PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+    }).isRequired,
 };
 
 const AddCostSheetToolsEquipment = Form.create()(AddCostSheetToolsEquipmentForm);

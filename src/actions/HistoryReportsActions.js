@@ -106,7 +106,6 @@ export const ReportCostHistoryMaterial = (materialId) =>
                 dispatch({type: REPORT_MATERIAL_COST_HISTORY_FETCHED, list: response.data.data });
             })
             .catch((error) => {
-                console.log(error);
                 dispatch({
                     type: REPORT_FETCHING_MATERIAL_COST_HISTORY_ERROR,
                     error: error.response.data.error.message
@@ -127,7 +126,6 @@ export const ReportCostHistoryMaterialData = (materialId) =>
                 dispatch({type: REPORT_MATERIAL_COST_HISTORY_FETCHED_DATA, list: response.data.data });
             })
             .catch((error) => {
-                console.log(error);
                 dispatch({
                     type: REPORT_FETCHING_MATERIAL_COST_HISTORY_ERROR_DATA,
                     error: error.response.data.error.message
@@ -149,7 +147,6 @@ export const ReportCostHistoryManPower = (manPowerId) =>
                 dispatch({type: REPORT_MANPOWER_COST_HISTORY_FETCHED, list: (response.data) ? response.data.data : [] });
             })
             .catch((error) => {
-                console.log(error);
                 dispatch({
                     type: REPORT_FETCHING_MANPOWER_COST_HISTORY_ERROR,
                     error: error.response.data.error.message
@@ -170,7 +167,6 @@ export const ReportCostHistoryManPowerData = (manPowerId) =>
                 dispatch({type: REPORT_MANPOWER_COST_HISTORY_FETCHED_DATA, list: (response.data) ? response.data.data : [] });
             })
             .catch((error) => {
-                //console.log(error);
                 dispatch({
                     type: REPORT_FETCHING_MANPOWER_COST_HISTORY_ERROR_DATA,
                     error: error.response.data.error.message
@@ -192,7 +188,6 @@ export const ReportCostHistorToolsAndEquipment = (toolsAndEquipmentId) =>
                 dispatch({type: REPORT_TOOL_COST_HISTORY_FETCHED, list: (response.data) ? response.data.data : [] });
             })
             .catch((error) => {
-                console.log(error);
                 dispatch({
                     type: REPORT_FETCHING_TOOL_COST_HISTORY_ERROR,
                     error: error.response.data.error.message
@@ -213,7 +208,6 @@ export const ReportCostHistorToolsAndEquipmentData = (toolsAndEquipmentId) =>
                 dispatch({type: REPORT_TOOL_COST_HISTORY_FETCHED_DATA, list: (response.data) ? response.data.data : [] });
             })
             .catch((error) => {
-                //console.log(error);
                 dispatch({
                     type: REPORT_FETCHING_TOOL_COST_HISTORY_ERROR_DATA,
                     error: error.response.data.error.message

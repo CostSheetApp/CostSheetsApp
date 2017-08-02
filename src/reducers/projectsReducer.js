@@ -10,7 +10,6 @@ import {
     PROJECT_INDIRECT_COSTS_FETCHED,
     FETCHING_PROJECT_INDIRECT_COSTS_ERROR,
     PROJECT_NEW_INDIRECT_COST_ADDED,
-    ADDING_PROJECT_NEW_INDIRECT_COST_ERROR
 } from '../constants/actionTypes';
 
 const initState = {
@@ -26,17 +25,17 @@ const reducer = (state = initState, action) => {
         return {
             ...state,
             IndirectCosts: [...state.IndirectCosts,action.payload]
-        }
+        };
         case PROJECT_INDIRECT_COSTS_FETCHED:
         return {
             ...state,
             IndirectCosts: action.list
-        }
+        };
         case FETCHING_PROJECT_INDIRECT_COSTS_ERROR:
         return {
             ...state,
             IndirectCosts: []
-        }
+        };
         case FETCHING_PROJECTS:
         return {
             ...state,

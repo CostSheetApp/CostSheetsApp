@@ -5,7 +5,7 @@ import {
     Form,
     Button,
     Modal,
-    Input,
+    //Input,
     InputNumber,
     //Icon,
     //Table,
@@ -33,7 +33,7 @@ class addCostSheetForm extends Component {
             onCancel,
             onCreate,
             isSaving,
-            UnitsOfMeasurement,
+            //UnitsOfMeasurement,
             Regions,
             costSheetList
         } = this.props;
@@ -91,9 +91,7 @@ class addCostSheetForm extends Component {
                         )}
                          </FormItem>
                     </Col>
-                    <Col span="12">
-                   
-                    </Col>
+                    <Col span="12" />
                     </FormItem>
                      <FormItem style={{paddingTop:"10px"}}>
                             <Col span="12">
@@ -136,6 +134,10 @@ addCostSheetForm.propTypes = {
     entityId: PropTypes.number.isRequired,
     costSheetList:PropTypes.array,
     FetchRegions:PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+        validateFields: PropTypes.object.isRequired,
+    }).isRequired,
 };
 
 const addCostSheet = Form.create()(addCostSheetForm);

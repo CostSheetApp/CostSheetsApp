@@ -83,7 +83,10 @@ addUserForm.propTypes = {
     title: PropTypes.string.isRequired,
     visible: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired
+    onCreate: PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+    }).isRequired,
 };
 
 const addUser = Form.create()(addUserForm);

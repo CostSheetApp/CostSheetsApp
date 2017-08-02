@@ -12,7 +12,7 @@ import {
     Card,
     Tag
 } from 'antd';
-import Moment from 'react-moment';
+//import Moment from 'react-moment';
 import '../styles/costSheets.css';
 import IndirectCosts from './IndirectCosts';
 import AddCostSheetForm from './AddCostSheetForm';
@@ -112,7 +112,7 @@ class DashboardProject extends Component {
                                     Costo total de obra: {'L. ' + (sheet.totalUnit*sheet.costSheet.minimumCost).toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")  }
                                 </Row>
                                 <Row>
-                                    Región: <Tag color='green'>{sheet.region.name}</Tag>
+                                    Región: <Tag color="green">{sheet.region.name}</Tag>
                                 </Row>
                                 <Row className="action-panel">
                                 <Button type="primary" className="actions" onClick={() => ViewCostSheet(sheet.costSheetId)}>Ver</Button>
@@ -145,6 +145,9 @@ DashboardProject.propTypes = {
     regions:PropTypes.array.isRequired,
     FetchRegions:PropTypes.func.isRequired,
     AddCostSheet:PropTypes.func.isRequired,
+    params:PropTypes.objectOf({
+        id:PropTypes.number,
+    }),
 };
 
 export default DashboardProject;

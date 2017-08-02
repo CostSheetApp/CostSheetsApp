@@ -22,7 +22,7 @@ Array.prototype.first = function () {
 };
 
 Number.prototype.padZero= function(len, c){
-    var s= this.toString();
+    let s= this.toString();
      c= c || '0';
     while(s.length< len) s= c+ s;
     return s;
@@ -61,7 +61,7 @@ class AddCostSheetManPowerForm extends Component {
                   <FormItem label="Mano de Obra">
                         {getFieldDecorator('manpowerId', {
                             rules: [
-                                { required: true, message: 'Por favor selecciona una mano de obra' }, 
+                                { required: true, message: 'Por favor selecciona una mano de obra'}, 
                                 ]
                         })(
                             <Select
@@ -69,7 +69,7 @@ class AddCostSheetManPowerForm extends Component {
                                 style={{ width: '100%' }}
                                 placeholder="Busca una mano de obra"
                                 optionFilterProp="children"
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 }
+                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
                                 {manpowers.map(o => <Option key={o.id.toString()}>{`${o.code.padZero(10)} - ${o.description}`}</Option>)}
                             </Select>
@@ -104,7 +104,11 @@ AddCostSheetManPowerForm.propTypes = {
     costSheetId: PropTypes.string.isRequired,
     isSaving: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired
+    onCreate: PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+        validateFields: PropTypes.object.isRequired,
+    }).isRequired,
 };
 
 const AddCostSheetManPower = Form.create()(AddCostSheetManPowerForm);

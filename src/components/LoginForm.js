@@ -69,7 +69,11 @@ class LoginForm extends Component {
 LoginForm.propTypes = {
     login: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
-    error: PropTypes.string.isRequired
+    error: PropTypes.string.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+        validateFields: PropTypes.object.isRequired,
+    }).isRequired,
 };
 
 export default Form.create()(LoginForm);

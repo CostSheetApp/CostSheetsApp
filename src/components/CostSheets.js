@@ -46,7 +46,7 @@ class CostSheets extends Component {
                             Costo Mínimo: {'L. ' + sheet.minimumCost.toFixed(2).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")  }
                         </Row>
                         <Row>
-                            Región: <Tag color='green'>{sheet.region.name}</Tag>
+                            Región: <Tag color="green">{sheet.region.name}</Tag>
                         </Row>
                         <Row>
                             Fecha:  <Moment format="DD/MM/YYYY">{sheet.createdAt}</Moment>
@@ -68,6 +68,7 @@ CostSheets.propTypes = {
     costSheets: PropTypes.array.isRequired,
     entityId: PropTypes.number.isRequired,
     ViewCostSheet: PropTypes.func.isRequired,
+    FetchCostSheets: PropTypes.func.isRequired,
 };
 
 export default CostSheets;

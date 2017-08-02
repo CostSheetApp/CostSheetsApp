@@ -101,7 +101,10 @@ addCostToolForm.propTypes = {
     visible: PropTypes.bool.isRequired,
     Regions: PropTypes.array.isRequired,
     onCancel: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired
+    onCreate: PropTypes.func.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+    }).isRequired,
 };
 
 const addCostTool = Form.create()(addCostToolForm);

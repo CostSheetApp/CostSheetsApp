@@ -5,7 +5,7 @@ import {
     Row,
     Col,
     Button,
-    Tabs,
+    //Tabs,
     Icon,
     Input,
     InputNumber,
@@ -22,11 +22,11 @@ import '../styles/indirect-costs.css';
 const FormItem = Form.Item;
 
 Array.prototype.GetTotal = function (id) {
-    var arr = this;
-    var children = this.filter(o => o.indirectCostId==id);
+    let arr = this;
+    let children = this.filter(o => o.indirectCostId==id);
 
-    var childrenValues = children.map(o => {
-        var total=0;
+    let childrenValues = children.map(o => {
+        let total=0;
         if(o.type==0){
             total =arr.GetTotal(o.id);
         }else{
@@ -45,7 +45,6 @@ class IndirectCostList extends Component {
             if (err) {
                 return;
             }
-            console.log("current Values",values)
             let {parentId,projectId,level,AddIndirectCostToList} = this.props;
             AddIndirectCostToList(projectId,parentId,values.description,values.amount,values.amount>0?1:level==1?1:0);
             form.resetFields();
@@ -64,9 +63,9 @@ class IndirectCostList extends Component {
         let {getFieldDecorator} = this.props.form;
         return (
             <div>
-                {filteredData.map( (indirectCost,index) =>  <Mayre
-                    of={ <Row >
-                        <Col offset={5-level}><strong>{parentIndex!=null?parentIndex+(index+1):(index+1)}.</strong> {indirectCost.description} 
+                {filteredData.map( (indirectCost,index) =>  <Mayre key={index}
+                    of={<Row key={index} >
+                        <Col offset={5-level}><strong>{parentIndex!=null?parentIndex+(index+1):(index+1)}.</strong>{indirectCost.description} 
                         <Mayre
                             of={
                                 <span>
@@ -85,9 +84,9 @@ class IndirectCostList extends Component {
                         </Col>
                         <IndirectCosts isEditing={isEditing} projectId={projectId} level={level-1} parentId={indirectCost.id}  parentIndex={parentIndex!=null?parentIndex+(index+1)+".":(index+1)+"."}/>
                         
-                        </Row> }
+                        </Row>}
                     or={
-                        <Row>
+                        <Row key={index}>
                         <Col offset={5-level}>
                             <Col span={4}><strong>{parentIndex!=null?parentIndex+(index+1):(index+1)}.</strong> {indirectCost.description}</Col>
                             <Col><NumberFormat value={indirectCost.amount} displayType={'text'} thousandSeparator={true} prefix={'L. '} decimalPrecision={2} />
@@ -119,7 +118,7 @@ class IndirectCostList extends Component {
                         </Col>
                         </Row>
                     }
-                    when={indirectCost.type == 0 }
+                    when={indirectCost.type == 0}
                     //with={{ some: 'thing' }}
                     />)}
 
@@ -184,24 +183,34 @@ IndirectCostList.defaultProps = {
 
 IndirectCostList.propTypes = {
     projectId:PropTypes.number.isRequired,
+    form: PropTypes.objectOf({
+        getFieldDecorator: PropTypes.object.isRequired,
+    }).isRequired,
+    level: PropTypes.number,
+    parentId:PropTypes.number,
+    parentIndex:PropTypes.number,
+    isEditing:PropTypes.bool,
+    DeleteIndirectCostFromList:PropTypes.func,
+    AddIndirectCostToList:PropTypes.func,
+    indirectCosts:PropTypes.array,
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         indirectCosts: state.projects.IndirectCosts
-    }
+    };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         AddIndirectCostToList: (projectId,indirectCostId,description,amount,type) => {
-            dispatch(AddIndirectCost(projectId,indirectCostId,description,amount,type))
+            dispatch(AddIndirectCost(projectId,indirectCostId,description,amount,type));
         },
         DeleteIndirectCostFromList: (projectId,id) => {
             dispatch(DeleteIndirectCost(projectId,id));
         }
-    }
-}
+    };
+};
 
 let IndirectCosts = connect(mapStateToProps, mapDispatchToProps)(Form.create()(IndirectCostList));
 
