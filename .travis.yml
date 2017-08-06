@@ -1,11 +1,9 @@
+sudo: false
 language: node_js
-cache: yarn
 node_js:
   - "7"
   - "6"
-  - "5"
-  - "4"
-script: npm run build
-after_success:
+script: npm run prebuild
+#after_success:
   # Send coverage data to coveralls.
-  - yarn run test:cover:CI
+  #- yarn run test:cover:CI
