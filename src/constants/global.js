@@ -1,1 +1,1 @@
-export const API_URL = 'https://cost-sheet-api.herokuapp.com/api';
+export const API_URL = 'http://cost-sheet-api.herokuapp.com/api';
