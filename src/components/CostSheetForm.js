@@ -841,13 +841,6 @@ addCostSheetForm.propTypes = {
     EditMaterial: PropTypes.func.isRequired,
     EditManPower: PropTypes.func.isRequired,
     EditToolEquipment: PropTypes.func.isRequired,
-    form: PropTypes.objectOf({
-        getFieldDecorator: PropTypes.object.isRequired,
-        validateFields: PropTypes.object,
-    }).isRequired,
-    params: PropTypes.objectOf({
-        id:PropTypes.number,
-    }),
 };
 
 const addCostSheet = Form.create()(addCostSheetForm);

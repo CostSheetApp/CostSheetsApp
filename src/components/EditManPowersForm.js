@@ -172,9 +172,6 @@ editManPowerForm.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
     AddCostManPower: PropTypes.func.isRequired,
-    form: PropTypes.objectOf({
-        getFieldDecorator: PropTypes.object.isRequired,
-    }).isRequired,
 };
 
 const editManPower = Form.create()(editManPowerForm);

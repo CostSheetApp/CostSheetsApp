@@ -76,12 +76,6 @@ ResetPasswordForm.propTypes = {
     hasError: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     resetPassword: PropTypes.func.isRequired,
-        form: PropTypes.objectOf({
-        getFieldDecorator: PropTypes.object.isRequired,
-    }).isRequired,
-    location: PropTypes.objectOf({
-        query:PropTypes.string,
-    }),
 };
 
 

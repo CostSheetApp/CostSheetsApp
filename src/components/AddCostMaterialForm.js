@@ -102,10 +102,6 @@ addCostMaterialForm.propTypes = {
     Regions: PropTypes.array.isRequired,
     onCancel: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
-    form: PropTypes.objectOf({
-        getFieldDecorator: PropTypes.object.isRequired,
-        validateFields: PropTypes.object.isRequired,
-    }).isRequired,
 };
 
 const addCostMaterial = Form.create()(addCostMaterialForm);

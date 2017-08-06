@@ -132,10 +132,6 @@ AddCostSheetMaterialForm.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
     SelectMaterialToBeAddToCostSheet: PropTypes.func.isRequired,
-    form: PropTypes.objectOf({
-        getFieldDecorator: PropTypes.object.isRequired,
-        validateFields: PropTypes.object.isRequired,
-    }).isRequired,
 };
 
 const AddCostSheetMaterial = Form.create()(AddCostSheetMaterialForm);

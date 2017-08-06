@@ -60,10 +60,6 @@ ForgotPasswordForm.propTypes = {
     hasError: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     forgotPassword: PropTypes.func.isRequired,
-    form: PropTypes.objectOf({
-        getFieldDecorator: PropTypes.object.isRequired,
-        validateFields: PropTypes.object,
-    }).isRequired,
 };
 
 

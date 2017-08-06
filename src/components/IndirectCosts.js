@@ -183,9 +183,6 @@ IndirectCostList.defaultProps = {
 
 IndirectCostList.propTypes = {
     projectId:PropTypes.number.isRequired,
-    form: PropTypes.objectOf({
-        getFieldDecorator: PropTypes.object.isRequired,
-    }).isRequired,
     level: PropTypes.number,
     parentId:PropTypes.number,
     parentIndex:PropTypes.number,
