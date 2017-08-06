@@ -105,9 +105,6 @@ AddCostSheetToolsEquipmentForm.propTypes = {
     isSaving: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
     onCreate: PropTypes.func.isRequired,
-    form: PropTypes.objectOf({
-        getFieldDecorator: PropTypes.object.isRequired,
-    }).isRequired,
 };
 
 const AddCostSheetToolsEquipment = Form.create()(AddCostSheetToolsEquipmentForm);
