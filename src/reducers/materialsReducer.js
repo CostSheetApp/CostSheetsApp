@@ -1,19 +1,4 @@
-import {
-    MATERIALS_FETCHED,
-    FETCHING_MATERIALS,
-    FETCHING_MATERIALS_ERROR,
-    FETCHING_MATERIAL_COST_HISTORY,
-    MATERIAL_COST_HISTORY_FETCHED,
-    MATERIAL_COST_HISTORY_FETCHED_ADD,
-    FETCHING_MATERIAL_COST_HISTORY_ERROR,
-    MATERIAL_UNITS_OF_MEASUREMENT_FETCHED,
-    //FETCHING_MATERIAL_UNITS_OF_MEASUREMENT_ERROR,
-    MATERIAL_ADDED,
-    ADDING_MATERIAL,
-    ADDING_MATERIAL_ERROR,
-    MATERIAL_UPDATED,
-    MATERIAL_DELETED
-} from '../constants/actionTypes';
+import { MATERIALS_FETCHED, FETCHING_MATERIALS, FETCHING_MATERIALS_ERROR, FETCHING_MATERIAL_COST_HISTORY, MATERIAL_COST_HISTORY_FETCHED, MATERIAL_COST_HISTORY_FETCHED_ADD, FETCHING_MATERIAL_COST_HISTORY_ERROR, MATERIAL_UNITS_OF_MEASUREMENT_FETCHED, MATERIAL_ADDED, ADDING_MATERIAL, ADDING_MATERIAL_ERROR, MATERIAL_UPDATED, MATERIAL_DELETED, ACCOUNT_LOGOUT } from '../constants/actionTypes';
 
 const initState = {
     list: [],
@@ -67,12 +52,12 @@ const reducer = (state = initState, action) => {
                 ...state,
                 CostHistory: {
                     ...state.CostHistory,
-                    list: [action.payload,state.CostHistory.list],
+                    list: [action.payload, state.CostHistory.list],
                     loading: false
                 }
             };
         case FETCHING_MATERIAL_COST_HISTORY_ERROR:
-           return {
+            return {
                 ...state,
                 CostHistory: {
                     ...state.CostHistory,
@@ -90,7 +75,7 @@ const reducer = (state = initState, action) => {
                 ...state,
                 isSaving: false,
                 list: [
-                     ...state.list,action.payload
+                    ...state.list, action.payload
                 ]
             };
         case ADDING_MATERIAL:
@@ -104,26 +89,28 @@ const reducer = (state = initState, action) => {
                 isSaving: false
             };
         case MATERIAL_UPDATED:
-        return {
-            ...state,
-            list: state.list.map( (item) => {
-                if(item.id !== action.payload.id) {
-                    // This isn't the item we care about - keep it as-is
-                    return item;
-                }
+            return {
+                ...state,
+                list: state.list.map((item) => {
+                    if (item.id !== action.payload.id) {
+                        // This isn't the item we care about - keep it as-is
+                        return item;
+                    }
 
-                // Otherwise, this is the one we want - return an updated value
-                return {
-                    ...item,
-                    ...action.payload
-                };    
-            })
-        };
+                    // Otherwise, this is the one we want - return an updated value
+                    return {
+                        ...item,
+                        ...action.payload
+                    };
+                })
+            };
         case MATERIAL_DELETED:
-        return {
-            ...state,
-            list: state.list.filter((item) => item.id !== action.id)
-        };
+            return {
+                ...state,
+                list: state.list.filter((item) => item.id !== action.id)
+            };
+        case ACCOUNT_LOGOUT:
+            return initState;
         default:
             return state;
     }

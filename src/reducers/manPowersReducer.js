@@ -1,16 +1,4 @@
-import {
-    MANPOWERS_FETCHED,
-    FETCHING_MANPOWERS,
-    FETCHING_MANPOWERS_ERROR,
-    FETCHING_MANPOWER_COST_HISTORY,
-    MANPOWER_COST_HISTORY_FETCHED,
-    FETCHING_MANPOWER_COST_HISTORY_ERROR,
-    MANPOWER_ADDED,
-    ADDING_MANPOWER,
-    ADDING_MANPOWER_ERROR,
-    MANPOWER_UPDATED,
-    MANPOWERS_JOBS_FETCHED
-} from '../constants/actionTypes';
+import { MANPOWERS_FETCHED, FETCHING_MANPOWERS, FETCHING_MANPOWERS_ERROR, FETCHING_MANPOWER_COST_HISTORY, MANPOWER_COST_HISTORY_FETCHED, FETCHING_MANPOWER_COST_HISTORY_ERROR, MANPOWER_ADDED, ADDING_MANPOWER, ADDING_MANPOWER_ERROR, MANPOWER_UPDATED, MANPOWERS_JOBS_FETCHED, ACCOUNT_LOGOUT} from '../constants/actionTypes';
 
 const initState = {
     list: [],
@@ -87,26 +75,28 @@ const reducer = (state = initState, action) => {
                 isSaving: true
             };
         case MANPOWER_UPDATED:
-        return {
-            ...state,
-            list: state.list.map( (item) => {
-                if(item.id !== action.payload.id) {
-                    // This isn't the item we care about - keep it as-is
-                    return item;
-                }
+            return {
+                ...state,
+                list: state.list.map((item) => {
+                    if (item.id !== action.payload.id) {
+                        // This isn't the item we care about - keep it as-is
+                        return item;
+                    }
 
-                // Otherwise, this is the one we want - return an updated value
-                return {
-                    ...item,
-                    ...action.payload
-                };    
-            })
-        };
+                    // Otherwise, this is the one we want - return an updated value
+                    return {
+                        ...item,
+                        ...action.payload
+                    };
+                })
+            };
         case ADDING_MANPOWER_ERROR:
             return {
                 ...state,
                 isSaving: false
             };
+        case ACCOUNT_LOGOUT:
+            return initState;
         default:
             return state;
     }

@@ -1,17 +1,4 @@
-import {
-    //COST_SHEET_ADDED,
-    COST_SHEETS_FETCHED,
-    COST_SHEET_FETCHED,
-    COST_SHEET_MATERIALS_FETCHED,
-    //FETCHED_COST_SHEET_MATERIALS_ERROR,
-    COST_SHEET_MANPOWER_FETCHED,
-    COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED,
-    SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET,
-
-    SUM_COST_SHEET_MATERIALS_FETCHED,
-    SUM_COST_SHEET_MANPOWER_FETCHED,
-    SUM_COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED
-} from '../constants/actionTypes';
+import { COST_SHEETS_FETCHED, COST_SHEET_FETCHED, COST_SHEET_MATERIALS_FETCHED, COST_SHEET_MANPOWER_FETCHED, COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED, SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET, SUM_COST_SHEET_MATERIALS_FETCHED, ACCOUNT_LOGOUT, SUM_COST_SHEET_MANPOWER_FETCHED, SUM_COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED } from '../constants/actionTypes';
 
 const initState = {
     list: [],
@@ -53,38 +40,40 @@ const reducer = (state = initState, action) => {
         case COST_SHEET_MATERIALS_FETCHED:
             return {
                 ...state,
-                materialsToEdit:action.payload
+                materialsToEdit: action.payload
             };
         case COST_SHEET_MANPOWER_FETCHED:
             return {
                 ...state,
-                manpowersToEdit:action.payload
+                manpowersToEdit: action.payload
             };
         case COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED:
             return {
                 ...state,
-                toolsAndEquipmentsToEdit:action.payload
+                toolsAndEquipmentsToEdit: action.payload
             };
         case SELECT_MATERIAL_TO_BE_ADD_TO_COSTSHEET:
-        return {
-            ...state,
-            materialToBeAddToCostSheet: action.material
-        };
+            return {
+                ...state,
+                materialToBeAddToCostSheet: action.material
+            };
         case SUM_COST_SHEET_MATERIALS_FETCHED:
-        return {
-            ...state,
-            SumMaterial: action.payload
-        };
+            return {
+                ...state,
+                SumMaterial: action.payload
+            };
         case SUM_COST_SHEET_MANPOWER_FETCHED:
-        return {
-            ...state,
-            SumManPower: action.payload
-        };
+            return {
+                ...state,
+                SumManPower: action.payload
+            };
         case SUM_COST_SHEET_TOOLS_AND_EQUIPMENT_FETCHED:
-        return {
-            ...state,
-            SumToolAndEquipment: action.payload
-        };
+            return {
+                ...state,
+                SumToolAndEquipment: action.payload
+            };
+        case ACCOUNT_LOGOUT:
+            return initState;
         default:
             return state;
     }
