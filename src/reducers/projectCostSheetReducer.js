@@ -1,9 +1,4 @@
-import {
-    PROJECTS_COSTSHEET_FETCHED,
-    FETCHING_PROJECTS_COSTSHEET,
-    FETCHING_PROJECTS_COSTSHEET_ERROR,
-    PROJECTS_COSTSHEET_ADDED
-} from '../constants/actionTypes';
+import { PROJECTS_COSTSHEET_FETCHED, FETCHING_PROJECTS_COSTSHEET, FETCHING_PROJECTS_COSTSHEET_ERROR, PROJECTS_COSTSHEET_ADDED, ACCOUNT_LOGOUT} from '../constants/actionTypes';
 
 const initState = {
     list: [],
@@ -14,10 +9,10 @@ const initState = {
 const reducer = (state = initState, action) => {
     switch (action.type) {
         case PROJECTS_COSTSHEET_ADDED:
-        return {
-            ...state,
-            list: [...state.list,action.payload]
-        };
+            return {
+                ...state,
+                list: [...state.list, action.payload]
+            };
         case FETCHING_PROJECTS_COSTSHEET:
             return {
                 ...state,
@@ -33,6 +28,8 @@ const reducer = (state = initState, action) => {
                 ...state,
                 loading: false
             };
+        case ACCOUNT_LOGOUT:
+            return initState;
         default:
             return state;
     }
