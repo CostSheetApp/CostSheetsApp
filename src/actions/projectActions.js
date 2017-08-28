@@ -25,11 +25,11 @@ export const FetchProjects = (entityId) =>
         dispatch({type: FETCHING_PROJECTS});
 
         axios
-            .get(`${API_URL}/Entities/${entityId}/Projects?filter={"where": {"isDeleted": false }}`,{
+            .get(`${API_URL}/EntityHasProjects?filter={"where": {"entityId": ${entityId}},"include": "project" }`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
-                dispatch({type: PROJECTS_FETCHED, list: response.data});
+                dispatch({type: PROJECTS_FETCHED, list: response.data.map(o => o.project)});
             })
             .catch((error) => {
                 //console.log(error);

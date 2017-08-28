@@ -1,17 +1,4 @@
-import {
-    TOOLS_FETCHED,
-    FETCHING_TOOLS,
-    FETCHING_TOOLS_ERROR,
-    FETCHING_TOOL_COST_HISTORY,
-    TOOL_COST_HISTORY_FETCHED,
-    TOOL_COST_HISTORY_FETCHED_ADD,
-    FETCHING_TOOL_COST_HISTORY_ERROR,
-    TOOL_ADDED,
-    ADDING_TOOL,
-    ADDING_TOOL_ERROR,
-    TOOL_UPDATED,
-    TOOL_DELETED
-} from '../constants/actionTypes';
+import { TOOLS_FETCHED, FETCHING_TOOLS, FETCHING_TOOLS_ERROR, FETCHING_TOOL_COST_HISTORY, TOOL_COST_HISTORY_FETCHED, TOOL_COST_HISTORY_FETCHED_ADD, FETCHING_TOOL_COST_HISTORY_ERROR, TOOL_ADDED, ADDING_TOOL, ADDING_TOOL_ERROR, TOOL_UPDATED, TOOL_DELETED, ACCOUNT_LOGOUT} from '../constants/actionTypes';
 
 const initState = {
     list: [],
@@ -64,7 +51,7 @@ const reducer = (state = initState, action) => {
                 ...state,
                 CostHistory: {
                     ...state.CostHistory,
-                    list: [action.payload,state.CostHistory.list],
+                    list: [action.payload, state.CostHistory.list],
                     loading: false
                 }
             };
@@ -92,31 +79,33 @@ const reducer = (state = initState, action) => {
                 isSaving: true
             };
         case TOOL_UPDATED:
-        return {
-            ...state,
-            list: state.list.map( (item) => {
-                if(item.id !== action.payload.id) {
-                    // This isn't the item we care about - keep it as-is
-                    return item;
-                }
+            return {
+                ...state,
+                list: state.list.map((item) => {
+                    if (item.id !== action.payload.id) {
+                        // This isn't the item we care about - keep it as-is
+                        return item;
+                    }
 
-                // Otherwise, this is the one we want - return an updated value
-                return {
-                    ...item,
-                    ...action.payload
-                };    
-            })
-        };
+                    // Otherwise, this is the one we want - return an updated value
+                    return {
+                        ...item,
+                        ...action.payload
+                    };
+                })
+            };
         case ADDING_TOOL_ERROR:
             return {
                 ...state,
                 isSaving: false
             };
         case TOOL_DELETED:
-        return {
-            ...state,
-            list: state.list.filter((item) => item.id !== action.id)
-        };
+            return {
+                ...state,
+                list: state.list.filter((item) => item.id !== action.id)
+            };
+        case ACCOUNT_LOGOUT:
+            return initState;
         default:
             return state;
     }

@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
-import fuelSavings from './fuelSavingsReducer';
-import {routerReducer} from 'react-router-redux';
+import { routerReducer } from 'react-router-redux';
 import accountReducer from './accountReducer';
 import regionsReducer from './regionsReducer';
 import usersReducer from './usersReducer';
@@ -19,7 +18,6 @@ import historyCostManPowerReducer from './reportHistoyCostManPowerReducer';
 import historyCostToolsAndEquipmentReducer from './reportHistoyCostToolsAndEquipmentReducer';
 
 const rootReducer = combineReducers({
-  fuelSavings,
   routing: routerReducer,
   account: accountReducer,
   regions: regionsReducer,
