@@ -16,7 +16,7 @@ const reducer = (state = initState, action) => {
         case USERS_FETCHED:
             return {
                 ...state,
-                list: action.list,
+                list: action.list.filter((o) => !o.isDeleted),
                 loading: false
             };
         case FETCHING_USERS_ERROR:

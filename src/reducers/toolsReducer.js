@@ -20,7 +20,7 @@ const reducer = (state = initState, action) => {
         case TOOLS_FETCHED:
             return {
                 ...state,
-                list: action.list,
+                list: action.list.filter((o) => !o.isDeleted),
                 loading: false
             };
         case FETCHING_TOOLS_ERROR:

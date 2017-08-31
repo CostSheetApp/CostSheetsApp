@@ -20,7 +20,7 @@ const reducer = (state = initState, action) => {
         case COST_SHEETS_FETCHED:
             return {
                 ...state,
-                list: action.payload,
+                list: action.payload.filter((o) => !o.isDeleted),
                 materialsToEdit: [],
                 materialToBeAddToCostSheet: {},
                 manpowersToEdit: [],

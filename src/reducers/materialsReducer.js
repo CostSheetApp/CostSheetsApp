@@ -21,7 +21,7 @@ const reducer = (state = initState, action) => {
         case MATERIALS_FETCHED:
             return {
                 ...state,
-                list: action.list,
+                list: action.list.filter((o) => !o.isDeleted),
                 loading: false
             };
         case FETCHING_MATERIALS_ERROR:

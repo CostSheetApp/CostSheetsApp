@@ -16,7 +16,7 @@ const reducer = (state = initState, action) => {
         case REGIONS_FETCHED:
             return {
                 ...state,
-                list: action.list,
+                list: action.list.filter((o) => !o.isDeleted),
                 loading: false
             };
         case FETCHING_REGIONS_ERROR:

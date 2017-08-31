@@ -21,7 +21,7 @@ const reducer = (state = initState, action) => {
         case MANPOWERS_FETCHED:
             return {
                 ...state,
-                list: action.list,
+                list: action.list.filter((o) => !o.isDeleted),
                 loading: false
             };
         case FETCHING_MANPOWERS_ERROR:
