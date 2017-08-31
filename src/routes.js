@@ -9,7 +9,6 @@ import EmpyLayout from './layouts/EmptyLayout';
 
 //import App from './components/App';
 //import HomePage from './components/HomePage';
-import FuelSavingsPage from './containers/FuelSavingsPage'; // eslint-disable-line import/no-named-as-default
 //import AboutPage from './components/AboutPage';
 import NotFoundPage from './components/NotFoundPage';
 import Login from './containers/Login';
@@ -83,7 +82,6 @@ export default (
       <Route path="reports/materialcosthistory" component={HistoryMaterial}/>
       <Route path="reports/manpowercosthistory" component={HistoryManPower}/>
       <Route path="reports/toolsandequipmentcosthistory" component={HistoryTool}/>
-      <Route path="fuel-savings" component={FuelSavingsPage}/>
     </Route>
     <Route path="*" component={NotFoundPage}/>
   </Route>
