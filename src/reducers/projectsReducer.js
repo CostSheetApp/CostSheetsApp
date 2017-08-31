@@ -33,7 +33,7 @@ const reducer = (state = initState, action) => {
         case PROJECTS_FETCHED:
             return {
                 ...state,
-                list: action.list.filter((o) => !o.project.isDeleted),
+                list: action.list.filter((o) => !o.isDeleted),
                 loading: false
             };
         case FETCHING_PROJECTS_ERROR:
