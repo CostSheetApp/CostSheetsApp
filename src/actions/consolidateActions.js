@@ -28,7 +28,7 @@ export const FetchProjects = (entityId, idProject) =>
     (dispatch) => {
         dispatch({type: FETCHING_PROJECTS});
         axios
-            .get(`${API_URL}/Entities/${entityId}/Projects?filter={"where": {"isDeleted": false }}`,{
+            .get(`${API_URL}/Entities/${entityId}/Projects`,{
         headers: {'Authorization': cookie.load('token')}
         })
             .then((response) => {
