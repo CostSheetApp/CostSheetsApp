@@ -25,7 +25,7 @@ const reducer = (state = initState, action) => {
         case PROJECTS_FETCHED:
             return {
                 ...state,
-                listProject: action.list,
+                listProject: action.list.filter((o) => !o.isDeleted),
                 listMaterial: [],
                 listManPower: [],
                 listToolEquipment: [],
