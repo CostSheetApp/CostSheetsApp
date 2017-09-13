@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/lexfernandez/CostSheetsApp.svg?branch=master)](https://travis-ci.org/lexfernandez/CostSheetsApp)
+[![Build Status](https://travis-ci.org/CostSheetApp/CostSheetsApp.svg?branch=master)](https://travis-ci.org/lexfernandez/CostSheetsApp)
 
 1. **One command to get started** - Type `npm start` to start development in your default browser.
 2. **Rapid feedback** - Each time you hit save, changes hot reload and linting and automated tests run.
